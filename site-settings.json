@@ -4,14 +4,14 @@
 	"mailpoet_list_id": "3",
 	"subcription_widget": {
 		"enable": true,
-		"title": "Stay up to date",
-		"description": "Get notified when I publish something new, and unsubscribe at any time.",
-		"placeholder": "Enter your email address",
-		"success_message": "Thank you for subscribing. You're in!",
-		"error_message": "Something went wrong. Please try again. If the problem persists, you can contact me."
-	},
+		"title": "Yangiliklardan xabardor bo'ling",
+  "description": "Saytda yangi maqola chiqqanda xabar oling. Istalgan vaqtda obunani bekor qilishingiz mumkin.",
+  "placeholder": "Email manzilingizni kiriting",
+  "success_message": "Obuna bo'ldingiz. Rahmat!",
+  "error_message": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring. Muammo davom etsa, biz bilan bog'laning."
+},
 	"newsletter_section": {
-		"enable": true,
+		"enable": false,
 		"title": "Join our newsletter 🎉",
 		"description": "Read and share new perspectives on just about any topic. Everyone’s welcome.",
 		"right_image": "/images/SVG-subcribe2.png",
@@ -19,51 +19,40 @@
 	},
 	"top_category_section": {
 		"enable": true,
-		"title": "Discover top 10 categories",
-		"sub_title": "Let's explore the most popular categories"
+		"title": "Top 10 yo‘nalish",
+  "sub_title": "Eng ko‘p qiziqilgan yo‘nalishlarni o‘rganing"
 	},
 	"site_info": {
-		"site_title": "Ncmaz Nextjs Blog",
-		"site_description": "Ncmaz Nextjs Blog headless WordPress",
-		"site_keywords": "Ncmaz Nextjs Blog",
-		"site_author": "ChisNghiax",
-		"site_email": "Your Email",
-		"site_phone": "Your Phone",
-		"site_address": "Your Address",
-		"site_city": "Your City",
-		"site_state": "Your State",
-		"site_zip": "Your Zip",
-		"site_country": "Your Country",
-		"site_url": "https://www.yoursite.com",
-		"site_logo": "/logo.png",
-		"site_logo_light": "/logo-light.png",
-		"site_favicon": "/favicon.png"
-	},
+	"site_title": "Infoedu.uz – Taʼlim yangiliklari va foydali maʼlumotlar",
+	"site_description": "O‘zbekiston taʼlim tizimiga oid yangiliklar, universitetlar, grantlar, imtihonlar va tanlovlar haqida to‘liq va ishonchli maʼlumotlar manbai.",
+	"site_keywords": "taʼlim yangiliklari, O‘zbekiston universitetlari, grantlar, imtihonlar, abituriyentlar, oliygohlar, infoedu",
+	"site_author": "Umidjon Esirgapov",
+	"site_email": "info@infoedu.uz",
+	"site_phone": "+998 (99) 956-72-71",
+	"site_address": "Jizzax shahri, O‘zbekiston",
+	"site_city": "Jizzax",
+	"site_state": "Jizzax viloyati",
+	"site_zip": "130100",
+	"site_country": "O‘zbekiston",
+	"site_url": "https://www.infoedu.uz",
+	"site_logo": "/logo.png",
+	"site_logo_light": "/logo-light.png",
+	"site_favicon": "/favicon.png"
+}
+,
 	"site_socials": [
 		{
-			"name": "facebook",
-			"url": "https://www.facebook.com/yourfacebookpage",
-			"icon": "/images/socials/facebook.svg",
-			"description": "Follow us on Facebook"
-		},
-		{
-			"name": "twitter",
-			"url": "https://twitter.com/yourtwitterpage",
-			"icon": "/images/socials/x-twitter.svg",
-			"description": "Follow us on Twitter"
-		},
-		{
-			"name": "github",
-			"url": "https://www.github.com/yourmediumpage",
-			"icon": "/images/socials/github.svg",
-			"description": "Follow us on Github"
-		},
-		{
-			"name": "tiktok",
-			"url": "https://www.tiktok.com/yourtiktokpage",
-			"icon": "/images/socials/tiktok.svg",
-			"description": "Follow us on Tiktok"
-		}
+		"name": "telegram",
+		"url": "https://t.me/info_edu_uz",
+		"icon": "/images/socials/telegram.svg",
+		"description": "Bizni Telegramda kuzating"
+	},
+	{
+		"name": "youtube",
+		"url": "https://www.youtube.com/umidjonesirgapov",
+		"icon": "/images/socials/youtube.svg",
+		"description": "YouTube kanalimizni kuzating"
+	}
 	],
 	"site_header": {
 		"desktop_header": {
@@ -73,31 +62,27 @@
 		}
 	},
 	"site_footer": {
-		"all_rights_reserved_text": "© 2024 BooliiTheme Company, Inc. All rights reserved."
+		"all_rights_reserved_text": "© 2025 InfoEdu.uz. Barcha huquqlar himoyalangan."
 	},
 	"single_page": {
 		"show_view_cout": true,
-		"show_comment_count": true
+		"show_comment_count": false
 	},
 	"search_page": {
 		"recommended_searches": {
-			"enable": true,
-			"title": "Recommended searches",
-			"items": [
-				{
-					"title": "Programming",
-					"url": "/search/posts/programming"
-				},
-				{
-					"title": "Design",
-					"url": "/search/posts/design"
-				},
-				{
-					"title": "Technology",
-					"url": "/search/posts/technology"
-				}
-			]
+	"enable": true,
+	"title": "Tavsiya etilgan qidiruvlar",
+	"items": [
+		{
+			"title": "Attestatsiya",
+			"url": "/search/posts/attestatsiya"
 		},
+		{
+			"title": "Abituriyent",
+			"url": "/search/posts/abituriyent"
+		}
+	]
+},
 		"show_top_categories": true,
 		"show_newsletter_section": true
 	},
@@ -110,8 +95,8 @@
 		"show_top_categories": true
 	},
 	"post_card": {
-		"show_view_cout": false,
-		"show_comment_count": true
+		"show_view_cout": true,
+		"show_comment_count": false
 	},
 	"submissions-settings": {
 		"enable": true,
@@ -178,86 +163,89 @@
 		}
 	},
 	"signUp_page": {
-		"title": "Create an account",
-		"sub_title": "Enter your email below to create your account.",
-		"blockquote": {
-			"text": "This theme has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.",
-			"author": "Chis agency"
-		}
+	"title": "Ro‘yxatdan o‘tish",
+	"sub_title": "Quyida elektron pochtangizni kiriting va shaxsiy profilingizni yarating.",
+	"blockquote": {
+		"text": "Infoedu.uz orqali ta’limga oid ma’lumotlarni tezroq, qulayroq va ishonchli tarzda topa boshladim.",
+		"author": "Foydalanuvchi fikri"
+	}
+},
+"signIn_page": {
+	"title": "Profilga kirish",
+	"sub_title": "Quyida elektron pochtangizni kiriting va profilingizga kiring.",
+	"blockquote": {
+		"text": "Infoedu.uz menga o‘qishga tayyorgarlikda ko‘p vaqt tejashga yordam berdi.",
+		"author": "Abituriyent fikri"
 	},
-	"signIn_page": {
-		"title": "Sign in to your account",
-		"sub_title": "Enter your email below to sign in to your account.",
-		"blockquote": {
-			"text": "This theme has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.",
-			"author": "Chis agency"
-		},
-		"lost_password": {
-			"is_use_lostpassword_default_of_wp": false,
-			"message": "Lost password not implemented yet! Please contact admmin for support.",
-			"url_lostpassword_default_of_wp": "https://yourwebsite.com/wp-login.php?action=lostpassword"
-		}
-	},
+	"lost_password": {
+		"is_use_lostpassword_default_of_wp": false,
+		"message": "Parolingizni tiklash xizmati hali yo‘lga qo‘yilmagan. Iltimos, admin bilan bog‘laning.",
+		"url_lostpassword_default_of_wp": "https://infoedu.uz/wp-login.php?action=lostpassword"
+	}
+}
+,
 	"mobile_nav_sidebar": {
-		"description": "Discover the most outstanding articles on all topics of life. Write your stories and share them with the community. "
-	},
-	"help_page": {
-		"uri": "/helps",
-		"title": "Helps",
-		"sub_title": "Read and share new perspectives on just about any topic. Everyone’s welcome."
-	},
+	"description": "Taʼlim, grantlar, imtihonlar va oliy o‘quv yurtlari haqida eng dolzarb maqolalarni kashf eting. O‘z hikoyangizni yozing va boshqalar bilan ulashing."
+},
+"help_page": {
+	"uri": "/helps",
+	"title": "Yordam",
+	"sub_title": "Platformadan foydalanish bo‘yicha qo‘llanmalar va foydali tavsiyalarni o‘qing. Har bir foydalanuvchi uchun ochiq."
+},
 	"contact_page": {
-		"enable": true,
-		"title": "Get in touch",
-		"sub_title": "We’d love to hear from you. Fill out the form below to get in touch with us.",
-		"form": {
-			"success_message": "🎉 Thank you for your message. We will get back to you soon.",
-			"error_message": "Something went wrong. Please try again. If the problem persists, you can contact me."
+	"enable": false,
+	"title": "Biz bilan bog‘laning",
+	"sub_title": "Savolingiz, taklif yoki hamkorlik istagingiz bormi? Quyidagi shaklni to‘ldiring — siz bilan tez orada aloqaga chiqamiz.",
+	"form": {
+		"success_message": "Rahmat! Xabaringiz muvaffaqiyatli yuborildi. Tez orada siz bilan bog‘lanamiz.",
+		"error_message": "Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring. Agar muammo davom etsa, biz bilan bevosita bog‘laning."
+	},
+	"my_contact_info": [
+		{
+			"name": "address",
+			"title": "📍 MANZIL",
+			"desc": "Jizzax shahri, O‘zbekiston"
 		},
-		"my_contact_info": [
-			{
-				"name": "address",
-				"title": "🚀 ADDRESS",
-				"desc": "123 Main Street, New York, NY 10001"
-			},
-			{
-				"name": "email",
-				"title": "💌 EMAIL",
-				"desc": "example@example.com"
-			},
-			{
-				"name": "phone",
-				"title": "☎️ PHONE",
-				"desc": "+88 123 456 789"
-			},
-			{
-				"name": "working_hours",
-				"title": "🕒 WORKING HOURS",
-				"desc": "Mon - Fri: 9:00 - 19:00"
-			},
-			{
-				"name": "socials",
-				"title": "👋 SOCIALS"
-			}
-		]
-	},
+		{
+			"name": "email",
+			"title": "📧 EMAIL",
+			"desc": "info@infoedu.uz"
+		},
+		{
+			"name": "phone",
+			"title": "📞 TELEFON",
+			"desc": "+998 (90) 123-45-67"
+		},
+		{
+			"name": "working_hours",
+			"title": "🕒 ISH VAQTI",
+			"desc": "Dushanba – Juma: 9:00 – 18:00"
+		},
+		{
+			"name": "socials",
+			"title": "🌐 IJTIMOIY TARMOQLAR"
+		}
+	]
+}
+,
 	"document_page": {
-		"enable": true,
-		"uri": "/documents",
-		"title": "Documents",
-		"sub_title": "Read and share new perspectives on just about any topic. Everyone’s welcome."
-	},
+	"enable": true,
+	"uri": "/documents",
+	"title": "Hujjatlar",
+	"sub_title": "O‘zbekiston ta’lim tizimiga oid muhim hujjatlar, nizomlar va qarorlarni shu yerda topishingiz mumkin."
+},
 	"cookies_policy_page": {
-		"uri": "#"
+		"uri": "/cookies_policy_page"
 	},
 	"privacy_policy_page": {
-		"uri": "/privacy-policy",
-		"title": "Privacy Policy"
-	},
-	"empty_state": {
-		"title": "No results found.",
-		"description": "We couldn’t find any results. Try for something else."
-	},
+	"uri": "/privacy-policy",
+	"title": "Maxfiylik siyosati"
+},
+"empty_state": {
+	"title": "Natijalar topilmadi",
+	"description": "Hech qanday natija topilmadi. Boshqa so‘z yoki ibora bilan qayta urinib ko‘ring."
+}
+,
 	"discussion_settings": {
 		"enable": true,
 		"must_logged_in_to_comment": true
