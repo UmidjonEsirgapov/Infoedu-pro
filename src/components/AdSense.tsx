@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
 
+declare global {
+  interface Window {
+    adsbygoogle: any;
+  }
+}
+
+
 interface AdSenseProps {
   client: string;
   slot: string;
