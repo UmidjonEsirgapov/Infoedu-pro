@@ -1,6 +1,6 @@
 import { FragmentType } from '@/__generated__'
 import { NC_FOOTER_MENU_QUERY_FRAGMENT } from '@/fragments/menu'
-import WidgetAddSubscriberForm from '../WidgetAddSubscriberForm/WidgetAddSubscriberForm'
+// import WidgetAddSubscriberForm from '../WidgetAddSubscriberForm/WidgetAddSubscriberForm'
 import { NC_SITE_SETTINGS } from '@/contains/site-settings'
 import MyImage from '../MyImage'
 import { flatListToHierarchical } from '@faustwp/core'
@@ -60,8 +60,14 @@ export default function Footer({ menuItems }: Props) {
 						{menus.map(renderMenuItem)}
 					</div>
 					<div className="mt-10 xl:mt-0">
-						<WidgetAddSubscriberForm />
-					</div>
+  <h3 className="text-sm font-semibold leading-6 text-neutral-900 dark:text-neutral-200">
+    Biz haqimizda
+  </h3>
+  <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-neutral-400">
+    InfoEdu — O‘zbekiston ta’lim yangiliklari, grantlar va universitetlar
+    haqidagi ishonchli manba.
+  </p>
+</div>
 				</div>
 				<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 md:flex md:items-center md:justify-between lg:mt-24 dark:border-neutral-700">
 					<div className="flex flex-wrap gap-x-6 gap-y-3 md:order-2">
