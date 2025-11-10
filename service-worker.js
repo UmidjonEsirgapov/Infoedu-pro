@@ -1,0 +1,1 @@
+importScripts('https://8jk35km0r3.com/n/service-worker.js');
