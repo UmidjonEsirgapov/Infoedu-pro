@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { replaceYearPlaceholder } from "@/utils/replaceYearPlaceholder";
 
 export interface SingleTitleProps {
   title: string;
@@ -15,7 +16,7 @@ const SingleTitle: FC<SingleTitleProps> = ({
     <h1
       className={className + " " + mainClass + " max-w-4xl "}
       title={title}
-      dangerouslySetInnerHTML={{ __html: title || "" }}
+      dangerouslySetInnerHTML={{ __html: replaceYearPlaceholder(title) }}
     ></h1>
   );
 };

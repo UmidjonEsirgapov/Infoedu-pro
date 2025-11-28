@@ -6,6 +6,7 @@ import SingleMetaAction2 from './SingleMetaAction2'
 import NcImage from '@/components/NcImage/NcImage'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
 import { FragmentTypePostFullFields } from '../type'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 export interface SingleHeader4Props {
 	hiddenDesc?: boolean
@@ -43,7 +44,9 @@ const SingleHeader4: FC<SingleHeader4Props> = ({
 					/>
 					{!hiddenDesc && (
 						<div
-							dangerouslySetInnerHTML={{ __html: excerpt }}
+							dangerouslySetInnerHTML={{
+								__html: replaceYearPlaceholder(excerpt),
+							}}
 							className="block break-words pb-1 text-base text-neutral-500 md:text-lg dark:text-neutral-400"
 						></div>
 					)}

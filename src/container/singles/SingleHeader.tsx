@@ -5,6 +5,7 @@ import PostMeta2 from '@/components/PostMeta2/PostMeta2'
 import SingleMetaAction2 from './SingleMetaAction2'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
 import { FragmentTypePostFullFields } from '../type'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 export interface SingleHeaderProps {
 	hiddenDesc?: boolean
@@ -40,7 +41,9 @@ const SingleHeader: FC<SingleHeaderProps> = ({
 					<SingleTitle mainClass={titleMainClass} title={title || ''} />
 					{!hiddenDesc && (
 						<div
-							dangerouslySetInnerHTML={{ __html: excerpt }}
+							dangerouslySetInnerHTML={{
+								__html: replaceYearPlaceholder(excerpt),
+							}}
 							className="max-w-screen-md break-words pb-1 text-base text-neutral-500 lg:text-lg dark:text-neutral-400"
 						></div>
 					)}

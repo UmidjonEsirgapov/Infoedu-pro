@@ -7,6 +7,7 @@ import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment
 import SingleTitle from '../SingleTitle'
 import SingleMetaAction2 from '../SingleMetaAction2'
 import MyImage from '@/components/MyImage'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 interface Props extends SingleType1Props {}
 
@@ -73,7 +74,9 @@ const SingleTypeVideo: FC<Props> = ({ post }) => {
 					<div className="max-w-screen-sm break-words pb-1 text-sm text-neutral-500 lg:text-lg dark:text-neutral-400">
 						<span
 							className="line-clamp-2"
-							dangerouslySetInnerHTML={{ __html: excerpt }}
+							dangerouslySetInnerHTML={{
+								__html: replaceYearPlaceholder(excerpt),
+							}}
 						></span>
 					</div>
 
