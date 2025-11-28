@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import CardCategory1 from '@/components/CardCategory1/CardCategory1'
 import NcModal from '@/components/NcModal/NcModal'
 import Button from '@/components/Button/Button'
