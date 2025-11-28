@@ -17,6 +17,9 @@
 		"right_image": "/images/SVG-subcribe2.png",
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
+	"top_banner": {
+		"enable": false
+	},
 	"top_category_section": {
 		"enable": true,
 		"title": "Top 10 yo‘nalish",
