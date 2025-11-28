@@ -17,19 +17,10 @@
 		"right_image": "/images/SVG-subcribe2.png",
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
-	"top_banner": {
-		"enable": false,
-		"description": "-50% Intro price for the next 72 hours only!.",
-		"end_link": {
-			"url": "https://themeforest.net/item/ncmaz-nextjs-headless-wordpress-blog-magazine/47815656",
-			"text": "Buy now  →",
-			"new_tab": true
-		}
-	},
 	"top_category_section": {
 		"enable": true,
-		"title": "Top 10 yo'nalish",
-  "sub_title": "Eng ko'p qiziqilgan yo'nalishlarni o'rganing"
+		"title": "Top 10 yo‘nalish",
+  "sub_title": "Eng ko‘p qiziqilgan yo‘nalishlarni o‘rganing"
 	},
 	"site_info": {
 	"site_title": "Infoedu.uz – Taʼlim yangiliklari va foydali maʼlumotlar",
