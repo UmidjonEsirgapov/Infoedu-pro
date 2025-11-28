@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 import { NcmazFaustBlockMagazineFragmentFragment } from '../__generated__/graphql'
 import { WordPressBlock } from '@faustwp/blocks'
 import NcmazFaustBlockMagazineClient from './NcmazFaustBlockMagazineClient'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 const NcmazFaustBlockMagazine: WordPressBlock<
 	NcmazFaustBlockMagazineFragmentFragment & {
@@ -35,7 +36,11 @@ const NcmazFaustBlockMagazine: WordPressBlock<
 	return (
 		<div className={`not-prose relative ${hasBackground ? 'py-16' : ''}`}>
 			{dataObject === null && (
-				<div dangerouslySetInnerHTML={{ __html: props.renderedHtml || '' }} />
+				<div
+					dangerouslySetInnerHTML={{
+						__html: replaceYearPlaceholder(props.renderedHtml),
+					}}
+				/>
 			)}
 
 			<NcmazFaustBlockMagazineClient {...props} dataObject={dataObject} />

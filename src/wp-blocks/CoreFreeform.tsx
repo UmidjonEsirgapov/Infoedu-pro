@@ -1,13 +1,16 @@
 import React from 'react'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 //
 const CoreFreeform = (props: any) => {
 	const { renderedHtml } = props || {}
 
 	let processedHtml = renderedHtml
+	// Replace [year] with current year
+	processedHtml = replaceYearPlaceholder(processedHtml)
 	// kieemr tra xem renderedHtml có <Table> không,
-	if (renderedHtml.includes('<table')) {
-		processedHtml = wrapTablesInDiv(renderedHtml)
+	if (processedHtml.includes('<table')) {
+		processedHtml = wrapTablesInDiv(processedHtml)
 	}
 
 	return (

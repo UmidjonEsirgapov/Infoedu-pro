@@ -6,6 +6,7 @@ import { gql, useMutation } from '@apollo/client'
 import { WordPressBlock } from '@faustwp/blocks'
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 const NcmazFaustBlockCta: WordPressBlock<
 	NcmazFaustBlockCtaFragmentFragment
@@ -127,7 +128,9 @@ const NcmazFaustBlockCta: WordPressBlock<
 			<div
 				ref={blockRef}
 				className="not-prose"
-				dangerouslySetInnerHTML={{ __html: renderedHtml || '' }}
+				dangerouslySetInnerHTML={{
+					__html: replaceYearPlaceholder(renderedHtml),
+				}}
 			/>
 		</>
 	)

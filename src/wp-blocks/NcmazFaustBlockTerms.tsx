@@ -6,6 +6,7 @@ import Empty from '@/components/Empty'
 import { TCategoryCardFull } from '@/components/CardCategory1/CardCategory1'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 const DynamicSectionGridCategoryBox = dynamic(
 	() => import('../components/SectionGridCategoryBox/SectionGridCategoryBox'),
@@ -45,7 +46,11 @@ const NcmazFaustBlockTerms: WordPressBlock<
 	return (
 		<div className={`not-prose relative ${hasBackground ? 'py-16' : ''}`}>
 			{dataObject === null && (
-				<div dangerouslySetInnerHTML={{ __html: props.renderedHtml }} />
+				<div
+					dangerouslySetInnerHTML={{
+						__html: replaceYearPlaceholder(props.renderedHtml),
+					}}
+				/>
 			)}
 
 			{hasBackground ? <BackgroundSection /> : null}

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 //
 const CoreHtml = (props: any) => {
@@ -10,8 +11,10 @@ const CoreHtml = (props: any) => {
 	const containerRef = useRef<HTMLDivElement>(null)
 	useEffect(() => {
 		if (containerRef.current && !scriptExecutedRef.current) {
+			// Replace [year] with current year before inserting HTML
+			const processedHtml = replaceYearPlaceholder(renderedHtml)
 			// Insert the HTML
-			containerRef.current.innerHTML = renderedHtml
+			containerRef.current.innerHTML = processedHtml
 
 			// Execute any scripts
 			const scripts = containerRef.current.getElementsByTagName('script')
