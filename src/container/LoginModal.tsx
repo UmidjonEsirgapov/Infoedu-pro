@@ -28,6 +28,7 @@ const LoginModal: FC<LoginModalProps> = () => {
 				/<[^>]+>/g,
 				'',
 			)
+			console.error('Login error:', errorMessage, data?.generateAuthorizationCode)
 			toast.error(errorMessage, {
 				position: 'bottom-center',
 			})
@@ -54,7 +55,14 @@ const LoginModal: FC<LoginModalProps> = () => {
 			}
 			return
 		}
-	}, [data?.generateAuthorizationCode.code, urlRiderect, router, closeLoginModal])
+	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, urlRiderect, router, closeLoginModal])
+
+	// Debug: error handling
+	useEffect(() => {
+		if (error) {
+			console.error('Login hook error:', error)
+		}
+	}, [error])
 
 	const closeModal = closeLoginModal
 
@@ -95,7 +103,6 @@ const LoginModal: FC<LoginModalProps> = () => {
 								login(
 									e.currentTarget.username.value,
 									e.currentTarget.password.value,
-									urlRiderect,
 								)
 							}}
 						>

@@ -83,7 +83,6 @@ export default function Login() {
 							login(
 								e.currentTarget.username.value,
 								e.currentTarget.password.value,
-								'/',
 							)
 						}}
 					>

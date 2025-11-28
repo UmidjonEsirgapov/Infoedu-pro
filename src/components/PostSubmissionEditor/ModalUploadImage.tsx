@@ -124,7 +124,17 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 		const getAccessToken = async () => {
 			const response = await fetch('/api/faust/auth/token', {
 				method: 'GET',
+				credentials: 'include', // Cookie'larni yuborish uchun
+				headers: {
+					'Content-Type': 'application/json',
+				},
 			})
+			
+			if (!response.ok) {
+				console.error('Token fetch error:', response.status, response.statusText)
+				throw new Error(`Failed to get access token: ${response.status}`)
+			}
+			
 			const data = await response.json()
 			const accessToken = data.accessToken
 			return accessToken
