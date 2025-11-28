@@ -56,16 +56,20 @@ const AuthorFavoritesChild: FaustPage<
 				first: 20,
 				inUserAndReaction,
 			},
-			onError: error => {
-				if (refetchTimes > 3) {
-					errorHandling(error)
-					return
-				}
-				setRefetchTimes(refetchTimes + 1)
-				refetch()
-			},
 		},
 	)
+
+	// Error handling with useEffect
+	React.useEffect(() => {
+		if (error) {
+			if (refetchTimes > 3) {
+				errorHandling(error)
+				return
+			}
+			setRefetchTimes(refetchTimes + 1)
+			refetch()
+		}
+	}, [error, refetchTimes, refetch])
 	//
 
 	const handleClickShowMore = () => {

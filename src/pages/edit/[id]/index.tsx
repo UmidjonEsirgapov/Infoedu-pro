@@ -41,20 +41,20 @@ const Page: FaustPage<{}> = (props) => {
 			{
 				client,
 				fetchPolicy: 'network-only',
-				context: {
-					fetchOptions: {
-						method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-					},
-				},
-				onError: (error) => {
-					if (refetchTimes > 3) {
-						errorHandling(error)
-					}
-					setRefetchTimes(refetchTimes + 1)
-					refetch()
-				},
 			},
 		)
+
+	// Error handling with useEffect
+	useEffect(() => {
+		if (error) {
+			if (refetchTimes > 3) {
+				errorHandling(error)
+				return
+			}
+			setRefetchTimes(refetchTimes + 1)
+			refetch()
+		}
+	}, [error, refetchTimes, refetch])
 
 	useEffect(() => {
 		if (!isAuthenticated || !router.query.id) {
@@ -62,6 +62,11 @@ const Page: FaustPage<{}> = (props) => {
 		}
 		getPostForEditPostPage({
 			variables: { databaseId: router.query.id as string },
+			context: {
+				fetchOptions: {
+					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+				},
+			},
 		})
 	}, [isAuthenticated])
 

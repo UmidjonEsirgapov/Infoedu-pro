@@ -88,39 +88,42 @@ const Page: FaustPage<{}> = () => {
 	`),
 		{
 			client,
-			context: {
-				fetchOptions: {
-					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-				},
-			},
-			onCompleted: (data) => {
-				const { ncUserMeta } = getUserDataFromUserCardFragment(
-					data?.viewer || {},
-				)
-				const bgImage = getImageDataFromImageFragment(
-					ncUserMeta?.backgroundImage?.node,
-				)
-				const featuredImage = getImageDataFromImageFragment(
-					ncUserMeta?.featuredImage?.node,
-				)
-
-				setCoverImage({
-					...bgImage,
-				})
-				setAvatarImage({
-					...featuredImage,
-				})
-			},
-			onError: (error) => {
-				if (refetchTimes > 3) {
-					errorHandling(error)
-				}
-				setRefetchTimes(refetchTimes + 1)
-
-				getViewerProfileResult.refetch()
-			},
 		},
 	)
+
+	// onCompleted handling with useEffect
+	useEffect(() => {
+		if (getViewerProfileResult.data?.viewer) {
+			const { ncUserMeta } = getUserDataFromUserCardFragment(
+				getViewerProfileResult.data.viewer || {},
+			)
+			const bgImage = getImageDataFromImageFragment(
+				ncUserMeta?.backgroundImage?.node,
+			)
+			const featuredImage = getImageDataFromImageFragment(
+				ncUserMeta?.featuredImage?.node,
+			)
+
+			setCoverImage({
+				...bgImage,
+			})
+			setAvatarImage({
+				...featuredImage,
+			})
+		}
+	}, [getViewerProfileResult.data])
+
+	// Error handling with useEffect
+	useEffect(() => {
+		if (getViewerProfileResult.error) {
+			if (refetchTimes > 3) {
+				errorHandling(getViewerProfileResult.error)
+				return
+			}
+			setRefetchTimes(refetchTimes + 1)
+			getViewerProfileResult.refetch()
+		}
+	}, [getViewerProfileResult.error, refetchTimes, getViewerProfileResult])
 
 	const [mutationUpdateViewerProfile, updateViewerProfileResult] = useMutation(
 		gql(`
@@ -207,7 +210,13 @@ const Page: FaustPage<{}> = () => {
 			return
 		}
 		if (isAuthenticated) {
-			queryGetViewerProfile()
+			queryGetViewerProfile({
+				context: {
+					fetchOptions: {
+						method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+					},
+				},
+			})
 		}
 	}, [isAuthenticated, isReady])
 

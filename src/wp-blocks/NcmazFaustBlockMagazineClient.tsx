@@ -77,15 +77,14 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 	const [queryGetPostByVariablesFromSSR, getPostByVariablesFromSSRResult] =
 		useLazyQuery(QUERY_GET_POSTS_BY, {
 			notifyOnNetworkStatusChange: true,
-			context: {
-				fetchOptions: {
-					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-				},
-			},
-			onError: (error) => {
-				errorHandling(error)
-			},
 		})
+
+	// Error handling with useEffect
+	useEffect(() => {
+		if (getPostByVariablesFromSSRResult.error) {
+			errorHandling(getPostByVariablesFromSSRResult.error)
+		}
+	}, [getPostByVariablesFromSSRResult.error])
 
 	const T = getTrans()
 
@@ -161,6 +160,11 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 				variables: {
 					...(dataInitQueryVariable || {}),
 					after: dataInitPageInfo?.endCursor,
+				},
+				context: {
+					fetchOptions: {
+						method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+					},
 				},
 			})
 			return

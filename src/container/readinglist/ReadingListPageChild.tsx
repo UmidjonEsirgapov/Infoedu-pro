@@ -32,24 +32,20 @@ const ReadingListPageChild: FaustPage<GetReadingListPageQuery> = (props) => {
     QUERY_GET_POSTS_BY,
     {
       notifyOnNetworkStatusChange: true,
-      context: {
-        fetchOptions: {
-          method: process.env.NEXT_PUBLIC_SITE_API_METHOD || "GET",
-        },
-      },
-      variables: {
-        first: 20,
-      },
-      onError: (error) => {
-        if (refetchTimes > 3) {
-          errorHandling(error);
-          return;
-        }
-        setRefetchTimes(refetchTimes + 1);
-        getPostsByPostInResult.refetch();
-      },
     }
   );
+
+  // Error handling with useEffect
+  useEffect(() => {
+    if (getPostsByPostInResult.error) {
+      if (refetchTimes > 3) {
+        errorHandling(getPostsByPostInResult.error);
+        return;
+      }
+      setRefetchTimes(refetchTimes + 1);
+      getPostsByPostInResult.refetch();
+    }
+  }, [getPostsByPostInResult.error, refetchTimes, getPostsByPostInResult]);
 
   const { viewer, viewerReactionPosts } = useSelector(
     (state: RootState) => state.viewer
@@ -94,8 +90,14 @@ const ReadingListPageChild: FaustPage<GetReadingListPageQuery> = (props) => {
 
     queryGetPostsByPostIn({
       variables: {
+        first: 20,
         in: ids.map((id) => String(id)),
         after: null,
+      },
+      context: {
+        fetchOptions: {
+          method: process.env.NEXT_PUBLIC_SITE_API_METHOD || "GET",
+        },
       },
     });
   }, [
