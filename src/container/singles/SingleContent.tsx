@@ -19,6 +19,7 @@ import { useMusicPlayer } from '@/hooks/useMusicPlayer'
 import { flatListToHierarchical } from '@faustwp/core'
 import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 import { ContentBlock } from '@faustwp/blocks/dist/mjs/components/WordPressBlocksViewer'
+import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 
 export interface SingleContentProps {
 	post: GetPostSiglePageQuery['post']
@@ -94,6 +95,66 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
 			window?.removeEventListener('scroll', handleProgressIndicatorHeadeEvent)
 		}
 	}, [])
+
+	// Replace [year] placeholder in post content after render
+	useEffect(() => {
+		if (!contentRef.current) return
+
+		const replaceYearInNode = (node: Node) => {
+			if (node.nodeType === Node.TEXT_NODE) {
+				const text = node.textContent || ''
+				if (text.includes('[year]')) {
+					const newText = replaceYearPlaceholder(text)
+					if (newText !== text) {
+						node.textContent = newText
+					}
+				}
+			} else if (node.nodeType === Node.ELEMENT_NODE) {
+				const element = node as Element
+				// Skip script and style tags
+				if (
+					element.tagName === 'SCRIPT' ||
+					element.tagName === 'STYLE' ||
+					element.tagName === 'CODE'
+				) {
+					return
+				}
+				// Process child nodes
+				Array.from(node.childNodes).forEach(replaceYearInNode)
+			}
+		}
+
+		// Use MutationObserver to handle dynamically loaded content
+		let timeoutId: NodeJS.Timeout
+		const observer = new MutationObserver(() => {
+			// Debounce to avoid too many replacements
+			clearTimeout(timeoutId)
+			timeoutId = setTimeout(() => {
+				if (contentRef.current) {
+					Array.from(contentRef.current.childNodes).forEach(replaceYearInNode)
+				}
+			}, 100)
+		})
+
+		observer.observe(contentRef.current, {
+			childList: true,
+			subtree: true,
+			characterData: true,
+		})
+
+		// Initial replacement after a short delay to ensure content is rendered
+		const initialTimeout = setTimeout(() => {
+			if (contentRef.current) {
+				Array.from(contentRef.current.childNodes).forEach(replaceYearInNode)
+			}
+		}, 100)
+
+		return () => {
+			clearTimeout(timeoutId)
+			clearTimeout(initialTimeout)
+			observer.disconnect()
+		}
+	}, [blocks])
 
 	const renderAlert = () => {
 		if (status === 'publish') {

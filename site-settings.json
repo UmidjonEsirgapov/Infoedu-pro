@@ -13,7 +13,7 @@
 	"newsletter_section": {
 		"enable": false,
 		"title": "Join our newsletter 🎉",
-		"description": "Read and share new perspectives on just about any topic. Everyone’s welcome.",
+		"description": "Read and share new perspectives on just about any topic. Everyone's welcome.",
 		"right_image": "/images/SVG-subcribe2.png",
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
