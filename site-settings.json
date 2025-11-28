@@ -62,7 +62,7 @@
 		}
 	},
 	"site_footer": {
-		"all_rights_reserved_text": "© 2025 InfoEdu.uz. Barcha huquqlar himoyalangan."
+		"all_rights_reserved_text": "© [year] InfoEdu.uz. Barcha huquqlar himoyalangan."
 	},
 	"single_page": {
 		"show_view_cout": true,
