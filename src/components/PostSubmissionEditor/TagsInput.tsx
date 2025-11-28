@@ -24,14 +24,6 @@ const TagsInput: FC<TagsInputProps> = ({ onChange, defaultValue }) => {
 	const [queryGetTags, { loading, error, data, fetchMore, called }] =
 		useLazyQuery(QUERY_GET_TAGS, {
 			notifyOnNetworkStatusChange: true,
-			context: {
-				fetchOptions: {
-					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-				},
-			},
-			variables: {
-				first: 50,
-			},
 		})
 
 	const handleClickShowMore = () => {
@@ -70,7 +62,16 @@ const TagsInput: FC<TagsInputProps> = ({ onChange, defaultValue }) => {
 		if (!isOpen) {
 			return
 		}
-		queryGetTags()
+		queryGetTags({
+			variables: {
+				first: 50,
+			},
+			context: {
+				fetchOptions: {
+					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+				},
+			},
+		})
 	}, [isOpen])
 
 	useEffect(() => {

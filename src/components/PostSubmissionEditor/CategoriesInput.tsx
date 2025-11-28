@@ -23,14 +23,6 @@ const CategoriesInput: FC<Props> = ({ onChange, defaultValue }) => {
 	const [queryGetCategories, { loading, error, data, fetchMore, called }] =
 		useLazyQuery(QUERY_GET_CATEGORIES, {
 			notifyOnNetworkStatusChange: true,
-			context: {
-				fetchOptions: {
-					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-				},
-			},
-			variables: {
-				first: 50,
-			},
 		})
 
 	const handleClickShowMore = () => {
@@ -68,7 +60,16 @@ const CategoriesInput: FC<Props> = ({ onChange, defaultValue }) => {
 
 	useEffect(() => {
 		if (!isOpen) return
-		queryGetCategories()
+		queryGetCategories({
+			variables: {
+				first: 50,
+			},
+			context: {
+				fetchOptions: {
+					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+				},
+			},
+		})
 	}, [isOpen])
 
 	useEffect(() => {

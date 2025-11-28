@@ -43,30 +43,21 @@ export default function useHandleGetPostsArchivePage(props: Props) {
   const [queryGetPostsByCategoryId, postsByCategoryIdResult] = useLazyQuery(
     QUERY_GET_POSTS_BY,
     {
-      variables: {
-        categoryId: categoryDatabaseId,
-        categoryName: categorySlug,
-        tagId: tagDatabaseId?.toString(),
-        author: authorDatabaseId,
-        search,
-        first: GET_POSTS_FIRST_COMMON,
-      },
       notifyOnNetworkStatusChange: true,
-      context: {
-        fetchOptions: {
-          method: process.env.NEXT_PUBLIC_SITE_API_METHOD || "GET",
-        },
-      },
-      onError: (error) => {
-        if (refetchTimes > 3) {
-          errorHandling(error);
-          return;
-        }
-        setRefetchTimes(refetchTimes + 1);
-        postsByCategoryIdResult.refetch();
-      },
     }
   );
+
+  // Error handling with useEffect
+  useEffect(() => {
+    if (postsByCategoryIdResult.error) {
+      if (refetchTimes > 3) {
+        errorHandling(postsByCategoryIdResult.error);
+        return;
+      }
+      setRefetchTimes(refetchTimes + 1);
+      postsByCategoryIdResult.refetch();
+    }
+  }, [postsByCategoryIdResult.error, refetchTimes]);
 
   function checkRouterQueryFilter() {
     // tra ve false neu khong co filter/ lan dau tien vao trang  / khi chua click vao filter nao
@@ -93,10 +84,20 @@ export default function useHandleGetPostsArchivePage(props: Props) {
 
     queryGetPostsByCategoryId({
       variables: {
+        categoryId: categoryDatabaseId,
+        categoryName: categorySlug,
+        tagId: tagDatabaseId?.toString(),
+        author: authorDatabaseId,
+        search,
         first: GET_POSTS_FIRST_COMMON,
         after: "",
         field: fiterValue.field,
         order: fiterValue.order,
+      },
+      context: {
+        fetchOptions: {
+          method: process.env.NEXT_PUBLIC_SITE_API_METHOD || "GET",
+        },
       },
     });
   }, [routerQueryFilter]);
@@ -106,8 +107,18 @@ export default function useHandleGetPostsArchivePage(props: Props) {
     if (!postsByCategoryIdResult.called) {
       queryGetPostsByCategoryId({
         variables: {
+          categoryId: categoryDatabaseId,
+          categoryName: categorySlug,
+          tagId: tagDatabaseId?.toString(),
+          author: authorDatabaseId,
+          search,
           after: initPostsPageInfo?.endCursor,
           first: GET_POSTS_FIRST_COMMON,
+        },
+        context: {
+          fetchOptions: {
+            method: process.env.NEXT_PUBLIC_SITE_API_METHOD || "GET",
+          },
         },
       });
     } else {

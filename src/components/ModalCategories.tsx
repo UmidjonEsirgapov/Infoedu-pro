@@ -23,23 +23,20 @@ const ModalCategories: FC<ModalCategoriesProps> = () => {
 
 	const [queryGetCategories, { loading, error, data, fetchMore, refetch }] =
 		useLazyQuery(QUERY_GET_CATEGORIES, {
-			variables: { first: 20 },
 			notifyOnNetworkStatusChange: true,
-			context: {
-				fetchOptions: {
-					method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
-				},
-			},
-			onError: (error) => {
-				if (refetchTimes > 3) {
-					errorHandling(error)
-					return
-				}
-				setRefetchTimes(refetchTimes + 1)
-
-				refetch()
-			},
 		})
+
+	// Error handling with useEffect
+	useEffect(() => {
+		if (error) {
+			if (refetchTimes > 3) {
+				errorHandling(error)
+				return
+			}
+			setRefetchTimes(refetchTimes + 1)
+			refetch()
+		}
+	}, [error, refetchTimes, refetch])
 
 	const handleClickShowMore = () => {
 		fetchMore({
@@ -124,7 +121,14 @@ const ModalCategories: FC<ModalCategoriesProps> = () => {
 						fontSize="text-sm font-medium"
 						onClick={() => {
 							openModal()
-							queryGetCategories()
+							queryGetCategories({
+								variables: { first: 20 },
+								context: {
+									fetchOptions: {
+										method: process.env.NEXT_PUBLIC_SITE_API_METHOD || 'GET',
+									},
+								},
+							})
 						}}
 					>
 						<CategoryIcon className="-ms-1.5 me-2 h-5 w-5" />
