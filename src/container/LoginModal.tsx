@@ -43,11 +43,18 @@ const LoginModal: FC<LoginModalProps> = () => {
 				},
 			)
 
+			// Close modal first
+			closeLoginModal()
+
 			// redirect to the urlRiderect or refresh
-			!urlRiderect && router.reload()
+			if (urlRiderect) {
+				router.push(urlRiderect)
+			} else {
+				router.reload()
+			}
 			return
 		}
-	}, [data?.generateAuthorizationCode.code])
+	}, [data?.generateAuthorizationCode.code, urlRiderect, router, closeLoginModal])
 
 	const closeModal = closeLoginModal
 

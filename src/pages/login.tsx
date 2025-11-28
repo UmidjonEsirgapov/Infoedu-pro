@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import ButtonPrimary from '@/components/Button/ButtonPrimary'
 import Error from '@/components/Error'
 import Input from '@/components/Input/Input'
@@ -20,9 +21,38 @@ export default function Login() {
 	const router = useRouter()
 	const T = getTrans()
 
-	if (isReady && isAuthenticated) {
-		router.replace('/')
-	}
+	useEffect(() => {
+		if (isReady && isAuthenticated) {
+			router.replace('/')
+		}
+	}, [isReady, isAuthenticated, router])
+
+	useEffect(() => {
+		if (!!data?.generateAuthorizationCode.error) {
+			// remove html tags on error message
+			const errorMessage = data?.generateAuthorizationCode.error.replace(
+				/<[^>]+>/g,
+				'',
+			)
+			toast.error(errorMessage, {
+				position: 'bottom-center',
+			})
+			return
+		}
+
+		if (!!data?.generateAuthorizationCode.code) {
+			toast.success(
+				'Login successful, redirecting...',
+				{
+					position: 'bottom-center',
+					duration: 3000,
+				},
+			)
+			// Redirect to home page after successful login
+			router.replace('/')
+			return
+		}
+	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, router])
 
 	const errorMessage = error?.message || data?.generateAuthorizationCode.error
 
