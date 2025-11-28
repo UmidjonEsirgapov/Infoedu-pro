@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import ButtonPrimary from '@/components/Button/ButtonPrimary'
 import Error from '@/components/Error'
 import Input from '@/components/Input/Input'
 import Label from '@/components/Label/Label'
 import Logo from '@/components/Logo/Logo'
 import { IS_CHISNGHIAX_DEMO_SITE } from '@/contains/site-settings'
-import { useLogin } from '@faustwp/core'
+import { useLogin, useAuth } from '@faustwp/core'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import getTrans from '@/utils/getTrans'
@@ -17,9 +17,11 @@ interface LoginModalProps {}
 
 const LoginModal: FC<LoginModalProps> = () => {
 	const { login, loading, data, error } = useLogin()
+	const { isAuthenticated, isReady } = useAuth()
 	const { closeLoginModal, isOpen, urlRiderect } = useLoginModal()
 	const router = useRouter()
 	const T = getTrans()
+	const [isProcessingLogin, setIsProcessingLogin] = useState(false)
 
 	useEffect(() => {
 		if (!!data?.generateAuthorizationCode.error) {
@@ -32,30 +34,68 @@ const LoginModal: FC<LoginModalProps> = () => {
 			toast.error(errorMessage, {
 				position: 'bottom-center',
 			})
+			setIsProcessingLogin(false)
 			return
 		}
 
-		if (!!data?.generateAuthorizationCode.code) {
+		if (!!data?.generateAuthorizationCode.code && !isProcessingLogin) {
+			setIsProcessingLogin(true)
+			console.log('Authorization code received, waiting for authentication...')
+			
+			// Wait a bit for token to be processed
+			setTimeout(() => {
+				// Check if authenticated after token processing
+				if (isReady && isAuthenticated) {
+					toast.success(
+						'Login successful, redirecting...',
+						{
+							position: 'bottom-center',
+							duration: 3000,
+						},
+					)
+					closeLoginModal()
+					if (urlRiderect) {
+						router.push(urlRiderect)
+					} else {
+						router.push('/')
+					}
+				} else {
+					// If not authenticated yet, reload to trigger auth check
+					toast.success(
+						'Login successful, reloading page...',
+						{
+							position: 'bottom-center',
+							duration: 3000,
+						},
+					)
+					closeLoginModal()
+					router.reload()
+				}
+				setIsProcessingLogin(false)
+			}, 1000) // Wait 1 second for token processing
+			return
+		}
+	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, urlRiderect, router, closeLoginModal, isAuthenticated, isReady, isProcessingLogin])
+
+	// Also check authentication state directly
+	useEffect(() => {
+		if (isProcessingLogin && isReady && isAuthenticated) {
 			toast.success(
-				'Login successful, system is reloading the page for synchronization...',
+				'Login successful, redirecting...',
 				{
 					position: 'bottom-center',
-					duration: 5000,
+					duration: 3000,
 				},
 			)
-
-			// Close modal first
 			closeLoginModal()
-
-			// redirect to the urlRiderect or refresh
 			if (urlRiderect) {
 				router.push(urlRiderect)
 			} else {
-				router.reload()
+				router.push('/')
 			}
-			return
+			setIsProcessingLogin(false)
 		}
-	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, urlRiderect, router, closeLoginModal])
+	}, [isAuthenticated, isReady, isProcessingLogin, urlRiderect, router, closeLoginModal])
 
 	// Debug: error handling
 	useEffect(() => {

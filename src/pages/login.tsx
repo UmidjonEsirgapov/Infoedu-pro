@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ButtonPrimary from '@/components/Button/ButtonPrimary'
 import Error from '@/components/Error'
 import Input from '@/components/Input/Input'
@@ -7,25 +7,31 @@ import LoginLayout from '@/container/login/LoginLayout'
 import { IS_CHISNGHIAX_DEMO_SITE } from '@/contains/site-settings'
 import { RootState } from '@/stores/store'
 import getTrans from '@/utils/getTrans'
-import { useLogin } from '@faustwp/core'
+import { useLogin, useAuth } from '@faustwp/core'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 
 export default function Login() {
-	const { isReady, isAuthenticated } = useSelector(
+	const { isReady: isReadyFromStore, isAuthenticated: isAuthenticatedFromStore } = useSelector(
 		(state: RootState) => state.viewer.authorizedUser,
 	)
+	const { isReady, isAuthenticated } = useAuth()
 	const { login, loading, error, data } = useLogin()
 	const router = useRouter()
 	const T = getTrans()
+	const [isProcessingLogin, setIsProcessingLogin] = useState(false)
+
+	// Use useAuth hook's state as primary source
+	const finalIsReady = isReady || isReadyFromStore
+	const finalIsAuthenticated = isAuthenticated || isAuthenticatedFromStore
 
 	useEffect(() => {
-		if (isReady && isAuthenticated) {
+		if (finalIsReady && finalIsAuthenticated) {
 			router.replace('/')
 		}
-	}, [isReady, isAuthenticated, router])
+	}, [finalIsReady, finalIsAuthenticated, router])
 
 	useEffect(() => {
 		if (!!data?.generateAuthorizationCode.error) {
@@ -37,22 +43,48 @@ export default function Login() {
 			toast.error(errorMessage, {
 				position: 'bottom-center',
 			})
+			setIsProcessingLogin(false)
 			return
 		}
 
-		if (!!data?.generateAuthorizationCode.code) {
-			toast.success(
-				'Login successful, redirecting...',
-				{
-					position: 'bottom-center',
-					duration: 3000,
-				},
-			)
-			// Redirect to home page after successful login
-			router.replace('/')
-			return
+		if (!!data?.generateAuthorizationCode.code && !isProcessingLogin) {
+			setIsProcessingLogin(true)
+			console.log('Authorization code received, waiting for authentication...')
+			
+			// Wait for token processing and authentication state update
+			const checkAuth = setInterval(() => {
+				if (isReady && isAuthenticated) {
+					clearInterval(checkAuth)
+					toast.success(
+						'Login successful, redirecting...',
+						{
+							position: 'bottom-center',
+							duration: 3000,
+						},
+					)
+					router.replace('/')
+					setIsProcessingLogin(false)
+				}
+			}, 500)
+
+			// Timeout after 5 seconds
+			setTimeout(() => {
+				clearInterval(checkAuth)
+				if (!isAuthenticated) {
+					// If still not authenticated, reload to trigger auth check
+					toast.success(
+						'Login successful, reloading page...',
+						{
+							position: 'bottom-center',
+							duration: 3000,
+						},
+					)
+					router.reload()
+				}
+				setIsProcessingLogin(false)
+			}, 5000)
 		}
-	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, router])
+	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, router, isAuthenticated, isReady, isProcessingLogin])
 
 	const errorMessage = error?.message || data?.generateAuthorizationCode.error
 
