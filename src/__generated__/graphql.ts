@@ -126,7 +126,7 @@ export type BlockWithSupportsAnchor = {
 };
 
 /** A taxonomy term that classifies content. Categories support hierarchy and can be used to create a nested structure. */
-export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermNode & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & WithAcfNcTaxonomyMeta & {
+export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermNode & MenuItemLinkable & Node & NodeWithRankMathSeo & TermNode & UniformResourceIdentifiable & WithAcfNcTaxonomyMeta & {
   __typename?: 'Category';
   /** The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
   ancestors?: Maybe<CategoryToAncestorsCategoryConnection>;
@@ -179,6 +179,8 @@ export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermN
   parentId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the Category type and the post type */
   posts?: Maybe<CategoryToPostConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathCategoryTermSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the Category type and the Taxonomy type */
@@ -294,6 +296,27 @@ export enum CategoryIdType {
   /** The URI for the node */
   Uri = 'URI'
 }
+
+/** The RankMath SEO meta settings for Categories. */
+export type CategoryMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'CategoryMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to include snippet data for this taxonomy. */
+  hasSnippetData?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
 
 /** Connection between the Category type and the category type */
 export type CategoryToAncestorsCategoryConnection = CategoryConnection & Connection & {
@@ -1196,6 +1219,8 @@ export type ContentNode = {
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathContentNodeSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -1367,7 +1392,7 @@ export type ContentTemplate = {
 };
 
 /** An Post Type object */
-export type ContentType = Node & UniformResourceIdentifiable & {
+export type ContentType = Node & NodeWithRankMathSeo & UniformResourceIdentifiable & {
   __typename?: 'ContentType';
   /** Whether this content type should can be exported. */
   canExport?: Maybe<Scalars['Boolean']['output']>;
@@ -1423,6 +1448,8 @@ export type ContentType = Node & UniformResourceIdentifiable & {
   restBase?: Maybe<Scalars['String']['output']>;
   /** The REST Controller class assigned to handling this content type. */
   restControllerClass?: Maybe<Scalars['String']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathSeo>;
   /** Makes this content type available via the admin bar. */
   showInAdminBar?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to add the content type to the GraphQL Schema. */
@@ -1640,6 +1667,258 @@ export enum ContentTypesOfTagEnum {
   /** The Type of Content object */
   Post = 'POST'
 }
+
+/** A block used for editing the site */
+export type CoreAccordion = BlockWithSupportsAnchor & EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreAccordion';
+  /** The anchor field for the block. */
+  anchor?: Maybe<Scalars['String']['output']>;
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreAccordion Block Type */
+  attributes?: Maybe<CoreAccordionAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreAccordion Block Type */
+export type CoreAccordionAttributes = BlockWithSupportsAnchor & {
+  __typename?: 'CoreAccordionAttributes';
+  /** The &quot;align&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  align?: Maybe<Scalars['String']['output']>;
+  /** The anchor field for the block. */
+  anchor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;ariaLabel&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  ariaLabel?: Maybe<Scalars['String']['output']>;
+  /** The &quot;autoclose&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  autoclose: Scalars['Boolean']['output'];
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;headingLevel&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  headingLevel: Scalars['Float']['output'];
+  /** The &quot;iconPosition&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  iconPosition: Scalars['String']['output'];
+  /** The &quot;layout&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  layout?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;levelOptions&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  levelOptions?: Maybe<Scalars['BlockAttributesArray']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;showIcon&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  showIcon: Scalars['Boolean']['output'];
+  /** The &quot;style&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreAccordionAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreAccordionHeading = BlockWithSupportsAnchor & EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreAccordionHeading';
+  /** The anchor field for the block. */
+  anchor?: Maybe<Scalars['String']['output']>;
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreAccordionHeading Block Type */
+  attributes?: Maybe<CoreAccordionHeadingAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreAccordionHeading Block Type */
+export type CoreAccordionHeadingAttributes = BlockWithSupportsAnchor & {
+  __typename?: 'CoreAccordionHeadingAttributes';
+  /** The anchor field for the block. */
+  anchor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;iconPosition&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  iconPosition: Scalars['String']['output'];
+  /** The &quot;level&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  level?: Maybe<Scalars['Float']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;openByDefault&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  openByDefault: Scalars['Boolean']['output'];
+  /** The &quot;showIcon&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  showIcon: Scalars['Boolean']['output'];
+  /** The &quot;style&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;title&quot; field on the &quot;CoreAccordionHeadingAttributes&quot; block or block attributes */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreAccordionItem = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreAccordionItem';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreAccordionItem Block Type */
+  attributes?: Maybe<CoreAccordionItemAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreAccordionItem Block Type */
+export type CoreAccordionItemAttributes = {
+  __typename?: 'CoreAccordionItemAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;layout&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  layout?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;openByDefault&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  openByDefault: Scalars['Boolean']['output'];
+  /** The &quot;style&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreAccordionItemAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreAccordionPanel = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreAccordionPanel';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreAccordionPanel Block Type */
+  attributes?: Maybe<CoreAccordionPanelAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreAccordionPanel Block Type */
+export type CoreAccordionPanelAttributes = {
+  __typename?: 'CoreAccordionPanelAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;isSelected&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  isSelected: Scalars['Boolean']['output'];
+  /** The &quot;layout&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  layout?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;openByDefault&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  openByDefault: Scalars['Boolean']['output'];
+  /** The &quot;style&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreAccordionPanelAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
 
 /** A block used for editing the site */
 export type CoreArchives = EditorBlock & PageEditorBlock & PostEditorBlock & {
@@ -2213,8 +2492,6 @@ export type CoreColumn = BlockWithSupportsAnchor & EditorBlock & PageEditorBlock
 /** Attributes of the CoreColumn Block Type */
 export type CoreColumnAttributes = BlockWithSupportsAnchor & {
   __typename?: 'CoreColumnAttributes';
-  /** The &quot;allowedBlocks&quot; field on the &quot;CoreColumnAttributes&quot; block or block attributes */
-  allowedBlocks?: Maybe<Scalars['BlockAttributesArray']['output']>;
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
   /** The &quot;backgroundColor&quot; field on the &quot;CoreColumnAttributes&quot; block or block attributes */
@@ -2995,8 +3272,6 @@ export type CoreCoverAttributes = BlockWithSupportsAnchor & {
   __typename?: 'CoreCoverAttributes';
   /** The &quot;align&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
   align?: Maybe<Scalars['String']['output']>;
-  /** The &quot;allowedBlocks&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
-  allowedBlocks?: Maybe<Scalars['BlockAttributesArray']['output']>;
   /** The &quot;alt&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
   alt: Scalars['String']['output'];
   /** The anchor field for the block. */
@@ -3045,6 +3320,8 @@ export type CoreCoverAttributes = BlockWithSupportsAnchor & {
   minHeightUnit?: Maybe<Scalars['String']['output']>;
   /** The &quot;overlayColor&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
   overlayColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;poster&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
+  poster?: Maybe<Scalars['String']['output']>;
   /** The &quot;sizeSlug&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
   sizeSlug?: Maybe<Scalars['String']['output']>;
   /** The &quot;style&quot; field on the &quot;CoreCoverAttributes&quot; block or block attributes */
@@ -3093,8 +3370,6 @@ export type CoreDetailsAttributes = BlockWithSupportsAnchor & {
   __typename?: 'CoreDetailsAttributes';
   /** The &quot;align&quot; field on the &quot;CoreDetailsAttributes&quot; block or block attributes */
   align?: Maybe<Scalars['String']['output']>;
-  /** The &quot;allowedBlocks&quot; field on the &quot;CoreDetailsAttributes&quot; block or block attributes */
-  allowedBlocks?: Maybe<Scalars['BlockAttributesArray']['output']>;
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
   /** The &quot;backgroundColor&quot; field on the &quot;CoreDetailsAttributes&quot; block or block attributes */
@@ -3385,6 +3660,8 @@ export type CoreGalleryAttributes = BlockWithSupportsAnchor & {
   allowResize: Scalars['Boolean']['output'];
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;aspectRatio&quot; field on the &quot;CoreGalleryAttributes&quot; block or block attributes */
+  aspectRatio: Scalars['String']['output'];
   /** The &quot;backgroundColor&quot; field on the &quot;CoreGalleryAttributes&quot; block or block attributes */
   backgroundColor?: Maybe<Scalars['String']['output']>;
   /** The &quot;borderColor&quot; field on the &quot;CoreGalleryAttributes&quot; block or block attributes */
@@ -3476,8 +3753,6 @@ export type CoreGroupAttributes = BlockWithSupportsAnchor & {
   __typename?: 'CoreGroupAttributes';
   /** The &quot;align&quot; field on the &quot;CoreGroupAttributes&quot; block or block attributes */
   align?: Maybe<Scalars['String']['output']>;
-  /** The &quot;allowedBlocks&quot; field on the &quot;CoreGroupAttributes&quot; block or block attributes */
-  allowedBlocks?: Maybe<Scalars['BlockAttributesArray']['output']>;
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
   /** The &quot;ariaLabel&quot; field on the &quot;CoreGroupAttributes&quot; block or block attributes */
@@ -4129,6 +4404,48 @@ export type CoreLoginoutAttributes = {
 };
 
 /** A block used for editing the site */
+export type CoreMath = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreMath';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreMath Block Type */
+  attributes?: Maybe<CoreMathAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreMath Block Type */
+export type CoreMathAttributes = {
+  __typename?: 'CoreMathAttributes';
+  /** The &quot;className&quot; field on the &quot;CoreMathAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;latex&quot; field on the &quot;CoreMathAttributes&quot; block or block attributes */
+  latex?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreMathAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;mathML&quot; field on the &quot;CoreMathAttributes&quot; block or block attributes */
+  mathML?: Maybe<Scalars['String']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreMathAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+};
+
+/** A block used for editing the site */
 export type CoreMediaText = BlockWithSupportsAnchor & EditorBlock & PageEditorBlock & PostEditorBlock & {
   __typename?: 'CoreMediaText';
   /** The anchor field for the block. */
@@ -4162,8 +4479,6 @@ export type CoreMediaTextAttributes = BlockWithSupportsAnchor & {
   __typename?: 'CoreMediaTextAttributes';
   /** The &quot;align&quot; field on the &quot;CoreMediaTextAttributes&quot; block or block attributes */
   align: Scalars['String']['output'];
-  /** The &quot;allowedBlocks&quot; field on the &quot;CoreMediaTextAttributes&quot; block or block attributes */
-  allowedBlocks?: Maybe<Scalars['BlockAttributesArray']['output']>;
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
   /** The &quot;backgroundColor&quot; field on the &quot;CoreMediaTextAttributes&quot; block or block attributes */
@@ -4999,6 +5314,60 @@ export type CorePostCommentsAttributes = {
 };
 
 /** A block used for editing the site */
+export type CorePostCommentsCount = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CorePostCommentsCount';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CorePostCommentsCount Block Type */
+  attributes?: Maybe<CorePostCommentsCountAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CorePostCommentsCount Block Type */
+export type CorePostCommentsCountAttributes = {
+  __typename?: 'CorePostCommentsCountAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textAlign&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  textAlign?: Maybe<Scalars['String']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CorePostCommentsCountAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
 export type CorePostCommentsForm = EditorBlock & PageEditorBlock & PostEditorBlock & {
   __typename?: 'CorePostCommentsForm';
   /** The API version of the Gutenberg Block */
@@ -5048,6 +5417,56 @@ export type CorePostCommentsFormAttributes = {
   textAlign?: Maybe<Scalars['String']['output']>;
   /** The &quot;textColor&quot; field on the &quot;CorePostCommentsFormAttributes&quot; block or block attributes */
   textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CorePostCommentsLink = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CorePostCommentsLink';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CorePostCommentsLink Block Type */
+  attributes?: Maybe<CorePostCommentsLinkAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CorePostCommentsLink Block Type */
+export type CorePostCommentsLinkAttributes = {
+  __typename?: 'CorePostCommentsLinkAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textAlign&quot; field on the &quot;CorePostCommentsLinkAttributes&quot; block or block attributes */
+  textAlign?: Maybe<Scalars['String']['output']>;
 };
 
 /** A block used for editing the site */
@@ -5102,6 +5521,8 @@ export type CorePostContentAttributes = {
   metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
   /** The &quot;style&quot; field on the &quot;CorePostContentAttributes&quot; block or block attributes */
   style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;tagName&quot; field on the &quot;CorePostContentAttributes&quot; block or block attributes */
+  tagName: Scalars['String']['output'];
   /** The &quot;textColor&quot; field on the &quot;CorePostContentAttributes&quot; block or block attributes */
   textColor?: Maybe<Scalars['String']['output']>;
 };
@@ -5142,8 +5563,8 @@ export type CorePostDateAttributes = {
   borderColor?: Maybe<Scalars['String']['output']>;
   /** The &quot;className&quot; field on the &quot;CorePostDateAttributes&quot; block or block attributes */
   className?: Maybe<Scalars['String']['output']>;
-  /** The &quot;displayType&quot; field on the &quot;CorePostDateAttributes&quot; block or block attributes */
-  displayType: Scalars['String']['output'];
+  /** The &quot;datetime&quot; field on the &quot;CorePostDateAttributes&quot; block or block attributes */
+  datetime?: Maybe<Scalars['String']['output']>;
   /** The &quot;fontFamily&quot; field on the &quot;CorePostDateAttributes&quot; block or block attributes */
   fontFamily?: Maybe<Scalars['String']['output']>;
   /** The &quot;fontSize&quot; field on the &quot;CorePostDateAttributes&quot; block or block attributes */
@@ -5535,6 +5956,66 @@ export type CorePostTermsToTermNodeConnectionPageInfo = PageInfo & TermNodeConne
   hasPreviousPage: Scalars['Boolean']['output'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CorePostTimeToRead = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CorePostTimeToRead';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CorePostTimeToRead Block Type */
+  attributes?: Maybe<CorePostTimeToReadAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CorePostTimeToRead Block Type */
+export type CorePostTimeToReadAttributes = {
+  __typename?: 'CorePostTimeToReadAttributes';
+  /** The &quot;averageReadingSpeed&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  averageReadingSpeed: Scalars['Float']['output'];
+  /** The &quot;backgroundColor&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;displayAsRange&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  displayAsRange: Scalars['Boolean']['output'];
+  /** The &quot;displayMode&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  displayMode: Scalars['String']['output'];
+  /** The &quot;fontFamily&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textAlign&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  textAlign?: Maybe<Scalars['String']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CorePostTimeToReadAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
 };
 
 /** A block used for editing the site */
@@ -6343,6 +6824,10 @@ export type CoreRssAttributes = {
   lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
   /** The &quot;metadata&quot; field on the &quot;CoreRssAttributes&quot; block or block attributes */
   metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;openInNewTab&quot; field on the &quot;CoreRssAttributes&quot; block or block attributes */
+  openInNewTab: Scalars['Boolean']['output'];
+  /** The &quot;rel&quot; field on the &quot;CoreRssAttributes&quot; block or block attributes */
+  rel?: Maybe<Scalars['String']['output']>;
   /** The &quot;style&quot; field on the &quot;CoreRssAttributes&quot; block or block attributes */
   style?: Maybe<Scalars['BlockAttributesObject']['output']>;
   /** The &quot;textColor&quot; field on the &quot;CoreRssAttributes&quot; block or block attributes */
@@ -7102,6 +7587,60 @@ export type CoreTemplatePartAttributes = {
 };
 
 /** A block used for editing the site */
+export type CoreTermCount = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreTermCount';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreTermCount Block Type */
+  attributes?: Maybe<CoreTermCountAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreTermCount Block Type */
+export type CoreTermCountAttributes = {
+  __typename?: 'CoreTermCountAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;bracketType&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  bracketType: Scalars['String']['output'];
+  /** The &quot;className&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreTermCountAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
 export type CoreTermDescription = EditorBlock & PageEditorBlock & PostEditorBlock & {
   __typename?: 'CoreTermDescription';
   /** The API version of the Gutenberg Block */
@@ -7153,6 +7692,168 @@ export type CoreTermDescriptionAttributes = {
   textAlign?: Maybe<Scalars['String']['output']>;
   /** The &quot;textColor&quot; field on the &quot;CoreTermDescriptionAttributes&quot; block or block attributes */
   textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreTermName = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreTermName';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreTermName Block Type */
+  attributes?: Maybe<CoreTermNameAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreTermName Block Type */
+export type CoreTermNameAttributes = {
+  __typename?: 'CoreTermNameAttributes';
+  /** The &quot;align&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  align?: Maybe<Scalars['String']['output']>;
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;isLink&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  isLink: Scalars['Boolean']['output'];
+  /** The &quot;level&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  level: Scalars['Float']['output'];
+  /** The &quot;lock&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textAlign&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  textAlign?: Maybe<Scalars['String']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreTermNameAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreTermTemplate = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreTermTemplate';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreTermTemplate Block Type */
+  attributes?: Maybe<CoreTermTemplateAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreTermTemplate Block Type */
+export type CoreTermTemplateAttributes = {
+  __typename?: 'CoreTermTemplateAttributes';
+  /** The &quot;align&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  align?: Maybe<Scalars['String']['output']>;
+  /** The &quot;backgroundColor&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;borderColor&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  borderColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontFamily&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  fontFamily?: Maybe<Scalars['String']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;layout&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  layout?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;CoreTermTemplateAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type CoreTermsQuery = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'CoreTermsQuery';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the CoreTermsQuery Block Type */
+  attributes?: Maybe<CoreTermsQueryAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the CoreTermsQuery Block Type */
+export type CoreTermsQueryAttributes = {
+  __typename?: 'CoreTermsQueryAttributes';
+  /** The &quot;align&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  align?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;layout&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  layout?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;lock&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;tagName&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  tagName: Scalars['String']['output'];
+  /** The &quot;termQuery&quot; field on the &quot;CoreTermsQueryAttributes&quot; block or block attributes */
+  termQuery: Scalars['BlockAttributesObject']['output'];
 };
 
 /** A block used for editing the site */
@@ -8273,6 +8974,48 @@ export type EnqueuedStylesheetConnectionPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** A block used for editing the site */
+export type FifuImage = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'FifuImage';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the FifuImage Block Type */
+  attributes?: Maybe<FifuImageAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the FifuImage Block Type */
+export type FifuImageAttributes = {
+  __typename?: 'FifuImageAttributes';
+  /** The &quot;altText&quot; field on the &quot;FifuImageAttributes&quot; block or block attributes */
+  altText?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;FifuImageAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;imageUrl&quot; field on the &quot;FifuImageAttributes&quot; block or block attributes */
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;FifuImageAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;FifuImageAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+};
+
 /** The general setting type */
 export type GeneralSettings = {
   __typename?: 'GeneralSettings';
@@ -8328,7 +9071,7 @@ export enum GlobalStylesheetTypesEnum {
 }
 
 /** Saved GraphQL Documents */
-export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWithContentEditor & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWithContentEditor & NodeWithRankMathSeo & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
   __typename?: 'GraphqlDocument';
   /** Alias names for saved GraphQL query documents */
   alias?: Maybe<Array<Scalars['String']['output']>>;
@@ -8418,6 +9161,8 @@ export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWith
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathGraphqlDocumentObjectSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -8543,7 +9288,7 @@ export type GraphqlDocumentGraphqlDocumentGroupsNodeInput = {
 };
 
 /** Tag the saved query document with other queries as a &quot;group&quot;. */
-export type GraphqlDocumentGroup = DatabaseIdentifier & Node & TermNode & UniformResourceIdentifiable & {
+export type GraphqlDocumentGroup = DatabaseIdentifier & Node & NodeWithRankMathSeo & TermNode & UniformResourceIdentifiable & {
   __typename?: 'GraphqlDocumentGroup';
   /** @deprecated Deprecated in favor of using Next.js pages */
   conditionalTags?: Maybe<ConditionalTags>;
@@ -8584,6 +9329,8 @@ export type GraphqlDocumentGroup = DatabaseIdentifier & Node & TermNode & Unifor
   link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
   name?: Maybe<Scalars['String']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathGraphqlDocumentGroupTermSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the GraphqlDocumentGroup type and the Taxonomy type */
@@ -9129,6 +9876,8 @@ export type HierarchicalContentNode = {
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathContentNodeSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -9381,6 +10130,8 @@ export type HierarchicalTermNode = {
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The name of the taxonomy that the object is associated with */
@@ -9555,7 +10306,7 @@ export type MediaDetailsSizesArgs = {
 };
 
 /** Represents uploaded media, including images, videos, documents, and audio files. */
-export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & Node & NodeWithAuthor & NodeWithComments & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & Node & NodeWithAuthor & NodeWithComments & NodeWithRankMathSeo & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
   __typename?: 'MediaItem';
   /** Alternative text to display when resource is not displayed */
   altText?: Maybe<Scalars['String']['output']>;
@@ -9660,6 +10411,8 @@ export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathMediaItemObjectSeo>;
   /** The sizes attribute value for an image. */
   sizes?: Maybe<Scalars['String']['output']>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
@@ -11383,6 +12136,14 @@ export type NodeWithPostEditorBlocksEditorBlocksArgs = {
   flat?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** A node with RankMath SEO data. */
+export type NodeWithRankMathSeo = {
+  /** The globally unique ID for the object */
+  id: Scalars['ID']['output'];
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathSeo>;
+};
+
 /** Content that maintains a history of changes. Provides access to previous versions of the content and the ability to restore earlier revisions. */
 export type NodeWithRevisions = {
   /** The globally unique ID for the object */
@@ -11453,7 +12214,7 @@ export enum OrderEnum {
 }
 
 /** A standalone content entry generally used for static, non-chronological content such as &quot;About Us&quot; or &quot;Contact&quot; pages. */
-export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithEditorBlocks & NodeWithFeaturedImage & NodeWithPageAttributes & NodeWithPageEditorBlocks & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfNcPageMeta & {
+export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithEditorBlocks & NodeWithFeaturedImage & NodeWithPageAttributes & NodeWithPageEditorBlocks & NodeWithRankMathSeo & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfNcPageMeta & {
   __typename?: 'Page';
   /** Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
   ancestors?: Maybe<HierarchicalContentNodeToContentNodeAncestorsConnection>;
@@ -11562,6 +12323,8 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
   /** Connection between the Page type and the page type */
   revisions?: Maybe<PageToRevisionConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathPageObjectSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -11725,6 +12488,43 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean']['output'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO meta settings for Pages. */
+export type PageMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'PageMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** List of custom fields name to include in the Page analysis */
+  analyzedFields?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Default article type when creating a new Pages. */
+  articleType?: Maybe<RankMathArticleTypeEnum>;
+  /** Default description for single Pages pages. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether to list bulk editing columns to the post listing screen. */
+  hasBulkEditing?: Maybe<RankMathBulkEditingTypeEnum>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether Link Suggestions meta box and the Pillar Content featured are enabled for this post type. */
+  hasLinkSuggestions?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** Whether to use the Focus Keyword as the default text for the links instead of the post titles. */
+  shouldUseFocusKeyword?: Maybe<Scalars['Boolean']['output']>;
+  /** Default rich snippet headline. */
+  snippetDescription?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet headline. */
+  snippetHeadline?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet select when creating a new Pages. */
+  snippetType?: Maybe<RankMathSnippetTypeEnum>;
+  /** The default image to display when sharing this post type on social media */
+  socialImage?: Maybe<MediaItem>;
+  /** Default title tag for single Pages pages. */
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Page type and the Comment type */
@@ -11982,7 +12782,7 @@ export enum PluginStatusEnum {
 }
 
 /** A chronological content entry typically used for blog posts, news articles, or similar date-based content. */
-export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithEditorBlocks & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithPostEditorBlocks & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & Previewable & UniformResourceIdentifiable & WithAcfNcPostMetaData & WithAcfNcmazAudioUrl & WithAcfNcmazGalleryImgs & WithAcfNcmazVideoUrl & {
+export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithEditorBlocks & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithPostEditorBlocks & NodeWithRankMathSeo & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & Previewable & UniformResourceIdentifiable & WithAcfNcPostMetaData & WithAcfNcmazAudioUrl & WithAcfNcmazGalleryImgs & WithAcfNcmazVideoUrl & {
   __typename?: 'Post';
   /**
    * The ancestors of the content node.
@@ -12105,6 +12905,8 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
   /** Connection between the Post type and the post type */
   revisions?: Maybe<PostToRevisionConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathPostObjectSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -12310,7 +13112,7 @@ export type PostEditorBlock = {
 };
 
 /** A standardized classification system for content presentation styles. These formats can be used to display content differently based on type, such as &quot;standard&quot;, &quot;gallery&quot;, &quot;video&quot;, etc. */
-export type PostFormat = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
+export type PostFormat = DatabaseIdentifier & MenuItemLinkable & Node & NodeWithRankMathSeo & TermNode & UniformResourceIdentifiable & {
   __typename?: 'PostFormat';
   /** @deprecated Deprecated in favor of using Next.js pages */
   conditionalTags?: Maybe<ConditionalTags>;
@@ -12351,6 +13153,8 @@ export type PostFormat = DatabaseIdentifier & MenuItemLinkable & Node & TermNode
   postFormatId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the PostFormat type and the post type */
   posts?: Maybe<PostFormatToPostConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathPostFormatTermSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the PostFormat type and the Taxonomy type */
@@ -12447,6 +13251,23 @@ export enum PostFormatIdType {
   /** The URI for the node */
   Uri = 'URI'
 }
+
+/** The RankMath SEO meta settings for Formats. */
+export type PostFormatMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'PostFormatMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
 
 /** Connection between the PostFormat type and the ContentNode type */
 export type PostFormatToContentNodeConnection = Connection & ContentNodeConnection & {
@@ -12640,6 +13461,43 @@ export enum PostIdType {
   /** Identify a resource by the URI. */
   Uri = 'URI'
 }
+
+/** The RankMath SEO meta settings for Posts. */
+export type PostMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'PostMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** List of custom fields name to include in the Page analysis */
+  analyzedFields?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Default article type when creating a new Posts. */
+  articleType?: Maybe<RankMathArticleTypeEnum>;
+  /** Default description for single Posts pages. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether to list bulk editing columns to the post listing screen. */
+  hasBulkEditing?: Maybe<RankMathBulkEditingTypeEnum>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether Link Suggestions meta box and the Pillar Content featured are enabled for this post type. */
+  hasLinkSuggestions?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** Whether to use the Focus Keyword as the default text for the links instead of the post titles. */
+  shouldUseFocusKeyword?: Maybe<Scalars['Boolean']['output']>;
+  /** Default rich snippet headline. */
+  snippetDescription?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet headline. */
+  snippetHeadline?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet select when creating a new Posts. */
+  snippetType?: Maybe<RankMathSnippetTypeEnum>;
+  /** The default image to display when sharing this post type on social media */
+  socialImage?: Maybe<MediaItem>;
+  /** Default title tag for single Posts pages. */
+  title?: Maybe<Scalars['String']['output']>;
+};
 
 /** Content field rendering options. Determines whether content fields are returned as raw data or with applied formatting and transformations. Default is RENDERED. */
 export enum PostObjectFieldFormatEnum {
@@ -13394,6 +14252,1957 @@ export type Previewable = {
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
 };
 
+/** The config for an advanced robots meta values. */
+export type RankMathAdvancedRobotsMeta = {
+  __typename?: 'RankMathAdvancedRobotsMeta';
+  /** Whether to specify a maximum size of image preview to be shown for images on the page. */
+  hasImagePreview?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to specify a maximum text length of a snippet of your page */
+  hasSnippet?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to specify a maximum duration of an animated video preview. */
+  hasVideoPreview?: Maybe<Scalars['Boolean']['output']>;
+  /** The maximum size of image preview to be shown for images. */
+  imagePreviewSize?: Maybe<RankMathImagePreviewSize>;
+  /** The maximum text length (in characters) of the snippet. -1 for no limit. */
+  snippetLength?: Maybe<Scalars['Int']['output']>;
+  /** The maximum duration (seconds characters) of the snippet. -1 for no limit. */
+  videoDuration?: Maybe<Scalars['Int']['output']>;
+};
+
+/** The SEO Article Type */
+export enum RankMathArticleTypeEnum {
+  /** Article. */
+  Article = 'ARTICLE',
+  /** Blog post. */
+  BlogPost = 'BLOG_POST',
+  /** News article. */
+  NewsArticle = 'NEWS_ARTICLE'
+}
+
+/** The RankMath SEO Author Archive meta settings. */
+export type RankMathAuthorArchiveMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'RankMathAuthorArchiveMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Change the `/author/` part in author archive URLs. */
+  baseSlug?: Maybe<Scalars['String']['output']>;
+  /** Whether author archives are enabled. */
+  hasArchives?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
+
+/** The RankMath SEO breadcrumbs settings. */
+export type RankMathBreadcrumbsConfig = {
+  __typename?: 'RankMathBreadcrumbsConfig';
+  /** Format the label used for archive pages. */
+  archiveFormat?: Maybe<Scalars['String']['output']>;
+  /** Whether to show all ancestor categories, if a category is a child category. */
+  hasAncestorCategories?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to display the homepage breadcrumb in trail. */
+  hasHome?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the post title is visible in the breadcrumbs. */
+  hasPostTitle?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the taxonomy name is visible in the breadcrumbs. */
+  hasTaxonomyName?: Maybe<Scalars['Boolean']['output']>;
+  /** Label used for homepage link (first item) in breadcrumbs. */
+  homeLabel?: Maybe<Scalars['String']['output']>;
+  /** Link to use for homepage (first item) in breadcrumbs. */
+  homeUrl?: Maybe<Scalars['String']['output']>;
+  /** Label used for 404 error item in breadcrumbs. */
+  notFoundLabel?: Maybe<Scalars['String']['output']>;
+  /** Prefix for the breadcrumb path. */
+  prefix?: Maybe<Scalars['String']['output']>;
+  /** Format the label used for search results pages. */
+  searchFormat?: Maybe<Scalars['String']['output']>;
+  /** Separator character or string that appears between breadcrumb items. */
+  separator?: Maybe<Scalars['String']['output']>;
+};
+
+/** The setting chosen for the RankMath Bulk Editing feature */
+export enum RankMathBulkEditingTypeEnum {
+  /** Disabled. */
+  Disabled = 'DISABLED',
+  /** Enabled. */
+  Enabled = 'ENABLED',
+  /** Read only. */
+  ReadOnly = 'READ_ONLY'
+}
+
+/** The category term object SEO data */
+export type RankMathCategoryTermSeo = RankMathSeo & {
+  __typename?: 'RankMathCategoryTermSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The seo data for Post Objects */
+export type RankMathContentNodeSeo = {
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Post Type settings. */
+export type RankMathContentTypeMetaSettings = {
+  __typename?: 'RankMathContentTypeMetaSettings';
+  /** The RankMath SEO meta settings for Pages. */
+  page?: Maybe<PageMetaSettings>;
+  /** The RankMath SEO meta settings for Posts. */
+  post?: Maybe<PostMetaSettings>;
+  /** The RankMath SEO meta settings for User Reaction Posts. */
+  userReactionPost?: Maybe<UserReactionPostMetaSettings>;
+};
+
+/** The RankMath SEO DateArchive meta settings. */
+export type RankMathDateArchiveMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'RankMathDateArchiveMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether archives are enabled. */
+  hasArchives?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
+
+/** A block used for editing the site */
+export type RankMathFaqBlock = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'RankMathFaqBlock';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the RankMathFaqBlock Block Type */
+  attributes?: Maybe<RankMathFaqBlockAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the RankMathFaqBlock Block Type */
+export type RankMathFaqBlockAttributes = {
+  __typename?: 'RankMathFaqBlockAttributes';
+  /** The &quot;className&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;contentCssClasses&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  contentCssClasses: Scalars['String']['output'];
+  /** The &quot;listCssClasses&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  listCssClasses: Scalars['String']['output'];
+  /** The &quot;listStyle&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  listStyle: Scalars['String']['output'];
+  /** The &quot;lock&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;questions&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  questions: Array<Maybe<Scalars['BlockAttributesObject']['output']>>;
+  /** The &quot;sizeSlug&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  sizeSlug: Scalars['String']['output'];
+  /** The &quot;textAlign&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  textAlign: Scalars['String']['output'];
+  /** The &quot;titleCssClasses&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  titleCssClasses: Scalars['String']['output'];
+  /** The &quot;titleWrapper&quot; field on the &quot;RankMathFaqBlockAttributes&quot; block or block attributes */
+  titleWrapper: Scalars['String']['output'];
+};
+
+/** RankMath Frontend SEO Score settings. */
+export type RankMathFrontendSeoScore = {
+  __typename?: 'RankMathFrontendSeoScore';
+  /** The list of post types which should display the calculated SEO score. */
+  enabledPostTypes?: Maybe<Array<Maybe<ContentTypeEnum>>>;
+  /** Whether to insert a backlink to RankMath.com to show your support, if you are showing the SEO scores on the front end. */
+  hasRankMathBacklink?: Maybe<Scalars['Boolean']['output']>;
+  /** Where the SEO score badges should be displayed automatically, or if the `[rank_math_seo_score]` shortcode is used instead. */
+  position?: Maybe<RankMathSeoScorePositionEnum>;
+  /** The list of post types which should display the calculated SEO score. */
+  template?: Maybe<RankMathSeoScoreTemplateTypeEnum>;
+};
+
+/** The RankMath SEO general site settings */
+export type RankMathGeneral = {
+  __typename?: 'RankMathGeneral';
+  /** Breadcrumbs settings. */
+  breadcrumbs?: Maybe<RankMathBreadcrumbsConfig>;
+  /** Frontend SEO score settings. */
+  frontendSeoScore?: Maybe<RankMathFrontendSeoScore>;
+  /** Whether RankMath breadcrumbs are enabled. */
+  hasBreadcrumbs?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to display the calculated SEO Score as a badge on the frontend. It can be disabled for specific posts in the post editor. */
+  hasFrontendSeoScore?: Maybe<Scalars['Boolean']['output']>;
+  /** Link settings. */
+  links?: Maybe<RankMathLinks>;
+  /** RankMath SEO redirection settings */
+  redirections?: Maybe<RankMathRedirectionSettings>;
+  /** The content to add after each post in your site feeds */
+  rssAfterContent?: Maybe<Scalars['String']['output']>;
+  /** The content to add before each post in your site feeds */
+  rssBeforeContent?: Maybe<Scalars['String']['output']>;
+  /** Webmaster Tools settings. */
+  webmaster?: Maybe<RankMathWebmaster>;
+};
+
+/** The RankMath SEO Global settings. */
+export type RankMathGlobalMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'RankMathGlobalMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** When a featured image or an OpenGraph Image is not set for individual posts/pages/CPTs, this image will be used as a fallback thumbnail when your post is shared on Facebook. */
+  openGraphImage?: Maybe<MediaItem>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** The separator character used in titles. */
+  separator?: Maybe<Scalars['String']['output']>;
+  /** Whether to automatically capitalize the first character of each word in the titles. */
+  shouldCapitalizeTitles?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to index enpty Taxonomy archives */
+  shouldIndexEmptyTaxonomies?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether titles for page, post, category, search, and archive pages can be rewritten. Only visible in themes without title-tag support */
+  shouldRewriteTitle?: Maybe<Scalars['Boolean']['output']>;
+  /** Card type selected when creating a new post. This will also be applied for posts without a card type selected. */
+  twitterCardType?: Maybe<RankMathTwitterCardTypeEnum>;
+};
+
+/** The graphql_document_group term object SEO data */
+export type RankMathGraphqlDocumentGroupTermSeo = RankMathSeo & {
+  __typename?: 'RankMathGraphqlDocumentGroupTermSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The graphql_document post object SEO data */
+export type RankMathGraphqlDocumentObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathGraphqlDocumentObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The graphql_document post type object SEO data */
+export type RankMathGraphqlDocumentTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathGraphqlDocumentTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Homepage settings. Only used when the Settings &gt; Reading &gt; Your homepage displays is set to `Your latest posts`. */
+export type RankMathHomepageMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'RankMathHomepageMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** Description when shared on Facebook, Twitter and other social networks. */
+  socialDescription?: Maybe<Scalars['String']['output']>;
+  /** Image displayed when your homepage is shared on Facebook and other social networks. */
+  socialImage?: Maybe<MediaItem>;
+  /** Title when shared on Facebook, Twitter and other social networks. */
+  socialTitle?: Maybe<Scalars['String']['output']>;
+  /** Title tag. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** A block used for editing the site */
+export type RankMathHowtoBlock = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'RankMathHowtoBlock';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the RankMathHowtoBlock Block Type */
+  attributes?: Maybe<RankMathHowtoBlockAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the RankMathHowtoBlock Block Type */
+export type RankMathHowtoBlockAttributes = {
+  __typename?: 'RankMathHowtoBlockAttributes';
+  /** The &quot;className&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;contentCssClasses&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  contentCssClasses: Scalars['String']['output'];
+  /** The &quot;days&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  days: Scalars['String']['output'];
+  /** The &quot;description&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  description: Scalars['String']['output'];
+  /** The &quot;hasDuration&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  hasDuration: Scalars['Boolean']['output'];
+  /** The &quot;hours&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  hours: Scalars['String']['output'];
+  /** The &quot;imageID&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  imageID?: Maybe<Scalars['Int']['output']>;
+  /** The &quot;listCssClasses&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  listCssClasses: Scalars['String']['output'];
+  /** The &quot;listStyle&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  listStyle: Scalars['String']['output'];
+  /** The &quot;lock&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;mainSizeSlug&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  mainSizeSlug: Scalars['String']['output'];
+  /** The &quot;metadata&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;minutes&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  minutes: Scalars['String']['output'];
+  /** The &quot;sizeSlug&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  sizeSlug: Scalars['String']['output'];
+  /** The &quot;steps&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  steps: Array<Maybe<Scalars['BlockAttributesObject']['output']>>;
+  /** The &quot;textAlign&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  textAlign: Scalars['String']['output'];
+  /** The &quot;timeLabel&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  timeLabel: Scalars['String']['output'];
+  /** The &quot;titleCssClasses&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  titleCssClasses: Scalars['String']['output'];
+  /** The &quot;titleWrapper&quot; field on the &quot;RankMathHowtoBlockAttributes&quot; block or block attributes */
+  titleWrapper: Scalars['String']['output'];
+};
+
+/** Robots meta image preview size. */
+export enum RankMathImagePreviewSize {
+  /** Large */
+  Large = 'LARGE',
+  /** Prevents search engines from following links on the pages */
+  None = 'NONE',
+  /** Standard. */
+  Standard = 'STANDARD'
+}
+
+/** The JSON+LD information. */
+export type RankMathJsonLd = {
+  __typename?: 'RankMathJsonLd';
+  /** The raw JSON+LD output */
+  raw?: Maybe<Scalars['String']['output']>;
+};
+
+/** The knowledge graph type */
+export enum RankMathKnowledgeGraphTypeEnum {
+  /** Company. */
+  Company = 'COMPANY',
+  /** Person. */
+  Person = 'PERSON'
+}
+
+/** The RankMath SEO links settings. */
+export type RankMathLinks = {
+  __typename?: 'RankMathLinks';
+  /** The default redirection url for attachments without a parent post */
+  defaultAttachmentRedirectUrl?: Maybe<Scalars['String']['output']>;
+  /** Whether  /category/ should be included in category archive URLs. */
+  hasCategoryBase?: Maybe<Scalars['Boolean']['output']>;
+  /** Only add `nofollow` attributes to links with the following target domains. If null, `nofollow` will be applied to &lt;em&gt;all&lt;/em&gt; external domains. */
+  nofollowDomains?: Maybe<Scalars['String']['output']>;
+  /** `nofollow` attributes will &lt;em&gt;not&lt;/em&gt; be added to links with the following target domains. */
+  nofollowExcludedDomains?: Maybe<Scalars['String']['output']>;
+  /** Whether to automatically add the `rel=&quot;nofollow&quot; attribute to links pointing to external image files. */
+  shouldNofollowImageLinks?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to automatically add the `rel=&quot;nofollow&quot; attribute to external links appearing in your posts, pages, and other post types. */
+  shouldNofollowLinks?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to automatically add `target=&quot;_blank&quot;` attribute for external links appearing in your posts, pages, and other post types to make them open in a new browser tab or window. */
+  shouldOpenInNewWindow?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to redirect all attachment page URLs to the post they appear in. */
+  shouldRedirectAttachments?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** The RankMath SEO Local settings. */
+export type RankMathLocalMetaSettings = {
+  __typename?: 'RankMathLocalMetaSettings';
+  /** The logo to be used in the Google&#039;s Knowledge Graph. */
+  logo?: Maybe<MediaItem>;
+  /** Your name or company name to be used in Google&#039;s Knowledge Graph */
+  name?: Maybe<Scalars['String']['output']>;
+  /** Whether the site represents a person or an organization. */
+  type?: Maybe<RankMathKnowledgeGraphTypeEnum>;
+  /** URL of the item. */
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+/** The attachment post object SEO data */
+export type RankMathMediaItemObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathMediaItemObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The attachment post type object SEO data */
+export type RankMathMediaItemTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathMediaItemTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO titles and meta site settings */
+export type RankMathMeta = {
+  __typename?: 'RankMathMeta';
+  /** Author Archive settings. */
+  authorArchives?: Maybe<RankMathAuthorArchiveMetaSettings>;
+  /** Content type settings. */
+  contentTypes?: Maybe<RankMathContentTypeMetaSettings>;
+  /** Date Archive settings. */
+  dateArchives?: Maybe<RankMathDateArchiveMetaSettings>;
+  /** Global settings. */
+  global?: Maybe<RankMathGlobalMetaSettings>;
+  /** Homepage settings. Only used is the Homepage is set to display a list of posts. */
+  homepage?: Maybe<RankMathHomepageMetaSettings>;
+  /** Local settings. */
+  local?: Maybe<RankMathLocalMetaSettings>;
+  /** Title tag on 404 Not Found error page. */
+  notFoundTitle?: Maybe<Scalars['String']['output']>;
+  /** Title tag on search results page. */
+  searchTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether to index paginated archive pages from getting. */
+  shouldIndexArchiveSubpages?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to index /page/2 and further of any archive. */
+  shouldIndexPaginatedPages?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to index password protected pages and posts. */
+  shouldIndexPasswordProtected?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to index search result pages. */
+  shouldIndexSearch?: Maybe<Scalars['Boolean']['output']>;
+  /** Social settings. */
+  social?: Maybe<RankMathSocialMetaSettings>;
+  /** Taxonomy settings. */
+  taxonomies?: Maybe<RankMathTaxonomyMetaSettings>;
+};
+
+/** Meta Settings with archive fields. */
+export type RankMathMetaSettingWithArchive = {
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+};
+
+/** Meta settings with robots fields. */
+export type RankMathMetaSettingWithRobots = {
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
+
+/** The OpenGraph Article meta. */
+export type RankMathOpenGraphArticle = {
+  __typename?: 'RankMathOpenGraphArticle';
+  /** The author. */
+  author?: Maybe<Scalars['String']['output']>;
+  /** The date modified. */
+  modifiedTime?: Maybe<Scalars['String']['output']>;
+  /** The date published. */
+  publishedTime?: Maybe<Scalars['String']['output']>;
+  /** The publisher */
+  publisher?: Maybe<Scalars['String']['output']>;
+  /** The article category. */
+  section?: Maybe<Scalars['String']['output']>;
+  /** The article tags. */
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+/** The OpenGraph Facebook meta. */
+export type RankMathOpenGraphFacebook = {
+  __typename?: 'RankMathOpenGraphFacebook';
+  /** The Facebook admins associated with this resource */
+  admins?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The Facebook app ID associated with this resource */
+  appId?: Maybe<Scalars['ID']['output']>;
+};
+
+/** The OpenGraph Image meta. */
+export type RankMathOpenGraphImage = {
+  __typename?: 'RankMathOpenGraphImage';
+  /** Height of image in pixels.  */
+  height?: Maybe<Scalars['Float']['output']>;
+  /** The https:// URL for the image. */
+  secureUrl?: Maybe<Scalars['String']['output']>;
+  /** MIME type of the image.  */
+  type?: Maybe<Scalars['String']['output']>;
+  /** URL for the image. */
+  url?: Maybe<Scalars['String']['output']>;
+  /** Width of image in pixels. */
+  width?: Maybe<Scalars['Float']['output']>;
+};
+
+/** The Facebook OpenGraph Locale. */
+export enum RankMathOpenGraphLocaleEnum {
+  /** af_ZA. */
+  AfZa = 'AF_ZA',
+  /** ak_GH. */
+  AkGh = 'AK_GH',
+  /** am_ET. */
+  AmEt = 'AM_ET',
+  /** ar_AR. */
+  ArAr = 'AR_AR',
+  /** as_IN. */
+  AsIn = 'AS_IN',
+  /** ay_BO. */
+  AyBo = 'AY_BO',
+  /** az_AZ. */
+  AzAz = 'AZ_AZ',
+  /** be_BY. */
+  BeBy = 'BE_BY',
+  /** bg_BG. */
+  BgBg = 'BG_BG',
+  /** bn_IN. */
+  BnIn = 'BN_IN',
+  /** bp_IN. */
+  BpIn = 'BP_IN',
+  /** br_FR. */
+  BrFr = 'BR_FR',
+  /** bs_BA. */
+  BsBa = 'BS_BA',
+  /** ca_ES. */
+  CaEs = 'CA_ES',
+  /** cb_IQ. */
+  CbIq = 'CB_IQ',
+  /** ck_US. */
+  CkUs = 'CK_US',
+  /** co_FR. */
+  CoFr = 'CO_FR',
+  /** cs_CZ. */
+  CsCz = 'CS_CZ',
+  /** cx_PH. */
+  CxPh = 'CX_PH',
+  /** cy_GB. */
+  CyGb = 'CY_GB',
+  /** da_DK. */
+  DaDk = 'DA_DK',
+  /** de_DE. */
+  DeDe = 'DE_DE',
+  /** el_GR. */
+  ElGr = 'EL_GR',
+  /** em_ZM. */
+  EmZm = 'EM_ZM',
+  /** en_GB. */
+  EnGb = 'EN_GB',
+  /** en_PI. */
+  EnPi = 'EN_PI',
+  /** en_UD. */
+  EnUd = 'EN_UD',
+  /** en_US. */
+  EnUs = 'EN_US',
+  /** eo_EO. */
+  EoEo = 'EO_EO',
+  /** es_ES. */
+  EsEs = 'ES_ES',
+  /** es_LA. */
+  EsLa = 'ES_LA',
+  /** es_MX. */
+  EsMx = 'ES_MX',
+  /** et_EE. */
+  EtEe = 'ET_EE',
+  /** eu_ES. */
+  EuEs = 'EU_ES',
+  /** fa_IR. */
+  FaIr = 'FA_IR',
+  /** fb_LT. */
+  FbLt = 'FB_LT',
+  /** ff_NG. */
+  FfNg = 'FF_NG',
+  /** fi_FI. */
+  FiFi = 'FI_FI',
+  /** fo_FO. */
+  FoFo = 'FO_FO',
+  /** fr_CA. */
+  FrCa = 'FR_CA',
+  /** fr_FR. */
+  FrFr = 'FR_FR',
+  /** fy_NL. */
+  FyNl = 'FY_NL',
+  /** ga_IE. */
+  GaIe = 'GA_IE',
+  /** gl_ES. */
+  GlEs = 'GL_ES',
+  /** gn_PY. */
+  GnPy = 'GN_PY',
+  /** gu_IN. */
+  GuIn = 'GU_IN',
+  /** gx_GR. */
+  GxGr = 'GX_GR',
+  /** ha_NG. */
+  HaNg = 'HA_NG',
+  /** he_IL. */
+  HeIl = 'HE_IL',
+  /** hi_IN. */
+  HiIn = 'HI_IN',
+  /** hr_HR. */
+  HrHr = 'HR_HR',
+  /** ht_HT. */
+  HtHt = 'HT_HT',
+  /** hu_HU. */
+  HuHu = 'HU_HU',
+  /** hy_AM. */
+  HyAm = 'HY_AM',
+  /** id_ID. */
+  IdId = 'ID_ID',
+  /** ig_NG. */
+  IgNg = 'IG_NG',
+  /** ik_US. */
+  IkUs = 'IK_US',
+  /** is_IS. */
+  IsIs = 'IS_IS',
+  /** it_IT. */
+  ItIt = 'IT_IT',
+  /** iu_CA. */
+  IuCa = 'IU_CA',
+  /** ja_JP. */
+  JaJp = 'JA_JP',
+  /** ja_KS. */
+  JaKs = 'JA_KS',
+  /** jv_ID. */
+  JvId = 'JV_ID',
+  /** ka_GE. */
+  KaGe = 'KA_GE',
+  /** kk_KZ. */
+  KkKz = 'KK_KZ',
+  /** km_KH. */
+  KmKh = 'KM_KH',
+  /** kn_IN. */
+  KnIn = 'KN_IN',
+  /** ko_KR. */
+  KoKr = 'KO_KR',
+  /** ks_IN. */
+  KsIn = 'KS_IN',
+  /** ku_TR. */
+  KuTr = 'KU_TR',
+  /** ky_KG. */
+  KyKg = 'KY_KG',
+  /** la_VA. */
+  LaVa = 'LA_VA',
+  /** lg_UG. */
+  LgUg = 'LG_UG',
+  /** li_NL. */
+  LiNl = 'LI_NL',
+  /** ln_CD. */
+  LnCd = 'LN_CD',
+  /** lo_LA. */
+  LoLa = 'LO_LA',
+  /** lt_LT. */
+  LtLt = 'LT_LT',
+  /** lv_LV. */
+  LvLv = 'LV_LV',
+  /** mg_MG. */
+  MgMg = 'MG_MG',
+  /** mi_NZ. */
+  MiNz = 'MI_NZ',
+  /** mk_MK. */
+  MkMk = 'MK_MK',
+  /** ml_IN. */
+  MlIn = 'ML_IN',
+  /** mn_MN. */
+  MnMn = 'MN_MN',
+  /** mr_IN. */
+  MrIn = 'MR_IN',
+  /** ms_MY. */
+  MsMy = 'MS_MY',
+  /** mt_MT. */
+  MtMt = 'MT_MT',
+  /** my_MM. */
+  MyMm = 'MY_MM',
+  /** nb_NO. */
+  NbNo = 'NB_NO',
+  /** nd_ZW. */
+  NdZw = 'ND_ZW',
+  /** ne_NP. */
+  NeNp = 'NE_NP',
+  /** nl_BE. */
+  NlBe = 'NL_BE',
+  /** nl_NL. */
+  NlNl = 'NL_NL',
+  /** nn_NO. */
+  NnNo = 'NN_NO',
+  /** nr_ZA. */
+  NrZa = 'NR_ZA',
+  /** ns_ZA. */
+  NsZa = 'NS_ZA',
+  /** ny_MW. */
+  NyMw = 'NY_MW',
+  /** om_ET. */
+  OmEt = 'OM_ET',
+  /** or_IN. */
+  OrIn = 'OR_IN',
+  /** pa_IN. */
+  PaIn = 'PA_IN',
+  /** pl_PL. */
+  PlPl = 'PL_PL',
+  /** ps_AF. */
+  PsAf = 'PS_AF',
+  /** pt_BR. */
+  PtBr = 'PT_BR',
+  /** pt_PT. */
+  PtPt = 'PT_PT',
+  /** qc_GT. */
+  QcGt = 'QC_GT',
+  /** qr_GR. */
+  QrGr = 'QR_GR',
+  /** qu_PE. */
+  QuPe = 'QU_PE',
+  /** qz_MM. */
+  QzMm = 'QZ_MM',
+  /** rm_CH. */
+  RmCh = 'RM_CH',
+  /** ro_RO. */
+  RoRo = 'RO_RO',
+  /** ru_RU. */
+  RuRu = 'RU_RU',
+  /** rw_RW. */
+  RwRw = 'RW_RW',
+  /** sa_IN. */
+  SaIn = 'SA_IN',
+  /** sc_IT. */
+  ScIt = 'SC_IT',
+  /** se_NO. */
+  SeNo = 'SE_NO',
+  /** si_LK. */
+  SiLk = 'SI_LK',
+  /** sk_SK. */
+  SkSk = 'SK_SK',
+  /** sl_SI. */
+  SlSi = 'SL_SI',
+  /** sn_ZW. */
+  SnZw = 'SN_ZW',
+  /** so_SO. */
+  SoSo = 'SO_SO',
+  /** sq_AL. */
+  SqAl = 'SQ_AL',
+  /** sr_RS. */
+  SrRs = 'SR_RS',
+  /** ss_SZ. */
+  SsSz = 'SS_SZ',
+  /** st_ZA. */
+  StZa = 'ST_ZA',
+  /** su_ID. */
+  SuId = 'SU_ID',
+  /** sv_SE. */
+  SvSe = 'SV_SE',
+  /** sw_KE. */
+  SwKe = 'SW_KE',
+  /** sy_SY. */
+  SySy = 'SY_SY',
+  /** sz_PL. */
+  SzPl = 'SZ_PL',
+  /** ta_IN. */
+  TaIn = 'TA_IN',
+  /** te_IN. */
+  TeIn = 'TE_IN',
+  /** tg_TJ. */
+  TgTj = 'TG_TJ',
+  /** th_TH. */
+  ThTh = 'TH_TH',
+  /** tk_TM. */
+  TkTm = 'TK_TM',
+  /** tl_PH. */
+  TlPh = 'TL_PH',
+  /** tl_ST. */
+  TlSt = 'TL_ST',
+  /** tn_BW. */
+  TnBw = 'TN_BW',
+  /** tr_TR. */
+  TrTr = 'TR_TR',
+  /** ts_ZA. */
+  TsZa = 'TS_ZA',
+  /** tt_RU. */
+  TtRu = 'TT_RU',
+  /** tz_MA. */
+  TzMa = 'TZ_MA',
+  /** uk_UA. */
+  UkUa = 'UK_UA',
+  /** ur_PK. */
+  UrPk = 'UR_PK',
+  /** uz_UZ. */
+  UzUz = 'UZ_UZ',
+  /** ve_ZA. */
+  VeZa = 'VE_ZA',
+  /** vi_VN. */
+  ViVn = 'VI_VN',
+  /** wo_SN. */
+  WoSn = 'WO_SN',
+  /** xh_ZA. */
+  XhZa = 'XH_ZA',
+  /** yi_DE. */
+  YiDe = 'YI_DE',
+  /** yo_NG. */
+  YoNg = 'YO_NG',
+  /** zh_CN. */
+  ZhCn = 'ZH_CN',
+  /** zh_HK. */
+  ZhHk = 'ZH_HK',
+  /** zh_TW. */
+  ZhTw = 'ZH_TW',
+  /** zu_ZA. */
+  ZuZa = 'ZU_ZA',
+  /** zz_TR. */
+  ZzTr = 'ZZ_TR'
+}
+
+/** The OpenGraph meta. */
+export type RankMathOpenGraphMeta = {
+  __typename?: 'RankMathOpenGraphMeta';
+  /** A list of other locales this page is available in */
+  alternateLocales?: Maybe<Array<Maybe<RankMathOpenGraphLocaleEnum>>>;
+  /** The OpenGraph Article meta. */
+  articleMeta?: Maybe<RankMathOpenGraphArticle>;
+  /** A brief description of the content, usually between 2 and 4 sentences.  */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The Facebook OpenGraph meta values. */
+  facebookMeta?: Maybe<RankMathOpenGraphFacebook>;
+  /** The OpenGraph image meta */
+  image?: Maybe<RankMathOpenGraphImage>;
+  /** The locale of the resource. */
+  locale?: Maybe<RankMathOpenGraphLocaleEnum>;
+  /** The Facebook OpenGraph meta values. */
+  productMeta?: Maybe<RankMathProduct>;
+  /** The name of the site this resource is associated with. */
+  siteName?: Maybe<Scalars['String']['output']>;
+  /** The Slack Enhanced Data meta values. */
+  slackEnhancedData?: Maybe<Array<Maybe<RankMathOpenGraphSlackEnhancedData>>>;
+  /** The title of your object as it should appear within the graph. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The Twitter OpenGraph meta values. */
+  twitterMeta?: Maybe<RankMathOpenGraphTwitter>;
+  /** The OpenGraph object type. */
+  type?: Maybe<Scalars['String']['output']>;
+  /** The updated time */
+  updatedTime?: Maybe<Scalars['String']['output']>;
+  /** The canonical URL of your object that will be used as its permanent ID in the graph. */
+  url?: Maybe<Scalars['String']['output']>;
+  /** The Twitter OpenGraph meta values. */
+  videoMeta?: Maybe<RankMathOpenGraphVideo>;
+};
+
+/** The OpenGraph Product availibility */
+export enum RankMathOpenGraphProductAvailabilityEnum {
+  /** The product is in stock */
+  InStock = 'IN_STOCK',
+  /** The product is out of stock */
+  OutOfStock = 'OUT_OF_STOCK'
+}
+
+/** The Enhanced Data Tags for Slack Sharing. */
+export type RankMathOpenGraphSlackEnhancedData = {
+  __typename?: 'RankMathOpenGraphSlackEnhancedData';
+  /** The Enhanced Data */
+  data?: Maybe<Scalars['String']['output']>;
+  /** The Enhanced Data label */
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+/** The OpenGraph Twitter meta. */
+export type RankMathOpenGraphTwitter = {
+  __typename?: 'RankMathOpenGraphTwitter';
+  /** The app country. */
+  appCountry?: Maybe<Scalars['String']['output']>;
+  /** The Twitter card type */
+  card?: Maybe<RankMathTwitterCardTypeEnum>;
+  /** @username of content creator */
+  creator?: Maybe<Scalars['String']['output']>;
+  /** Description of content (maximum 200 characters) */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The Twitter Google Play app meta */
+  googleplayApp?: Maybe<RankMathOpenGraphTwitterApp>;
+  /** URL of image to use in the card. */
+  image?: Maybe<Scalars['String']['output']>;
+  /** The Twitter iPad app meta */
+  ipadApp?: Maybe<RankMathOpenGraphTwitterApp>;
+  /** The Twitter iPhone app meta */
+  iphoneApp?: Maybe<RankMathOpenGraphTwitterApp>;
+  /** URL to raw video or audio stream */
+  playerStream?: Maybe<Scalars['String']['output']>;
+  /** The content type of the stream */
+  playerStreamContentType?: Maybe<Scalars['String']['output']>;
+  /** URL of the twitter player. */
+  playerUrl?: Maybe<Scalars['Int']['output']>;
+  /** @username of website */
+  site?: Maybe<Scalars['String']['output']>;
+  /** Title of content */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The OpenGraph Twitter App meta. */
+export type RankMathOpenGraphTwitterApp = {
+  __typename?: 'RankMathOpenGraphTwitterApp';
+  /** The App ID . */
+  id?: Maybe<Scalars['ID']['output']>;
+  /** The name of the Twitter app. */
+  name?: Maybe<Scalars['String']['output']>;
+  /** Your app\’s custom URL scheme. */
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+/** The OpenGraph Video meta. */
+export type RankMathOpenGraphVideo = {
+  __typename?: 'RankMathOpenGraphVideo';
+  /** The duration of the video. */
+  duration?: Maybe<Scalars['String']['output']>;
+  /** The URL of the video. */
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+/** The page post object SEO data */
+export type RankMathPageObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathPageObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The page post type object SEO data */
+export type RankMathPageTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathPageTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The post_format term object SEO data */
+export type RankMathPostFormatTermSeo = RankMathSeo & {
+  __typename?: 'RankMathPostFormatTermSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The post post object SEO data */
+export type RankMathPostObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathPostObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The post post type object SEO data */
+export type RankMathPostTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathPostTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The OpenGraph Product meta. */
+export type RankMathProduct = {
+  __typename?: 'RankMathProduct';
+  /** The currency of the object price. */
+  availability?: Maybe<RankMathOpenGraphProductAvailabilityEnum>;
+  /** The brand of the product. */
+  brand?: Maybe<Scalars['String']['output']>;
+  /** The currency of the object price. */
+  currency?: Maybe<Scalars['String']['output']>;
+  /** The price of the object */
+  price?: Maybe<Scalars['Float']['output']>;
+};
+
+/** The RankMath SEO Redirection object. */
+export type RankMathRedirection = DatabaseIdentifier & Node & {
+  __typename?: 'RankMathRedirection';
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** The date the redirection was created. */
+  dateCreated?: Maybe<Scalars['String']['output']>;
+  /** The GMT date the redirection was created. */
+  dateCreatedGmt?: Maybe<Scalars['String']['output']>;
+  /** The date the redirection was last accessed. */
+  dateLastAccessed?: Maybe<Scalars['String']['output']>;
+  /** The GMT date the redirection was last accessed. */
+  dateLastAccessedGmt?: Maybe<Scalars['String']['output']>;
+  /** The date the redirection was last modified. */
+  dateModified?: Maybe<Scalars['String']['output']>;
+  /** The GMT date the redirection was last modified. */
+  dateModifiedGmt?: Maybe<Scalars['String']['output']>;
+  /** The number of hits for this redirection. */
+  hits?: Maybe<Scalars['Int']['output']>;
+  /** The globally unique ID for the object */
+  id: Scalars['ID']['output'];
+  /** The URL to redirect to. */
+  redirectToUrl?: Maybe<Scalars['String']['output']>;
+  /** The sources of the redirection. */
+  sources?: Maybe<Array<Maybe<RankMathRedirectionSource>>>;
+  /** The status of the redirection. */
+  status?: Maybe<RankMathRedirectionStatusEnum>;
+  /** The redirection type (HTTP status code). */
+  type?: Maybe<RankMathRedirectionTypeEnum>;
+};
+
+/** The Redirection behavior. */
+export enum RankMathRedirectionBehaviorEnum {
+  /** Redirect to custom URL. */
+  Custom = 'CUSTOM',
+  /** Redirect to default 404. */
+  Default = 'DEFAULT',
+  /** Redirect to Home page. */
+  Homepage = 'HOMEPAGE'
+}
+
+/** The Redirection comparison type. */
+export enum RankMathRedirectionComparisonTypeEnum {
+  /** Contains */
+  Contains = 'CONTAINS',
+  /** End With */
+  End = 'END',
+  /** Exact */
+  Exact = 'EXACT',
+  /** Regex */
+  Regex = 'REGEX',
+  /** Starts With */
+  Start = 'START'
+}
+
+/** A paginated collection of RankMathRedirection Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of RankMathRedirection Nodes */
+export type RankMathRedirectionConnection = {
+  /** A list of edges (relational context) between RootQuery and connected RankMathRedirection Nodes */
+  edges: Array<RankMathRedirectionConnectionEdge>;
+  /** A list of connected RankMathRedirection Nodes */
+  nodes: Array<RankMathRedirection>;
+  /** Information about pagination in a connection. */
+  pageInfo: RankMathRedirectionConnectionPageInfo;
+};
+
+/** Represents a connection to a RankMathRedirection. Contains both the RankMathRedirection Node and metadata about the relationship. */
+export type RankMathRedirectionConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected RankMathRedirection Node */
+  node: RankMathRedirection;
+};
+
+/** Options for ordering the Redirection connection. */
+export enum RankMathRedirectionConnectionOrderByEnum {
+  /** Order by the database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Order by the date created. */
+  DateCreated = 'DATE_CREATED',
+  /** Order by the date last accessed. */
+  DateLastAccessed = 'DATE_LAST_ACCESSED',
+  /** Order by the date created. */
+  DateUpdated = 'DATE_UPDATED',
+  /** Order by the number of hits. */
+  Hits = 'HITS',
+  /** Order by the Redirect To URL */
+  RedirectToUrl = 'REDIRECT_TO_URL',
+  /** Order by the redirection type (HTTP status code). */
+  Type = 'TYPE'
+}
+
+/** The Redirection connection orderby input. */
+export type RankMathRedirectionConnectionOrderbyInput = {
+  /** The field to order the results by. */
+  field?: InputMaybe<RankMathRedirectionConnectionOrderByEnum>;
+  /** The ordering direction. */
+  order?: InputMaybe<OrderEnum>;
+};
+
+/** Pagination metadata specific to &quot;RankMathRedirectionConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;RankMathRedirectionConnectionEdge&quot; Nodes. */
+export type RankMathRedirectionConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Redirection settings */
+export type RankMathRedirectionSettings = {
+  __typename?: 'RankMathRedirectionSettings';
+  /** The fallback redirection behavior */
+  fallbackBehavior?: Maybe<RankMathRedirectionBehaviorEnum>;
+  /** The custom redirection URL to use as a fallback. Only set if `fallbackBehavior` is `CUSTOM`. */
+  fallbackCustomUrl?: Maybe<Scalars['String']['output']>;
+  /** Whether the auto post redirection is enabled. */
+  hasAutoPostRedirect?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the redirection Debug console is enabled. */
+  hasDebug?: Maybe<Scalars['Boolean']['output']>;
+  /** The redirection type. */
+  redirectionType?: Maybe<RankMathRedirectionTypeEnum>;
+};
+
+/** The RankMath SEO Redirection source to match. */
+export type RankMathRedirectionSource = {
+  __typename?: 'RankMathRedirectionSource';
+  /** The comparison type to use when matching the pattern. */
+  comparison?: Maybe<RankMathRedirectionComparisonTypeEnum>;
+  /** The ignore flag to use when matching the pattern. */
+  ignore?: Maybe<Scalars['String']['output']>;
+  /** The pattern to match. */
+  pattern?: Maybe<Scalars['String']['output']>;
+};
+
+/** The Redirection status. */
+export enum RankMathRedirectionStatusEnum {
+  /** Active. */
+  Active = 'ACTIVE',
+  /** Inactive. */
+  Inactive = 'INACTIVE',
+  /** Trashed. */
+  Trash = 'TRASH'
+}
+
+/** The Redirection type. */
+export enum RankMathRedirectionTypeEnum {
+  /** 301 Permanent Move */
+  Redirect_301 = 'REDIRECT_301',
+  /** 302 Temporary Move */
+  Redirect_302 = 'REDIRECT_302',
+  /** 307 Temporary Redirect */
+  Redirect_307 = 'REDIRECT_307',
+  /** 410 Content Deleted */
+  Redirect_410 = 'REDIRECT_410',
+  /** 451 Content Unavailable for Legal Reasons */
+  Redirect_451 = 'REDIRECT_451'
+}
+
+/** A block used for editing the site */
+export type RankMathRichSnippet = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'RankMathRichSnippet';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the RankMathRichSnippet Block Type */
+  attributes?: Maybe<RankMathRichSnippetAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the RankMathRichSnippet Block Type */
+export type RankMathRichSnippetAttributes = {
+  __typename?: 'RankMathRichSnippetAttributes';
+  /** The &quot;className&quot; field on the &quot;RankMathRichSnippetAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;RankMathRichSnippetAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;RankMathRichSnippetAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;post_id&quot; field on the &quot;RankMathRichSnippetAttributes&quot; block or block attributes */
+  postId: Scalars['String']['output'];
+};
+
+/** Robot meta value tag. */
+export enum RankMathRobotsMetaValueEnum {
+  /** IndexInstructs search engines to index and show these pages in the search results. */
+  Index = 'INDEX',
+  /** No ArchivePrevents search engines from showing Cached links for pages */
+  Noarchive = 'NOARCHIVE',
+  /** No FollowPrevents search engines from following links on the pages */
+  Nofollow = 'NOFOLLOW',
+  /** No Image IndexPrevents images on a page from being indexed by Google and other search engines */
+  Noimageindex = 'NOIMAGEINDEX',
+  /** No IndexPrevents pages from being indexed and displayed in search engine result pages */
+  Noindex = 'NOINDEX',
+  /** No SnippetPrevents a snippet from being shown in the search results */
+  Nosnippet = 'NOSNIPPET'
+}
+
+/** Base SEO fields shared across WP types. */
+export type RankMathSeo = {
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The SEO rating */
+export enum RankMathSeoRatingEnum {
+  /** Bad ( < 50 ) score */
+  Bad = 'BAD',
+  /** Good (50-79) score */
+  Good = 'GOOD',
+  /** Great ( > 80 ) score */
+  Great = 'GREAT',
+  /** Unknown score. */
+  Unknown = 'UNKNOWN'
+}
+
+/** The Seo score information. */
+export type RankMathSeoScore = {
+  __typename?: 'RankMathSeoScore';
+  /** The html output for the Frontend SEO badge */
+  badgeHtml?: Maybe<Scalars['String']['output']>;
+  /** Whether the SEO score should be displayed on the frontend */
+  hasFrontendScore?: Maybe<Scalars['Boolean']['output']>;
+  /** The SEO score */
+  rating?: Maybe<RankMathSeoRatingEnum>;
+  /** The SEO score */
+  score?: Maybe<Scalars['Int']['output']>;
+};
+
+/** The frontend SEO Score position */
+export enum RankMathSeoScorePositionEnum {
+  /** Above & below content */
+  Both = 'BOTH',
+  /** Below content */
+  Bottom = 'BOTTOM',
+  /** Custom (use shortcode) */
+  Custom = 'CUSTOM',
+  /** Above content */
+  Top = 'TOP'
+}
+
+/** The frontend SEO Score template type */
+export enum RankMathSeoScoreTemplateTypeEnum {
+  /** Circle template */
+  Circle = 'CIRCLE',
+  /** Square template */
+  Square = 'SQUARE'
+}
+
+/** The RankMath SEO site settings */
+export type RankMathSettings = {
+  __typename?: 'RankMathSettings';
+  /** General settings. */
+  general?: Maybe<RankMathGeneral>;
+  /** Meta settings. */
+  meta?: Maybe<RankMathMeta>;
+  /** Sitemap settings. */
+  sitemap?: Maybe<RankMathSitemap>;
+};
+
+/** The RankMath SEO titles and meta site settings */
+export type RankMathSitemap = {
+  __typename?: 'RankMathSitemap';
+  /** Author sitemap settings. Null if authors are not indexable. */
+  author?: Maybe<RankMathSitemapAuthorSettings>;
+  /** Content types included in the sitemap. */
+  contentTypes?: Maybe<Array<Maybe<RankMathSitemapContentTypeSettings>>>;
+  /** Sitemap general settings. */
+  general?: Maybe<RankMathSitemapGeneralSettings>;
+  /** The URL to the sitemap index. */
+  sitemapIndexUrl?: Maybe<Scalars['String']['output']>;
+  /** Content types included in the sitemap. */
+  taxonomies?: Maybe<Array<Maybe<RankMathSitemapTaxonomySettings>>>;
+};
+
+
+/** The RankMath SEO titles and meta site settings */
+export type RankMathSitemapContentTypesArgs = {
+  include?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+};
+
+
+/** The RankMath SEO titles and meta site settings */
+export type RankMathSitemapTaxonomiesArgs = {
+  include?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
+};
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapAuthorSettings = {
+  __typename?: 'RankMathSitemapAuthorSettings';
+  /** The connected authors whose URLs are included in the sitemap */
+  connectedAuthors?: Maybe<RankMathSitemapAuthorSettingsToUserConnection>;
+  /** List of user roles excluded from the sitemap. */
+  excludedRoles?: Maybe<Array<Maybe<UserRoleEnum>>>;
+  /** List of user IDs excluded from the sitemap. */
+  excludedUserDatabaseIds?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+  /** The sitemap URL. */
+  sitemapUrl?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapAuthorSettingsConnectedAuthorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Connection between the RankMathSitemapAuthorSettings type and the User type */
+export type RankMathSitemapAuthorSettingsToUserConnection = Connection & UserConnection & {
+  __typename?: 'RankMathSitemapAuthorSettingsToUserConnection';
+  /** Edges for the RankMathSitemapAuthorSettingsToUserConnection connection */
+  edges: Array<RankMathSitemapAuthorSettingsToUserConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<User>;
+  /** Information about pagination in a connection. */
+  pageInfo: RankMathSitemapAuthorSettingsToUserConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RankMathSitemapAuthorSettingsToUserConnectionEdge = Edge & UserConnectionEdge & {
+  __typename?: 'RankMathSitemapAuthorSettingsToUserConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: User;
+};
+
+/** Pagination metadata specific to &quot;RankMathSitemapAuthorSettingsToUserConnection&quot; collections. Provides cursors and flags for navigating through sets of RankMathSitemapAuthorSettingsToUserConnection Nodes. */
+export type RankMathSitemapAuthorSettingsToUserConnectionPageInfo = PageInfo & UserConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RankMathSitemapAuthorSettingsToUserConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapContentTypeSettings = {
+  __typename?: 'RankMathSitemapContentTypeSettings';
+  /** The connected content nodes whose URLs are included in the sitemap */
+  connectedContentNodes?: Maybe<RankMathSitemapContentTypeSettingsToContentNodeConnection>;
+  /** List of custom field (post meta) names which contain image URLs to include them in the sitemaps. */
+  customImageMetaKeys?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Whether the content type is included in the sitemap. */
+  isInSitemap?: Maybe<Scalars['Boolean']['output']>;
+  /** The sitemap URL. */
+  sitemapUrl?: Maybe<Scalars['String']['output']>;
+  /** The content type. */
+  type?: Maybe<ContentTypeEnum>;
+};
+
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapContentTypeSettingsConnectedContentNodesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Connection between the RankMathSitemapContentTypeSettings type and the ContentNode type */
+export type RankMathSitemapContentTypeSettingsToContentNodeConnection = Connection & ContentNodeConnection & {
+  __typename?: 'RankMathSitemapContentTypeSettingsToContentNodeConnection';
+  /** Edges for the RankMathSitemapContentTypeSettingsToContentNodeConnection connection */
+  edges: Array<RankMathSitemapContentTypeSettingsToContentNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<ContentNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: RankMathSitemapContentTypeSettingsToContentNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RankMathSitemapContentTypeSettingsToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
+  __typename?: 'RankMathSitemapContentTypeSettingsToContentNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: ContentNode;
+};
+
+/** Pagination metadata specific to &quot;RankMathSitemapContentTypeSettingsToContentNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of RankMathSitemapContentTypeSettingsToContentNodeConnection Nodes. */
+export type RankMathSitemapContentTypeSettingsToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'RankMathSitemapContentTypeSettingsToContentNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapGeneralSettings = {
+  __typename?: 'RankMathSitemapGeneralSettings';
+  /**
+   * Whether to notify search engines when the sitemap is updated.
+   * @deprecated This feature is no longer supported by Google, and has been removed from RankMath v1.0.211+.
+   */
+  canPingSearchEngines?: Maybe<Scalars['Boolean']['output']>;
+  /** A list of post IDs excluded from the sitemap. This option **applies** to all posts types including posts, pages, and custom post types. */
+  excludedPostDatabaseIds?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+  /** A list of term IDs excluded from the sitemap. This option **applies** to all taxonomies. */
+  excludedTermDatabaseIds?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+  /** Whether the Featured Image is included in sitemaps too, even if it does not appear directly in the post content. */
+  hasFeaturedImage?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether reference to images from the post content is included in sitemaps. */
+  hasImages?: Maybe<Scalars['Boolean']['output']>;
+  /** Max number of links on each sitemap page. */
+  linksPerSitemap?: Maybe<Scalars['Int']['output']>;
+};
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapTaxonomySettings = {
+  __typename?: 'RankMathSitemapTaxonomySettings';
+  /** The connected terms whose URLs are included in the sitemap */
+  connectedTerms?: Maybe<RankMathSitemapTaxonomySettingsToTermNodeConnection>;
+  /** Whether to archive pages of terms that have no posts associated. */
+  hasEmptyTerms?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the content type is included in the sitemap. */
+  isInSitemap?: Maybe<Scalars['Boolean']['output']>;
+  /** The sitemap URL. */
+  sitemapUrl?: Maybe<Scalars['String']['output']>;
+  /** The taxonomy type. */
+  type?: Maybe<TaxonomyEnum>;
+};
+
+
+/** The RankMath SEO Sitemap general settings. */
+export type RankMathSitemapTaxonomySettingsConnectedTermsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Connection between the RankMathSitemapTaxonomySettings type and the TermNode type */
+export type RankMathSitemapTaxonomySettingsToTermNodeConnection = Connection & TermNodeConnection & {
+  __typename?: 'RankMathSitemapTaxonomySettingsToTermNodeConnection';
+  /** Edges for the RankMathSitemapTaxonomySettingsToTermNodeConnection connection */
+  edges: Array<RankMathSitemapTaxonomySettingsToTermNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<TermNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: RankMathSitemapTaxonomySettingsToTermNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RankMathSitemapTaxonomySettingsToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
+  __typename?: 'RankMathSitemapTaxonomySettingsToTermNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: TermNode;
+};
+
+/** Pagination metadata specific to &quot;RankMathSitemapTaxonomySettingsToTermNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of RankMathSitemapTaxonomySettingsToTermNodeConnection Nodes. */
+export type RankMathSitemapTaxonomySettingsToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RankMathSitemapTaxonomySettingsToTermNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The rich snippet type. */
+export enum RankMathSnippetTypeEnum {
+  /** Article */
+  Article = 'ARTICLE',
+  /** Book */
+  Book = 'BOOK',
+  /** Course */
+  Course = 'COURSE',
+  /** Event */
+  Event = 'EVENT',
+  /** Job Posting */
+  Jobposting = 'JOBPOSTING',
+  /** Local Business */
+  LocalBusiness = 'LOCAL_BUSINESS',
+  /** Music */
+  Music = 'MUSIC',
+  /** None. */
+  Off = 'OFF',
+  /** Person */
+  Person = 'PERSON',
+  /** Product */
+  Product = 'PRODUCT',
+  /** Recipe */
+  Recipe = 'RECIPE',
+  /** Restaurant */
+  Restaurant = 'RESTAURANT',
+  /** Service */
+  Service = 'SERVICE',
+  /** Software Application */
+  Software = 'SOFTWARE',
+  /** Video */
+  Video = 'VIDEO'
+}
+
+/** The RankMath SEO Social settings. */
+export type RankMathSocialMetaSettings = {
+  __typename?: 'RankMathSocialMetaSettings';
+  /** Additional social profile URLs to add to the sameAs property for the Organization Schema. */
+  additionalProfiles?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** A list of numeric Facebook admin User Ids. */
+  facebookAdminId?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+  /** The facebook Facebook app ID. */
+  facebookAppId?: Maybe<Scalars['Int']['output']>;
+  /** The personal Facebook profile URL used to show authorship when articles are shared on Facebook. */
+  facebookAuthorUrl?: Maybe<Scalars['String']['output']>;
+  /** The complete Facebook page URL. */
+  facebookPageUrl?: Maybe<Scalars['String']['output']>;
+  /** Twitter Username of the auther used in the `twitter:creater` tag. */
+  twitterAuthorName?: Maybe<Scalars['String']['output']>;
+};
+
+/** The post_tag term object SEO data */
+export type RankMathTagTermSeo = RankMathSeo & {
+  __typename?: 'RankMathTagTermSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Taxonomy meta settings. */
+export type RankMathTaxonomyMetaSettings = {
+  __typename?: 'RankMathTaxonomyMetaSettings';
+  /** The RankMath SEO meta settings for Categories. */
+  category?: Maybe<CategoryMetaSettings>;
+  /** The RankMath SEO meta settings for Formats. */
+  postFormat?: Maybe<PostFormatMetaSettings>;
+  /** The RankMath SEO meta settings for Tags. */
+  tag?: Maybe<TagMetaSettings>;
+};
+
+/** A block used for editing the site */
+export type RankMathTocBlock = EditorBlock & PageEditorBlock & PostEditorBlock & {
+  __typename?: 'RankMathTocBlock';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the RankMathTocBlock Block Type */
+  attributes?: Maybe<RankMathTocBlockAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the RankMathTocBlock Block Type */
+export type RankMathTocBlockAttributes = {
+  __typename?: 'RankMathTocBlockAttributes';
+  /** The &quot;align&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  align?: Maybe<Scalars['String']['output']>;
+  /** The &quot;backgroundColor&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;className&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;excludeHeadings&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  excludeHeadings?: Maybe<Scalars['BlockAttributesArray']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;headings&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  headings?: Maybe<Array<Maybe<Scalars['BlockAttributesObject']['output']>>>;
+  /** The &quot;listStyle&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  listStyle?: Maybe<Scalars['String']['output']>;
+  /** The &quot;lock&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;style&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;title&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The &quot;titleWrapper&quot; field on the &quot;RankMathTocBlockAttributes&quot; block or block attributes */
+  titleWrapper: Scalars['String']['output'];
+};
+
+/** The Twitter Card Type Enum */
+export enum RankMathTwitterCardTypeEnum {
+  /** The twitter App card */
+  App = 'APP',
+  /** The twitter Player card */
+  Player = 'PLAYER',
+  /** Summary Card. */
+  Summary = 'SUMMARY',
+  /** Summary Card with Large Image. */
+  SummaryLargeImage = 'SUMMARY_LARGE_IMAGE'
+}
+
+/** The user-reaction-post post object SEO data */
+export type RankMathUserReactionPostObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathUserReactionPostObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The user-reaction-post post type object SEO data */
+export type RankMathUserReactionPostTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathUserReactionPostTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The user object SEO data */
+export type RankMathUserSeo = RankMathSeo & {
+  __typename?: 'RankMathUserSeo';
+  /** Additional social profile URLs to add to the sameAs property. */
+  additionalProfiles?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The complete Facebook profile URL. */
+  facebookProfileUrl?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** Twitter Username of the user. */
+  twitterUserName?: Maybe<Scalars['String']['output']>;
+};
+
+/** The RankMath SEO Webmaster Tools settings */
+export type RankMathWebmaster = {
+  __typename?: 'RankMathWebmaster';
+  /** The Baidu Webmaster Tools verification HTML code or ID. */
+  baidu?: Maybe<Scalars['String']['output']>;
+  /** The Bing Webmaster Tools verification HTML code or ID. */
+  bing?: Maybe<Scalars['String']['output']>;
+  /** The Google Search Console verification HTML code or ID. */
+  google?: Maybe<Scalars['String']['output']>;
+  /** The Norton Safe Web verification HTML code or ID. */
+  norton?: Maybe<Scalars['String']['output']>;
+  /** The Pinterest verification HTML code or ID. */
+  pinterest?: Maybe<Scalars['String']['output']>;
+  /** The Yandex verification HTML code or ID. */
+  yandex?: Maybe<Scalars['String']['output']>;
+};
+
 /** The reading setting type */
 export type ReadingSettings = {
   __typename?: 'ReadingSettings';
@@ -13954,8 +16763,14 @@ export type RootQuery = {
   postFormats?: Maybe<RootQueryToPostFormatConnection>;
   /** Connection between the RootQuery type and the post type */
   posts?: Maybe<RootQueryToPostConnection>;
+  /** RankMath SEO site settings */
+  rankMathSettings?: Maybe<RankMathSettings>;
   /** Fields of the &#039;ReadingSettings&#039; settings group */
   readingSettings?: Maybe<ReadingSettings>;
+  /** RankMath SEO redirection */
+  redirection?: Maybe<RankMathRedirection>;
+  /** A RankMath SEO redirection object. */
+  redirections?: Maybe<RootQueryToRankMathRedirectionConnection>;
   /** Connection between the RootQuery type and the EnqueuedScript type */
   registeredScripts?: Maybe<RootQueryToEnqueuedScriptConnection>;
   /** Connection between the RootQuery type and the EnqueuedStylesheet type */
@@ -14279,6 +17094,22 @@ export type RootQueryPostsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPostConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryRedirectionArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryRedirectionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToRankMathRedirectionConnectionWhereArgs>;
 };
 
 
@@ -15397,6 +18228,49 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** Connection between the RootQuery type and the RankMathRedirection type */
+export type RootQueryToRankMathRedirectionConnection = Connection & RankMathRedirectionConnection & {
+  __typename?: 'RootQueryToRankMathRedirectionConnection';
+  /** Edges for the RootQueryToRankMathRedirectionConnection connection */
+  edges: Array<RootQueryToRankMathRedirectionConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<RankMathRedirection>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToRankMathRedirectionConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToRankMathRedirectionConnectionEdge = Edge & RankMathRedirectionConnectionEdge & {
+  __typename?: 'RootQueryToRankMathRedirectionConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: RankMathRedirection;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToRankMathRedirectionConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToRankMathRedirectionConnection Nodes. */
+export type RootQueryToRankMathRedirectionConnectionPageInfo = PageInfo & RankMathRedirectionConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToRankMathRedirectionConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToRankMathRedirectionConnection connection */
+export type RootQueryToRankMathRedirectionConnectionWhereArgs = {
+  /** Order the results by a specific field. */
+  orderby?: InputMaybe<RankMathRedirectionConnectionOrderbyInput>;
+  /** Search the status, redirection url, or sources for the provided value. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Filter the redirections by their status. */
+  status?: InputMaybe<Array<InputMaybe<RankMathRedirectionStatusEnum>>>;
+};
+
 /** Connection between the RootQuery type and the ContentNode type */
 export type RootQueryToRevisionsConnection = Connection & ContentNodeConnection & {
   __typename?: 'RootQueryToRevisionsConnection';
@@ -15951,7 +18825,7 @@ export type Settings = {
 };
 
 /** A taxonomy term used to organize and classify content. Tags do not have a hierarchy and are generally used for more specific classifications. */
-export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
+export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & NodeWithRankMathSeo & TermNode & UniformResourceIdentifiable & {
   __typename?: 'Tag';
   /** @deprecated Deprecated in favor of using Next.js pages */
   conditionalTags?: Maybe<ConditionalTags>;
@@ -15987,6 +18861,8 @@ export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Unif
   name?: Maybe<Scalars['String']['output']>;
   /** Connection between the Tag type and the post type */
   posts?: Maybe<TagToPostConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathTagTermSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /**
@@ -16088,6 +18964,27 @@ export enum TagIdType {
   /** The URI for the node */
   Uri = 'URI'
 }
+
+/** The RankMath SEO meta settings for Tags. */
+export type TagMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'TagMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to include snippet data for this taxonomy. */
+  hasSnippetData?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
 
 /** Connection between the Tag type and the ContentNode type */
 export type TagToContentNodeConnection = Connection & ContentNodeConnection & {
@@ -16452,8 +19349,22 @@ export type TaxonomyToTermNodeConnectionPageInfo = PageInfo & TermNodeConnection
 };
 
 /** The template assigned to the node */
-export type Template_PageNoTitle = ContentTemplate & {
-  __typename?: 'Template_PageNoTitle';
+export type Template_Blank = ContentTemplate & {
+  __typename?: 'Template_Blank';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']['output']>;
+};
+
+/** The template assigned to the node */
+export type Template_BlogAlternative = ContentTemplate & {
+  __typename?: 'Template_BlogAlternative';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']['output']>;
+};
+
+/** The template assigned to the node */
+export type Template_Test = ContentTemplate & {
+  __typename?: 'Template_Test';
   /** The name of the template */
   templateName?: Maybe<Scalars['String']['output']>;
 };
@@ -16490,6 +19401,8 @@ export type TermNode = {
   link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
   name?: Maybe<Scalars['String']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathSeo>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The name of the taxonomy that the object is associated with */
@@ -17229,7 +20142,7 @@ export type UpdateUserReactionPostPayload = {
 };
 
 /** A registered user account. Users can be assigned roles, author content, and have various capabilities within the site. */
-export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdentifiable & WithAcfNcUserMeta & WithAcfUserReactionFields & {
+export type User = Commenter & DatabaseIdentifier & Node & NodeWithRankMathSeo & UniformResourceIdentifiable & WithAcfNcUserMeta & WithAcfUserReactionFields & {
   __typename?: 'User';
   /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
   avatar?: Maybe<Avatar>;
@@ -17293,6 +20206,8 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   revisions?: Maybe<UserToRevisionsConnection>;
   /** Connection between the User type and the UserRole type */
   roles?: Maybe<UserToUserRoleConnection>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathUserSeo>;
   /** Whether the Toolbar should be displayed when the user is viewing the site. */
   shouldShowAdminToolbar?: Maybe<Scalars['Boolean']['output']>;
   shouldShowFaustToolbar?: Maybe<Scalars['Boolean']['output']>;
@@ -17489,7 +20404,7 @@ export type UserReactionFields_Fields = {
 };
 
 /** Intermediate table to store information about each user&#039;s post retention. */
-export type UserReactionPost = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
+export type UserReactionPost = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithRankMathSeo & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'UserReactionPost';
   /**
    * The ancestors of the content node.
@@ -17565,6 +20480,8 @@ export type UserReactionPost = ContentNode & DatabaseIdentifier & MenuItemLinkab
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathUserReactionPostObjectSeo>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
@@ -17657,6 +20574,43 @@ export enum UserReactionPostIdType {
   /** Identify a resource by the URI. */
   Uri = 'URI'
 }
+
+/** The RankMath SEO meta settings for User Reaction Posts. */
+export type UserReactionPostMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'UserReactionPostMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** List of custom fields name to include in the Page analysis */
+  analyzedFields?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Default article type when creating a new User Reaction Posts. */
+  articleType?: Maybe<RankMathArticleTypeEnum>;
+  /** Default description for single User Reaction Posts pages. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether to list bulk editing columns to the post listing screen. */
+  hasBulkEditing?: Maybe<RankMathBulkEditingTypeEnum>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether Link Suggestions meta box and the Pillar Content featured are enabled for this post type. */
+  hasLinkSuggestions?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** Whether to use the Focus Keyword as the default text for the links instead of the post titles. */
+  shouldUseFocusKeyword?: Maybe<Scalars['Boolean']['output']>;
+  /** Default rich snippet headline. */
+  snippetDescription?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet headline. */
+  snippetHeadline?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet select when creating a new User Reaction Posts. */
+  snippetType?: Maybe<RankMathSnippetTypeEnum>;
+  /** The default image to display when sharing this post type on social media */
+  socialImage?: Maybe<MediaItem>;
+  /** Default title tag for single User Reaction Posts pages. */
+  title?: Maybe<Scalars['String']['output']>;
+};
 
 /** Connection between the userReactionPost type and the userReactionPost type */
 export type UserReactionPostToParentConnectionEdge = Edge & OneToOneConnection & UserReactionPostConnectionEdge & {
@@ -18582,13 +21536,13 @@ export type NcmazFcPostFullFieldsFragment = { __typename: 'Post', uri?: string |
         & { ' $fragmentRefs'?: { 'NcmazFcImageHasDetailFieldsFragment': NcmazFcImageHasDetailFieldsFragment } }
       ) } | null } | null } & { ' $fragmentName'?: 'NcmazFcPostFullFieldsFragment' };
 
-export type NcmazFcPostFullVsEditorBlocksNoContentFieldsFragment = { __typename: 'Post', uri?: string | null, modified?: string | null, date?: string | null, commentStatus?: string | null, status?: string | null, commentCount?: number | null, excerpt?: string | null, databaseId: number, title?: string | null, editorBlocks?: Array<{ __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+export type NcmazFcPostFullVsEditorBlocksNoContentFieldsFragment = { __typename: 'Post', uri?: string | null, modified?: string | null, date?: string | null, commentStatus?: string | null, status?: string | null, commentCount?: number | null, excerpt?: string | null, databaseId: number, title?: string | null, editorBlocks?: Array<{ __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
     { __typename: 'CoreColumn', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'CoreColumnFragmentFragment': CoreColumnFragmentFragment } }
   ) | (
     { __typename: 'CoreColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'CoreColumnsFragmentFragment': CoreColumnsFragmentFragment } }
-  ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+  ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
     { __typename: 'NcmazFaustBlockCta', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'NcmazFaustBlockCtaFragmentFragment': NcmazFaustBlockCtaFragmentFragment } }
   ) | (
@@ -18600,7 +21554,7 @@ export type NcmazFcPostFullVsEditorBlocksNoContentFieldsFragment = { __typename:
   ) | (
     { __typename: 'NcmazFaustBlockTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'NcmazFaustBlockTermsFragmentFragment': NcmazFaustBlockTermsFragmentFragment } }
-  ) | null> | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: (
+  ) | { __typename: 'RankMathFaqBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathHowtoBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathRichSnippet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathTocBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | null> | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: (
       { __typename?: 'User', description?: string | null }
       & { ' $fragmentRefs'?: { 'NcmazFcUserShortForPostCardFragmentFragment': NcmazFcUserShortForPostCardFragmentFragment } }
     ) } | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<(
@@ -19427,13 +22381,13 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', title?: string | null, ncPageMeta?: { __typename?: 'NcPageMeta', isFullWithPage?: boolean | null } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, sourceUrl?: string | null } } | null, editorBlocks?: Array<{ __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+export type GetPageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', title?: string | null, ncPageMeta?: { __typename?: 'NcPageMeta', isFullWithPage?: boolean | null } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, sourceUrl?: string | null } } | null, editorBlocks?: Array<{ __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
       { __typename: 'CoreColumn', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'CoreColumnFragmentFragment': CoreColumnFragmentFragment } }
     ) | (
       { __typename: 'CoreColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'CoreColumnsFragmentFragment': CoreColumnsFragmentFragment } }
-    ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+    ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
       { __typename: 'NcmazFaustBlockCta', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'NcmazFaustBlockCtaFragmentFragment': NcmazFaustBlockCtaFragmentFragment } }
     ) | (
@@ -19445,7 +22399,7 @@ export type GetPageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Pa
     ) | (
       { __typename: 'NcmazFaustBlockTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'NcmazFaustBlockTermsFragmentFragment': NcmazFaustBlockTermsFragmentFragment } }
-    ) | null> | null } | null, generalSettings?: (
+    ) | { __typename: 'RankMathFaqBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathHowtoBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathRichSnippet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'RankMathTocBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | null> | null } | null, generalSettings?: (
     { __typename?: 'GeneralSettings' }
     & { ' $fragmentRefs'?: { 'NcgeneralSettingsFieldsFragmentFragment': NcgeneralSettingsFieldsFragmentFragment } }
   ) | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<(
