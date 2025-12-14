@@ -43,3 +43,4 @@ yarn-error.log*
 ## code editors
 .idea
 .vscode
+.env
