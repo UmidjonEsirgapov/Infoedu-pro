@@ -17,7 +17,7 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
 }) => {
 	return (
 		<div className={`nc-WidgetCategories overflow-hidden ${className}`}>
-			<WidgetHeading1 title="✨ Top 10 categories" />
+			<WidgetHeading1 title="✨ Top 10 katigoriyalar" />
 			<div className="flow-root">
 				<div className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-700">
 					{isLoading ? (

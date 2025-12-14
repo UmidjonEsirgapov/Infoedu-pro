@@ -18,7 +18,7 @@
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
 	"top_banner": {
-		"enable": false
+		"enable": true
 	},
 	"top_category_section": {
 		"enable": true,
