@@ -8,7 +8,7 @@ const client = getApolloClient()
 const SITEMAP_QUERY = gql`
 	query SitemapQuery($after: String) {
 		contentNodes(
-			where: { contentTypes: [POST, PAGE] }
+			where: { contentTypes: [POST, PAGE, OLIYGOH] }
 			first: 50
 			after: $after
 		) {

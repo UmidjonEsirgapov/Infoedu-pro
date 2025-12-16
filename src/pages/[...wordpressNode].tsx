@@ -21,6 +21,9 @@ export async function myGetPaths() {
 	let posts = (await response.json()) as any[]
 	let categories = (await getAllCategories.json()) as any[]
 
+	// NOTE: Universitetlar (oliygoh) endi /oliygoh/[slug] route'ida ishlaydi
+	// Shuning uchun ularni bu yerda qo'shishimiz shart emas
+
 	if (!categories?.length) {
 		categories = []
 	}
@@ -31,6 +34,8 @@ export async function myGetPaths() {
 	posts = [
 		...categories.map((category) => ({ slug: 'category/' + category.slug })),
 		...posts,
+		// Universitetlar endi /oliygoh/[slug] route'ida ishlaydi
+		// src/pages/oliygoh/[slug].tsx faylida handle qilinadi
 	]
 
 	if (IS_CHISNGHIAX_DEMO_SITE) {
