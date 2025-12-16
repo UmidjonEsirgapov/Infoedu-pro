@@ -1,11 +1,11 @@
 import React from 'react';
 import { gql } from '@apollo/client';
 import { FaustTemplate } from '@faustwp/core';
-import Head from 'next/head';
 import PageLayout from '@/container/PageLayout';
 import Hero from '@/components/oliygoh/Hero';
 import ContactCard from '@/components/oliygoh/ContactCard';
 import QuotaTable from '@/components/oliygoh/QuotaTable';
+import SEO from '@/components/SEO/SEO';
 
 // --- 3. MAIN COMPONENT ---
 
@@ -14,7 +14,7 @@ const Universitet: FaustTemplate<any> = (props) => {
 
   if (!data) return <div className="p-10 text-center">Yuklanmoqda...</div>;
 
-  const { title, content, featuredImage, oliygohMalumotlari } = data;
+  const { title, content, featuredImage, oliygohMalumotlari, uri, slug } = data;
   const bgImage = featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000';
   const info = oliygohMalumotlari || {};
 
@@ -23,15 +23,43 @@ const Universitet: FaustTemplate<any> = (props) => {
   const nextYear = currentYear + 1;
 
   // SEO
-  const seoTitle = `${title} - Kirish ballari va qabul ${currentYear}-${nextYear} | InfoEdu`;
-  const seoDesc = `${title} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun o'tish ballari, kvotalar va fakultetlar ro'yxati.`;
+  const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz';
+  
+  // Title - H1 bilan bir xil (faqat title o'zi)
+  const seoTitle = title || 'Universitet';
+  
+  // Description - sarlavha ostidagi content'dan olinadi
+  const getDescriptionFromContent = (htmlContent: string | null | undefined): string => {
+    if (!htmlContent) return '';
+    
+    // HTML taglarini olib tashlash
+    const textContent = htmlContent
+      .replace(/<[^>]*>/g, '') // HTML taglarini olib tashlash
+      .replace(/&nbsp;/g, ' ') // &nbsp; ni bo'shliqqa o'zgartirish
+      .replace(/&amp;/g, '&') // &amp; ni & ga o'zgartirish
+      .replace(/&lt;/g, '<') // &lt; ni < ga o'zgartirish
+      .replace(/&gt;/g, '>') // &gt; ni > ga o'zgartirish
+      .replace(/&quot;/g, '"') // &quot; ni " ga o'zgartirish
+      .replace(/&#39;/g, "'") // &#39; ni ' ga o'zgartirish
+      .trim();
+    
+    // Birinchi paragrafni olish (160 belgigacha)
+    const firstParagraph = textContent.split('\n').find(p => p.trim().length > 0) || textContent;
+    return firstParagraph.substring(0, 160).trim();
+  };
+  
+  const seoDesc = getDescriptionFromContent(content) || `${title || 'Universitet'} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun o'tish ballari, kvotalar va fakultetlar ro'yxati.`;
+  const seoImage = bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
+  const seoUrl = uri ? `${BASE_URL}${uri}` : (slug ? `${BASE_URL}/oliygoh/${slug}/` : BASE_URL);
 
   return (
     <>
-      <Head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDesc} />
-      </Head>
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        imageUrl={seoImage}
+        url={seoUrl}
+      />
 
       {/* 1-Xato: HEADER VA FOOTER QAYTARILDI (PageLayout orqali) */}
       <PageLayout
@@ -94,6 +122,7 @@ Universitet.query = gql`
         title
         content
         slug
+        uri
         featuredImage {
           node {
             sourceUrl

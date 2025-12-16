@@ -8,7 +8,7 @@ const client = getApolloClient()
 const SITEMAP_QUERY = gql`
 	query SitemapQuery($after: String) {
 		contentNodes(
-			where: { contentTypes: [POST, PAGE, OLIYGOH] }
+			where: { contentTypes: [POST, PAGE] }
 			first: 50
 			after: $after
 		) {
@@ -41,11 +41,17 @@ async function getAllWPContent(after = null, acc: any[] = []) {
 	return acc
 }
 
-// Function to format the date to ISO 8601 format (W3C Datetime Format)
-// Google requires: YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS+00:00
+// Function to format the date to `m/d/Y g:i a`
 function formatDate(dateString: string): string {
 	const date = new Date(dateString)
-	return date.toISOString()
+	const month = date.getMonth() + 1
+	const day = date.getDate()
+	const year = date.getFullYear()
+	const hours = date.getHours()
+	const minutes = date.getMinutes().toString().padStart(2, '0')
+	const period = hours >= 12 ? 'PM' : 'AM'
+
+	return `${month}/${day}/${year} ${hours % 12 || 12}:${minutes} ${period}`
 }
 
 // Sitemap component

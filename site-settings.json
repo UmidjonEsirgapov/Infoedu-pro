@@ -18,7 +18,13 @@
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
 	"top_banner": {
-		"enable": true
+		"enable": true,
+		"description": "O'quv markazi va Xususiy OTMlar diqqatiga: Kunlik 50,000+ maqsadli auditoriyaga chiqing.",
+		"end_link": {
+			"url": "https://kichik-taklif.vercel.app/",
+			"text": "Taklif bilan tanishish →",
+			"new_tab": true
+		}
 	},
 	"top_category_section": {
 		"enable": true,
