@@ -123,7 +123,7 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 
 		const getAccessToken = async () => {
 			try {
-				const response = await fetch('/api/faust/auth/token', {
+				const response = await fetch('/api/faust/auth/token/', {
 					method: 'GET',
 					credentials: 'include', // Cookie'larni yuborish uchun
 					headers: {

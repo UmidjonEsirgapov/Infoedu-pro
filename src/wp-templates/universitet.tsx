@@ -6,6 +6,7 @@ import PageLayout from '@/container/PageLayout';
 import Hero from '@/components/oliygoh/Hero';
 import ContactCard from '@/components/oliygoh/ContactCard';
 import QuotaTable from '@/components/oliygoh/QuotaTable';
+import Breadcrumb from '@/components/oliygoh/Breadcrumb';
 
 // --- 3. MAIN COMPONENT ---
 
@@ -103,6 +104,8 @@ const Universitet: FaustTemplate<any> = (props) => {
         generalSettings={props.data?.generalSettings}
       >
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+            {/* BREADCRUMB */}
+            <Breadcrumb title={title} />
             
             {/* HERO */}
             <Hero 
