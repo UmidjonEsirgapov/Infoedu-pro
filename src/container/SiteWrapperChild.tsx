@@ -32,7 +32,7 @@ export function SiteWrapperChild({
 		setIsFirstFetchApis(true)
 		dispatch(updateViewerToStore(viewer))
 		// get user meta data
-		fetch('/api/cms-user-meta/' + viewer?.userId + '/')
+		fetch('/api/cms-user-meta/' + viewer?.userId)
 			.then((res) => res.json())
 			.then((data: CMSUserMetaResponseData) => {
 				const user = data?.data?.user

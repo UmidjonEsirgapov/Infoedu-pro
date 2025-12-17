@@ -5,7 +5,7 @@ const { createSecureHeaders } = require('next-secure-headers')
  * @type {import('next').NextConfig}
  **/
 module.exports = withFaust({
-	trailingSlash: true,
+	// trailingSlash: true, // Faust.js bilan muammo yaratadi, o'chirildi
 	reactStrictMode: true,
 	typedRoutes: false,
 	images: {
