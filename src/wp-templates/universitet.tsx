@@ -1,11 +1,11 @@
 import React from 'react';
 import { gql } from '@apollo/client';
 import { FaustTemplate } from '@faustwp/core';
+import Head from 'next/head';
 import PageLayout from '@/container/PageLayout';
 import Hero from '@/components/oliygoh/Hero';
 import ContactCard from '@/components/oliygoh/ContactCard';
 import QuotaTable from '@/components/oliygoh/QuotaTable';
-import SEO from '@/components/SEO/SEO';
 
 // --- 3. MAIN COMPONENT ---
 
@@ -52,19 +52,54 @@ const Universitet: FaustTemplate<any> = (props) => {
   const seoImage = bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
   const seoUrl = uri ? `${BASE_URL}${uri}` : (slug ? `${BASE_URL}/oliygoh/${slug}/` : BASE_URL);
 
+  // --- SCHEMA MARKUP (JSON-LD) ---
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "CollegeOrUniversity",
+    "name": title,
+    "url": seoUrl,
+    "logo": seoImage,
+    "image": seoImage,
+    "description": seoDesc,
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "UZ",
+      "addressLocality": info.manzil ? info.manzil.split(',')[0] : "O'zbekiston",
+      "streetAddress": info.manzil || ""
+    },
+    ...(info.telefon && {
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": info.telefon,
+        "contactType": "admissions",
+        "areaServed": "UZ",
+        "availableLanguage": ["Uzbek", "Russian"]
+      }
+    }),
+    "sameAs": [
+      info.rasmiySayt,
+      info.telegramKanal
+    ].filter(Boolean)
+  };
+
   return (
     <>
-      <SEO
-        title={seoTitle}
-        description={seoDesc}
-        imageUrl={seoImage}
-        url={seoUrl}
-      />
+      {/* --- SCHEMA MARKUPNI QO'SHISH --- */}
+      <Head>
+        <title>{seoTitle}</title>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </Head>
 
       {/* 1-Xato: HEADER VA FOOTER QAYTARILDI (PageLayout orqali) */}
       <PageLayout
         headerMenuItems={props.data?.primaryMenuItems?.nodes}
         footerMenuItems={props.data?.footerMenuItems?.nodes}
+        pageTitle={seoTitle}
+        pageDescription={seoDesc}
+        pageFeaturedImageUrl={seoImage}
         generalSettings={props.data?.generalSettings}
       >
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
