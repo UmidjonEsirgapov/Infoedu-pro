@@ -80,7 +80,7 @@ const UniversitetFilters: React.FC<UniversitetFiltersProps> = ({
   const hasActiveFilters = filters.search || filters.viloyat || filters.turi;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 p-5 sm:p-6 md:p-7 shadow-lg">
+    <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 p-5 sm:p-6 md:p-7 shadow-lg w-full">
       {/* Header */}
       <div className="mb-5 sm:mb-6">
         <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-1">Filtrlash</h3>

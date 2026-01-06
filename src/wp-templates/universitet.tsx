@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { gql } from '@apollo/client';
 import { FaustTemplate } from '@faustwp/core';
 import Head from 'next/head';
@@ -23,13 +23,57 @@ const Universitet: FaustTemplate<any> = (props) => {
 
   if (!data) return <div className="p-10 text-center">Yuklanmoqda...</div>;
 
-  const { title, content, featuredImage, oliygohMalumotlari, uri, slug } = data;
+  const { title, content, featuredImage, oliygohMalumotlari, uri, slug, date, modified } = data;
   const bgImage = featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000';
   const info = oliygohMalumotlari || {};
 
   // Dinamik yillar
   const currentYear = new Date().getFullYear();
   const nextYear = currentYear + 1;
+
+  // Header balandligini o'lchash va top value hisoblash
+  const [stickyTop, setStickyTop] = useState(120);
+  
+  useEffect(() => {
+    const calculateStickyTop = () => {
+      if (typeof window === 'undefined') return;
+      
+      // Header elementini topish - SiteHeader komponenti ichidagi sticky div
+      const headerWrapper = document.querySelector('div[class*="sticky"][class*="top-0"]');
+      const banner = document.querySelector('.Ncmaz_Banner');
+      
+      let headerHeight = 0;
+      let bannerHeight = 0;
+      
+      if (headerWrapper) {
+        headerHeight = headerWrapper.getBoundingClientRect().height;
+      }
+      
+      if (banner) {
+        bannerHeight = banner.getBoundingClientRect().height;
+      }
+      
+      // Header + Banner + 16px padding
+      const totalHeight = headerHeight + bannerHeight + 16;
+      setStickyTop(Math.max(totalHeight, 80)); // Minimum 80px
+    };
+    
+    calculateStickyTop();
+    
+    // Resize va scroll event'larda qayta hisoblash
+    window.addEventListener('resize', calculateStickyTop);
+    window.addEventListener('scroll', calculateStickyTop);
+    
+    // MutationObserver - DOM o'zgarishlarini kuzatish
+    const observer = new MutationObserver(calculateStickyTop);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    
+    return () => {
+      window.removeEventListener('resize', calculateStickyTop);
+      window.removeEventListener('scroll', calculateStickyTop);
+      observer.disconnect();
+    };
+  }, []);
 
   // SEO
   const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz';
@@ -70,43 +114,200 @@ const Universitet: FaustTemplate<any> = (props) => {
   }, [uri, slug, BASE_URL]);
 
   // --- SCHEMA MARKUP (JSON-LD) ---
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "CollegeOrUniversity",
-    "name": title,
-    "url": seoUrl,
-    "logo": seoImage,
-    "image": seoImage,
-    "description": seoDesc,
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "UZ",
-      "addressLocality": info.manzil ? info.manzil.split(',')[0] : "O'zbekiston",
-      "streetAddress": info.manzil || ""
-    },
-    ...(info.telefon && {
-      "contactPoint": {
+  // 1. Organization/CollegeOrUniversity Schema
+  const organizationSchema = useMemo(() => {
+    const schema: any = {
+      "@context": "https://schema.org",
+      "@type": "CollegeOrUniversity",
+      "@id": `${seoUrl}#organization`,
+      "name": title,
+      "url": seoUrl,
+      "description": seoDesc,
+      "image": seoImage,
+      "logo": {
+        "@type": "ImageObject",
+        "url": seoImage
+      },
+      "foundingDate": undefined, // Kelajakda qo'shish mumkin
+      "numberOfStudents": undefined // Kelajakda qo'shish mumkin
+    };
+
+    // Address
+    if (info.manzil) {
+      const addressParts = info.manzil.split(',').map((s: string) => s.trim());
+      schema.address = {
+        "@type": "PostalAddress",
+        "addressCountry": "UZ",
+        "addressLocality": addressParts[0] || "O'zbekiston",
+        "streetAddress": info.manzil
+      };
+    }
+
+    // Contact Points
+    const contactPoints: any[] = [];
+    
+    if (info.telefon) {
+      contactPoints.push({
         "@type": "ContactPoint",
         "telephone": info.telefon,
         "contactType": "admissions",
         "areaServed": "UZ",
-        "availableLanguage": ["Uzbek", "Russian"]
-      }
-    }),
-    "sameAs": [
+        "availableLanguage": ["uz", "ru", "en"]
+      });
+    }
+
+    if (info.elektronPochta) {
+      contactPoints.push({
+        "@type": "ContactPoint",
+        "email": info.elektronPochta,
+        "contactType": "admissions",
+        "areaServed": "UZ"
+      });
+    }
+
+    if (contactPoints.length > 0) {
+      schema.contactPoint = contactPoints.length === 1 ? contactPoints[0] : contactPoints;
+    }
+
+    // SameAs (social media and official website)
+    const sameAs = [
       info.rasmiySayt,
       info.telegramKanal
-    ].filter(Boolean)
-  };
+    ].filter(Boolean);
+    
+    if (sameAs.length > 0) {
+      schema.sameAs = sameAs;
+    }
+
+    // Additional properties
+    if (info.viloyat) {
+      const viloyat = Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat;
+      schema.addressRegion = viloyat;
+      schema.location = {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": viloyat,
+          "addressCountry": "UZ"
+        }
+      };
+    }
+
+    if (info.universitetTuri) {
+      schema.additionalType = Array.isArray(info.universitetTuri) 
+        ? info.universitetTuri[0] 
+        : info.universitetTuri;
+    }
+
+    // Educational credentials
+    schema.hasCredential = {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "degree"
+    };
+
+    // Geo coordinates (if available in future)
+    // schema.geo = {
+    //   "@type": "GeoCoordinates",
+    //   "latitude": "",
+    //   "longitude": ""
+    // };
+
+    return schema;
+  }, [title, seoUrl, seoDesc, seoImage, info]);
+
+  // 2. BreadcrumbList Schema
+  const breadcrumbSchema = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${seoUrl}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Bosh sahifa",
+          "item": BASE_URL
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Oliy Ta'lim Muassasalari",
+          "item": `${BASE_URL}/oliygoh/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": title,
+          "item": seoUrl
+        }
+      ]
+    };
+  }, [title, seoUrl, BASE_URL]);
+
+  // 3. WebPage Schema
+  const webpageSchema = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": seoUrl,
+      "name": seoTitle,
+      "description": seoDesc,
+      "url": seoUrl,
+      "inLanguage": ["uz", "ru"],
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": `${BASE_URL}#website`,
+        "name": props.data?.generalSettings?.title || "Infoedu",
+        "url": BASE_URL
+      },
+      "about": {
+        "@id": `${seoUrl}#organization`
+      },
+      "breadcrumb": {
+        "@id": `${seoUrl}#breadcrumb`
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": seoImage
+      },
+      ...(date && { "datePublished": date }),
+      ...(modified && { "dateModified": modified })
+    };
+  }, [seoTitle, seoDesc, seoUrl, seoImage, BASE_URL, props.data?.generalSettings?.title, data]);
 
   return (
     <>
       {/* --- SCHEMA MARKUPNI QO'SHISH --- */}
       <Head>
         <title>{seoTitle}</title>
+        <meta name="description" content={seoDesc} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDesc} />
+        <meta property="og:image" content={seoImage} />
+        <meta property="og:url" content={seoUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="uz_UZ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDesc} />
+        <meta name="twitter:image" content={seoImage} />
+        
+        {/* Organization/CollegeOrUniversity Schema */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        
+        {/* BreadcrumbList Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        
+        {/* WebPage Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}
         />
       </Head>
 
@@ -130,25 +331,30 @@ const Universitet: FaustTemplate<any> = (props) => {
               viloyat={info.viloyat} 
             />
 
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8 relative z-10">
-              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 md:p-8">
-                
-                <article className="prose prose-slate dark:prose-invert max-w-none mb-12">
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">{title} haqida ma'lumot</h2>
-                  <div dangerouslySetInnerHTML={{ __html: content }} />
-                </article>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                {/* Asosiy Kontent */}
+                <div className="lg:col-span-2">
+                  <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 md:p-8">
+                    
+                    <article className="prose prose-slate dark:prose-invert max-w-none mb-12">
+                      <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">{title} haqida ma'lumot</h2>
+                      <div dangerouslySetInnerHTML={{ __html: content }} />
+                    </article>
 
-                <hr className="border-slate-200 dark:border-slate-700 my-10" />
+                    <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
-                {/* Qabul Komissiyasi - kirish ballaridan yuqorida */}
-                <div className="mb-10">
-                  <ContactCard info={info} />
+                    {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
+                    <QuotaTable quotas={props.quotas || []} universityName={title} />
+                  </div>
                 </div>
 
-                <hr className="border-slate-200 dark:border-slate-700 my-10" />
-
-                {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
-                <QuotaTable quotas={props.quotas || []} universityName={title} />
+                {/* Sidebar - Qabul Komissiyasi */}
+                <div className="lg:col-span-1">
+                  <div className="lg:sticky" style={{ top: `${stickyTop}px` }}>
+                    <ContactCard info={info} />
+                  </div>
+                </div>
               </div>
             </div>
         </div>
@@ -185,6 +391,8 @@ Universitet.query = gql`
           universitetTuri
           yotoqxonaBormi
         }
+        date
+        modified
       }
     }
     # 2. Layout (Header/Footer) uchun kerakli ma'lumotlar

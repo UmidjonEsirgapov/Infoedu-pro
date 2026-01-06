@@ -14,22 +14,24 @@ interface ContactCardProps {
 
 const ContactCard: React.FC<ContactCardProps> = ({ info }) => {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 w-full">
       <div className="bg-slate-900 dark:bg-slate-950 p-4 sm:p-5 md:p-6 text-white">
         <h3 className="text-base sm:text-lg font-bold">Qabul Komissiyasi</h3>
         <p className="text-slate-300 dark:text-slate-400 text-xs mt-1">Savollaringiz bormi? Biz bilan bog'laning</p>
       </div>
 
       <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex flex-col gap-3">
            {info.telefon && (
-               <a href={`tel:${info.telefon}`} className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-blue-200 dark:border-blue-800 text-sm sm:text-base touch-manipulation">
-                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> <span className="truncate">{info.telefon}</span>
+               <a href={`tel:${info.telefon}`} className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-blue-200 dark:border-blue-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2">
+                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
+                 <span className="truncate text-center">{info.telefon}</span>
                </a>
            )}
            {info.telegramKanal && (
-               <a href={info.telegramKanal} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-sky-200 dark:border-sky-800 text-sm sm:text-base touch-manipulation">
-                 <Send className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> <span className="truncate">Telegram orqali yozish</span>
+               <a href={info.telegramKanal} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-sky-200 dark:border-sky-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2">
+                 <Send className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
+                 <span className="truncate text-center whitespace-nowrap">Telegram</span>
                </a>
            )}
         </div>

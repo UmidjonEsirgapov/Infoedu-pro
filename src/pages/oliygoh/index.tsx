@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { getApolloClient } from '@faustwp/core';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
@@ -129,6 +129,50 @@ export default function OliygohlarPage(props: PageProps) {
     turi: '',
   });
 
+  // Header balandligini o'lchash va top value hisoblash
+  const [stickyTop, setStickyTop] = useState(120);
+  
+  useEffect(() => {
+    const calculateStickyTop = () => {
+      if (typeof window === 'undefined') return;
+      
+      // Header elementini topish - SiteHeader komponenti ichidagi sticky div
+      const headerWrapper = document.querySelector('div[class*="sticky"][class*="top-0"]');
+      const banner = document.querySelector('.Ncmaz_Banner');
+      
+      let headerHeight = 0;
+      let bannerHeight = 0;
+      
+      if (headerWrapper) {
+        headerHeight = headerWrapper.getBoundingClientRect().height;
+      }
+      
+      if (banner) {
+        bannerHeight = banner.getBoundingClientRect().height;
+      }
+      
+      // Header + Banner + 16px padding
+      const totalHeight = headerHeight + bannerHeight + 16;
+      setStickyTop(Math.max(totalHeight, 80)); // Minimum 80px
+    };
+    
+    calculateStickyTop();
+    
+    // Resize va scroll event'larda qayta hisoblash
+    window.addEventListener('resize', calculateStickyTop);
+    window.addEventListener('scroll', calculateStickyTop);
+    
+    // MutationObserver - DOM o'zgarishlarini kuzatish
+    const observer = new MutationObserver(calculateStickyTop);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    
+    return () => {
+      window.removeEventListener('resize', calculateStickyTop);
+      window.removeEventListener('scroll', calculateStickyTop);
+      observer.disconnect();
+    };
+  }, []);
+
   // Memoize filter handler
   const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
@@ -192,7 +236,7 @@ export default function OliygohlarPage(props: PageProps) {
       >
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-900 dark:via-slate-800/50 dark:to-slate-900">
           {/* Header Section */}
-          <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
@@ -255,11 +299,11 @@ export default function OliygohlarPage(props: PageProps) {
           </div>
 
           {/* Main Content */}
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12 -mt-8 relative z-10">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12 -mt-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
               {/* Filters Sidebar */}
               <div className="lg:col-span-1 order-2 lg:order-1">
-                <div className="lg:sticky lg:top-6 z-10">
+                <div className="lg:sticky lg:self-start" style={{ top: `${stickyTop}px` }}>
                   <UniversitetFilters
                     onFilterChange={handleFilterChange}
                     allUniversities={allUniversities}
