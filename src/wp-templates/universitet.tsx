@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { gql } from '@apollo/client';
 import { FaustTemplate } from '@faustwp/core';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import Hero from '@/components/oliygoh/Hero';
-import ContactCard from '@/components/oliygoh/ContactCard';
-import QuotaTable from '@/components/oliygoh/QuotaTable';
 import Breadcrumb from '@/components/oliygoh/Breadcrumb';
+
+// Lazy load komponentlar
+const ContactCard = dynamic(() => import('@/components/oliygoh/ContactCard'), {
+  loading: () => <div className="bg-white rounded-xl border border-slate-200 p-6 animate-pulse"><div className="h-64 bg-slate-100 rounded"></div></div>
+});
+
+const QuotaTable = dynamic(() => import('@/components/oliygoh/QuotaTable'), {
+  loading: () => <div className="mt-10 animate-pulse"><div className="h-8 bg-slate-200 rounded w-64 mb-6"></div><div className="h-96 bg-slate-100 rounded"></div></div>
+});
 
 // --- 3. MAIN COMPONENT ---
 
@@ -29,29 +37,37 @@ const Universitet: FaustTemplate<any> = (props) => {
   // Title - H1 bilan bir xil (faqat title o'zi)
   const seoTitle = title || 'Universitet';
   
-  // Description - sarlavha ostidagi content'dan olinadi
-  const getDescriptionFromContent = (htmlContent: string | null | undefined): string => {
-    if (!htmlContent) return '';
+  // Description - sarlavha ostidagi content'dan olinadi - memoized
+  const seoDesc = useMemo(() => {
+    const getDescriptionFromContent = (htmlContent: string | null | undefined): string => {
+      if (!htmlContent) return '';
+      
+      // HTML taglarini olib tashlash
+      const textContent = htmlContent
+        .replace(/<[^>]*>/g, '') // HTML taglarini olib tashlash
+        .replace(/&nbsp;/g, ' ') // &nbsp; ni bo'shliqqa o'zgartirish
+        .replace(/&amp;/g, '&') // &amp; ni & ga o'zgartirish
+        .replace(/&lt;/g, '<') // &lt; ni < ga o'zgartirish
+        .replace(/&gt;/g, '>') // &gt; ni > ga o'zgartirish
+        .replace(/&quot;/g, '"') // &quot; ni " ga o'zgartirish
+        .replace(/&#39;/g, "'") // &#39; ni ' ga o'zgartirish
+        .trim();
+      
+      // Birinchi paragrafni olish (160 belgigacha)
+      const firstParagraph = textContent.split('\n').find(p => p.trim().length > 0) || textContent;
+      return firstParagraph.substring(0, 160).trim();
+    };
     
-    // HTML taglarini olib tashlash
-    const textContent = htmlContent
-      .replace(/<[^>]*>/g, '') // HTML taglarini olib tashlash
-      .replace(/&nbsp;/g, ' ') // &nbsp; ni bo'shliqqa o'zgartirish
-      .replace(/&amp;/g, '&') // &amp; ni & ga o'zgartirish
-      .replace(/&lt;/g, '<') // &lt; ni < ga o'zgartirish
-      .replace(/&gt;/g, '>') // &gt; ni > ga o'zgartirish
-      .replace(/&quot;/g, '"') // &quot; ni " ga o'zgartirish
-      .replace(/&#39;/g, "'") // &#39; ni ' ga o'zgartirish
-      .trim();
-    
-    // Birinchi paragrafni olish (160 belgigacha)
-    const firstParagraph = textContent.split('\n').find(p => p.trim().length > 0) || textContent;
-    return firstParagraph.substring(0, 160).trim();
-  };
+    return getDescriptionFromContent(content) || `${title || 'Universitet'} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun o'tish ballari, kvotalar va fakultetlar ro'yxati.`;
+  }, [content, title, currentYear, nextYear]);
   
-  const seoDesc = getDescriptionFromContent(content) || `${title || 'Universitet'} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun o'tish ballari, kvotalar va fakultetlar ro'yxati.`;
-  const seoImage = bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
-  const seoUrl = uri ? `${BASE_URL}${uri}` : (slug ? `${BASE_URL}/oliygoh/${slug}/` : BASE_URL);
+  const seoImage = useMemo(() => {
+    return bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
+  }, [bgImage, BASE_URL]);
+  
+  const seoUrl = useMemo(() => {
+    return uri ? `${BASE_URL}${uri}` : (slug ? `${BASE_URL}/oliygoh/${slug}/` : BASE_URL);
+  }, [uri, slug, BASE_URL]);
 
   // --- SCHEMA MARKUP (JSON-LD) ---
   const schemaData = {
@@ -103,7 +119,7 @@ const Universitet: FaustTemplate<any> = (props) => {
         pageFeaturedImageUrl={seoImage}
         generalSettings={props.data?.generalSettings}
       >
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100">
             {/* BREADCRUMB */}
             <Breadcrumb title={title} />
             
@@ -114,33 +130,25 @@ const Universitet: FaustTemplate<any> = (props) => {
               viloyat={info.viloyat} 
             />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8 relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8 relative z-10">
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 md:p-8">
                 
-                {/* Asosiy Kontent */}
-                <div className="lg:col-span-2">
-                   <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
-                      
-                      <article className="prose prose-slate max-w-none mb-12">
-                         {/* 6-Xato: "{Title} haqida ma'lumot" */}
-                         <h2 className="text-2xl font-bold text-slate-900 mb-6">{title} haqida ma'lumot</h2>
-                         <div dangerouslySetInnerHTML={{ __html: content }} />
-                         
-                         {/* 7-Xato: Ortiqcha statik bloklar olib tashlandi */}
-                      </article>
+                <article className="prose prose-slate dark:prose-invert max-w-none mb-12">
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">{title} haqida ma'lumot</h2>
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </article>
 
-                      <hr className="border-slate-200 my-10" />
+                <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
-                      {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
-                      <QuotaTable quotas={props.quotas || []} />
-                   </div>
+                {/* Qabul Komissiyasi - kirish ballaridan yuqorida */}
+                <div className="mb-10">
+                  <ContactCard info={info} />
                 </div>
 
-                {/* Sidebar */}
-                <div className="lg:col-span-1">
-                   <ContactCard info={info} />
-                </div>
+                <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
+                {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
+                <QuotaTable quotas={props.quotas || []} universityName={title} />
               </div>
             </div>
         </div>
