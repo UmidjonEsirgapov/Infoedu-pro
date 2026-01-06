@@ -32,6 +32,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
     // WP dagi nomi: "Andijon davlat universiteti"
     const wpTitle = hasData.title;
+    
+    if (!wpTitle) {
+      return { notFound: true };
+    }
 
     // 2. Sizning 'scores.json' faylingizdan shu universitetni qidiramiz
     let matchedScores = [];

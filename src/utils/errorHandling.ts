@@ -4,7 +4,8 @@ import toast from 'react-hot-toast'
 
 export default function errorHandling(error: ApolloError) {
 	if (error.networkError) {
-		return toast.error('Network error: ' + error.networkError)
+		const networkErrorMsg = error.networkError.message || String(error.networkError)
+		return toast.error('Network error: ' + networkErrorMsg)
 	} else if (error.graphQLErrors.length > 0) {
 		return toast.error('GraphQL error: ' + decode(error.message))
 	} else {

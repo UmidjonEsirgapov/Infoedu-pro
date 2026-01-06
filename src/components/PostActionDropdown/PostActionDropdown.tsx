@@ -198,7 +198,7 @@ const PostActionDropdown: FC<Props> = ({
 
 	const hanldeClickDropDown = (item: TPostActionitem) => {
 		if (item.id === 'copylink') {
-			navigator.clipboard.writeText(window.location.origin + uri || '')
+			navigator.clipboard.writeText(window.location.origin + (uri || ''))
 			toast.success(T['Link copied to clipboard'])
 			return
 		}

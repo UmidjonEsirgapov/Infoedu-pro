@@ -68,7 +68,7 @@ const Page: FaustPage<{}> = (props) => {
 				},
 			},
 		})
-	}, [isAuthenticated])
+	}, [isAuthenticated, router.query.id, getPostForEditPostPage])
 
 	useEffect(() => {
 		if (isAuthenticated === false) {
@@ -184,7 +184,7 @@ const Page: FaustPage<{}> = (props) => {
 							isAllowComments: commentStatus === 'open',
 							postFormatsSelected: postFormats,
 							videoUrl: ncmazVideoUrl?.videoUrl || '',
-							objGalleryImgs: ncmazGalleryImgs.reduce((acc, cur, index) => {
+							objGalleryImgs: (ncmazGalleryImgs || []).reduce((acc, cur, index) => {
 								return {
 									...acc,
 									[`image${index + 1}`]: {

@@ -101,15 +101,24 @@ function Content({
 			'.ncmazfc-block-content-common-class',
 		)
 
-		const dataInitTerms: TCategoryCardFull[] = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-terms') || 'null',
-		)
-		const dataInitErrors = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-errors') || 'null',
-		)
+		try {
+			const termsAttr = contentNode?.getAttribute('data-ncmazfc-init-terms')
+			const errorsAttr = contentNode?.getAttribute('data-ncmazfc-init-errors')
+			
+			const dataInitTerms: TCategoryCardFull[] = termsAttr 
+				? JSON.parse(termsAttr) 
+				: []
+			const dataInitErrors = errorsAttr 
+				? JSON.parse(errorsAttr) 
+				: []
 
-		setDataInitTerms_state(dataInitTerms)
-		setDataInitErrors_state(dataInitErrors)
+			setDataInitTerms_state(dataInitTerms)
+			setDataInitErrors_state(dataInitErrors)
+		} catch (error) {
+			console.error('Error parsing block data:', error)
+			setDataInitTerms_state([])
+			setDataInitErrors_state([])
+		}
 	}, [])
 
 	return (

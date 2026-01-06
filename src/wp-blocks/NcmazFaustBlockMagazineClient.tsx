@@ -122,26 +122,39 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 			'.ncmazfc-block-content-common-class',
 		)
 
-		const dataInitPosts: TPostCard[] = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-posts') || 'null',
-		)
-		const dataInitErrors = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-errors') || 'null',
-		)
-		const dataInitQueryVariable = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-query-variables') || 'null',
-		)
-		const dataInitPageInfo: {
-			endCursor: string
-			hasNextPage: boolean
-		} | null = JSON.parse(
-			contentNode?.getAttribute('data-ncmazfc-init-data-page-info') || 'null',
-		)
+		try {
+			const postsAttr = contentNode?.getAttribute('data-ncmazfc-init-posts')
+			const errorsAttr = contentNode?.getAttribute('data-ncmazfc-init-errors')
+			const queryVarAttr = contentNode?.getAttribute('data-ncmazfc-init-query-variables')
+			const pageInfoAttr = contentNode?.getAttribute('data-ncmazfc-init-data-page-info')
 
-		setDataInitPosts_state(dataInitPosts)
-		setDataInitErrors_state(dataInitErrors)
-		setDataInitQueryVariable_state(dataInitQueryVariable)
-		setDataInitPageInfo_state(dataInitPageInfo)
+			const dataInitPosts: TPostCard[] = postsAttr 
+				? JSON.parse(postsAttr) 
+				: []
+			const dataInitErrors = errorsAttr 
+				? JSON.parse(errorsAttr) 
+				: []
+			const dataInitQueryVariable = queryVarAttr 
+				? JSON.parse(queryVarAttr) 
+				: null
+			const dataInitPageInfo: {
+				endCursor: string
+				hasNextPage: boolean
+			} | null = pageInfoAttr 
+				? JSON.parse(pageInfoAttr) 
+				: null
+
+			setDataInitPosts_state(dataInitPosts)
+			setDataInitErrors_state(dataInitErrors)
+			setDataInitQueryVariable_state(dataInitQueryVariable)
+			setDataInitPageInfo_state(dataInitPageInfo)
+		} catch (error) {
+			console.error('Error parsing block data:', error)
+			setDataInitPosts_state([])
+			setDataInitErrors_state([])
+			setDataInitQueryVariable_state(null)
+			setDataInitPageInfo_state(null)
+		}
 	}, [])
 
 	//
