@@ -98,7 +98,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com"
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com" 
         />
          
         <script
@@ -106,6 +106,15 @@ export default class Document extends NextDocument {
            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258193393152528"
            crossOrigin="anonymous"
          />
+
+<script
+  src="https://quge5.com/88/tag.min.js"
+  data-zone="206210"
+  async
+  data-cfasync="false"
+/>
+
+
 				</Head>
 				<body className="relative bg-white text-base text-neutral-900 dark:bg-neutral-900/95 dark:text-neutral-100">
 					<Main />
