@@ -20,9 +20,8 @@ interface Darslik {
   darslikMalumotlari?: {
     sinf?: number | null;
     textbookFile?: {
-      node?: {
-        sourceUrl?: string | null;
-      } | null;
+      sourceUrl?: string | null;
+      mediaItemUrl?: string | null;
     } | string | null;
   } | null;
   fanlar?: {
@@ -66,8 +65,9 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
           darslikMalumotlari {
             sinf
             textbookFile {
-              node {
+              ... on MediaItem {
                 sourceUrl
+                mediaItemUrl
               }
             }
           }
@@ -499,16 +499,29 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       console.warn(`[SERVER] Reached MAX_PAGES limit (${MAX_PAGES}), some textbooks may be missing`);
     }
 
-    // Get menu items from a single query
-    const { data: menuData } = await client.query({
-      query: GET_DARSLIKLAR_BY_CLASS,
-      variables: {
-        first: 1,
-        after: null,
-        headerLocation: PRIMARY_LOCATION,
-        footerLocation: FOOTER_LOCATION,
-      },
-    });
+    // Get menu items from a separate query
+    let generalSettings = null;
+    let primaryMenuItems = null;
+    let footerMenuItems = null;
+
+    try {
+      const { data: menuData } = await client.query({
+        query: GET_DARSLIKLAR_BY_CLASS,
+        variables: {
+          first: 1,
+          after: null,
+          headerLocation: PRIMARY_LOCATION,
+          footerLocation: FOOTER_LOCATION,
+        },
+      });
+
+      generalSettings = menuData?.generalSettings || null;
+      primaryMenuItems = menuData?.primaryMenuItems || null;
+      footerMenuItems = menuData?.footerMenuItems || null;
+    } catch (menuError) {
+      console.error('[SERVER] Error fetching menu data:', menuError);
+      // Continue with null values - page will still work without menus
+    }
 
     // Already filtered during pagination, no need to filter again
     const filteredDarsliklar = allDarsliklar;
@@ -517,9 +530,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       props: {
         data: {
           darsliklar: filteredDarsliklar,
-          generalSettings: menuData?.generalSettings || null,
-          primaryMenuItems: menuData?.primaryMenuItems || null,
-          footerMenuItems: menuData?.footerMenuItems || null,
+          generalSettings,
+          primaryMenuItems,
+          footerMenuItems,
         },
         sinfRaqami,
       },
