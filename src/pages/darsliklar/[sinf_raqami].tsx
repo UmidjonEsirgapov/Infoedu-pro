@@ -24,8 +24,6 @@ interface Darslik {
         sourceUrl?: string | null;
         mediaItemUrl?: string | null;
       } | null;
-      sourceUrl?: string | null;
-      mediaItemUrl?: string | null;
     } | string | null;
   } | null;
   fanlar?: {
@@ -70,14 +68,6 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
             sinf
             textbookFile {
               node {
-                sourceUrl
-                mediaItemUrl
-              }
-              ... on MediaItem {
-                sourceUrl
-                mediaItemUrl
-              }
-              ... on File {
                 sourceUrl
                 mediaItemUrl
               }
@@ -224,15 +214,9 @@ export default function SinfDarsliklarPage(props: PageProps) {
                     (typeof darslik.darslikMalumotlari.textbookFile === 'string' || 
                      (typeof darslik.darslikMalumotlari.textbookFile === 'object' && 
                       darslik.darslikMalumotlari.textbookFile !== null &&
-                      (
-                        // Check node wrapper first
-                        (darslik.darslikMalumotlari.textbookFile.node && 
-                         (darslik.darslikMalumotlari.textbookFile.node.sourceUrl || 
-                          darslik.darslikMalumotlari.textbookFile.node.mediaItemUrl)) ||
-                        // Fallback to direct properties
-                        (darslik.darslikMalumotlari.textbookFile.sourceUrl || 
-                         darslik.darslikMalumotlari.textbookFile.mediaItemUrl)
-                      )));
+                      darslik.darslikMalumotlari.textbookFile.node &&
+                      (darslik.darslikMalumotlari.textbookFile.node.sourceUrl || 
+                       darslik.darslikMalumotlari.textbookFile.node.mediaItemUrl)));
                   
                   return (
                     <Link
