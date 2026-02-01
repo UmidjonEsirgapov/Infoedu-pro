@@ -102,13 +102,153 @@ export type AcfGoogleMap = {
   zoom?: Maybe<Scalars['String']['output']>;
 };
 
-/** Connection between the NcmazGalleryImgs_Fields type and the MediaItem type */
+/** Connection between the DarslikMalumotlari_Fields type and the MediaItem type */
 export type AcfMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & OneToOneConnection & {
   __typename?: 'AcfMediaItemConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
   cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: MediaItem;
+};
+
+/** A block used for editing the site */
+export type AdvancedPostsListingAdvancedPostsListingBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
+  __typename?: 'AdvancedPostsListingAdvancedPostsListingBlock';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the AdvancedPostsListingAdvancedPostsListingBlock Block Type */
+  attributes?: Maybe<AdvancedPostsListingAdvancedPostsListingBlockAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the AdvancedPostsListingAdvancedPostsListingBlock Block Type */
+export type AdvancedPostsListingAdvancedPostsListingBlockAttributes = {
+  __typename?: 'AdvancedPostsListingAdvancedPostsListingBlockAttributes';
+  /** The &quot;backgroundColor&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;button_Right_Left_Padding&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  buttonRightLeftPadding: Scalars['String']['output'];
+  /** The &quot;button_Top_bottom_Padding&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  buttonTopBottomPadding: Scalars['String']['output'];
+  /** The &quot;className&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  className?: Maybe<Scalars['String']['output']>;
+  /** The &quot;columnGap&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  columnGap: Scalars['String']['output'];
+  /** The &quot;commaSeparatedIds&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  commaSeparatedIds: Scalars['BlockAttributesArray']['output'];
+  /** The &quot;Content_font_size&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  contentFontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;Content_Manage_styling&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  contentManageStyling: Scalars['Boolean']['output'];
+  /** The &quot;contentType&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  contentType: Scalars['String']['output'];
+  /** The &quot;customCSS&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  customCSS?: Maybe<Scalars['String']['output']>;
+  /** The &quot;customPostsOptions&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  customPostsOptions?: Maybe<Scalars['BlockAttributesArray']['output']>;
+  /** The &quot;customTaxonomyPosts&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  customTaxonomyPosts?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;fontSize&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  fontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;gradient&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  gradient?: Maybe<Scalars['String']['output']>;
+  /** The &quot;height&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  height?: Maybe<Scalars['String']['output']>;
+  /** The &quot;imageUrl&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  imageUrl: Scalars['String']['output'];
+  /** The &quot;ImgWidth&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  imgWidth?: Maybe<Scalars['String']['output']>;
+  /** The &quot;JustifyContent&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  justifyContent: Scalars['String']['output'];
+  /** The &quot;lock&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;Meta_font_size&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  metaFontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;Meta_Manage_styling&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  metaManageStyling: Scalars['Boolean']['output'];
+  /** The &quot;metadata&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;nextName&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  nextName: Scalars['String']['output'];
+  /** The &quot;numPostsToShow&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  numPostsToShow: Scalars['Float']['output'];
+  /** The &quot;paginationAline&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  paginationAline: Scalars['String']['output'];
+  /** The &quot;PaginationOnToggler&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  paginationOnToggler: Scalars['Boolean']['output'];
+  /** The &quot;prevName&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  prevName: Scalars['String']['output'];
+  /** The &quot;ReadMoreBgColor&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  readMoreBgColor: Scalars['String']['output'];
+  /** The &quot;Read_more_font_size&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  readMoreFontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;ReadMoreText&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  readMoreText: Scalars['String']['output'];
+  /** The &quot;ReadMoreTextColor&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  readMoreTextColor: Scalars['String']['output'];
+  /** The &quot;RemoveCommaSeparatedIds&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  removeCommaSeparatedIds: Scalars['BlockAttributesArray']['output'];
+  /** The &quot;rowGap&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  rowGap: Scalars['String']['output'];
+  /** The &quot;selectedCustomPostType&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  selectedCustomPostType: Scalars['String']['output'];
+  /** The &quot;selectedImageTogggler&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  selectedImageTogggler?: Maybe<Scalars['Boolean']['output']>;
+  /** The &quot;selectedLayout&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  selectedLayout: Scalars['String']['output'];
+  /** The &quot;showContent&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showContent: Scalars['Boolean']['output'];
+  /** The &quot;showImgToggler&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showImgToggler: Scalars['Boolean']['output'];
+  /** The &quot;showMeta&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showMeta: Scalars['Boolean']['output'];
+  /** The &quot;showPostTitle&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showPostTitle: Scalars['Boolean']['output'];
+  /** The &quot;showRange&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showRange?: Maybe<Scalars['String']['output']>;
+  /** The &quot;showReadMoreToggler&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  showReadMoreToggler?: Maybe<Scalars['Boolean']['output']>;
+  /** The &quot;sortBy&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  sortBy: Scalars['String']['output'];
+  /** The &quot;style&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  style?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;textColor&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  textColor?: Maybe<Scalars['String']['output']>;
+  /** The &quot;title_font_size&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  titleFontSize?: Maybe<Scalars['String']['output']>;
+  /** The &quot;title_Manage_styling&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  titleManageStyling: Scalars['Boolean']['output'];
+  /** The &quot;totalColoms&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  totalColoms: Scalars['Float']['output'];
+  /** The &quot;updatedCptIds&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  updatedCptIds: Array<Maybe<Scalars['BlockAttributesObject']['output']>>;
+  /** The &quot;valueForWidth&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  valueForWidth: Scalars['Boolean']['output'];
+  /** The &quot;widthController&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  widthController: Scalars['Boolean']['output'];
+  /** The &quot;widthPercentage&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  widthPercentage: Scalars['String']['output'];
+  /** The &quot;widthPercentageState&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  widthPercentageState?: Maybe<Scalars['Boolean']['output']>;
+  /** The &quot;wordsLimit&quot; field on the &quot;AdvancedPostsListingAdvancedPostsListingBlockAttributes&quot; block or block attributes */
+  wordsLimit: Scalars['Float']['output'];
 };
 
 /** Avatars are profile images for users. WordPress by default uses the Gravatar service to host and fetch avatars from. */
@@ -747,7 +887,7 @@ export type CommentAuthor = Commenter & DatabaseIdentifier & Node & {
   avatar?: Maybe<Avatar>;
   /** The unique identifier stored in the database */
   databaseId: Scalars['Int']['output'];
-  /** The email for the comment author */
+  /** The email for the comment author. */
   email?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment author object */
   id: Scalars['ID']['output'];
@@ -917,7 +1057,7 @@ export type CommentToCommenterConnectionEdge = CommenterConnectionEdge & Edge & 
   __typename?: 'CommentToCommenterConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
   cursor?: Maybe<Scalars['String']['output']>;
-  /** The email address representing the author for this particular comment */
+  /** Email address representing the author for this particular comment */
   email?: Maybe<Scalars['String']['output']>;
   /** IP address of the author at the time of making this comment. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
   ipAddress?: Maybe<Scalars['String']['output']>;
@@ -1560,6 +1700,8 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   Post = 'POST',
   /** The Type of Content object */
+  Textbooks = 'TEXTBOOKS',
+  /** The Type of Content object */
   UserReactionPost = 'USER_REACTION_POST'
 }
 
@@ -1683,6 +1825,12 @@ export enum ContentTypesOfCategoryEnum {
   Post = 'POST'
 }
 
+/** Allowed Content Types of the Fan taxonomy. */
+export enum ContentTypesOfFanEnum {
+  /** The Type of Content object */
+  Textbooks = 'TEXTBOOKS'
+}
+
 /** Allowed Content Types of the GraphqlDocumentGroup taxonomy. */
 export enum ContentTypesOfGraphqlDocumentGroupEnum {
   /** The Type of Content object */
@@ -1702,7 +1850,7 @@ export enum ContentTypesOfTagEnum {
 }
 
 /** A block used for editing the site */
-export type CoreAccordion = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAccordion = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAccordion';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -1774,7 +1922,7 @@ export type CoreAccordionAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreAccordionHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAccordionHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAccordionHeading';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -1840,7 +1988,7 @@ export type CoreAccordionHeadingAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreAccordionItem = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAccordionItem = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAccordionItem';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -1896,7 +2044,7 @@ export type CoreAccordionItemAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreAccordionPanel = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAccordionPanel = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAccordionPanel';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -1954,7 +2102,7 @@ export type CoreAccordionPanelAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreArchives = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreArchives = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreArchives';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2016,7 +2164,7 @@ export type CoreArchivesAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreAudio = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAudio = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAudio';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2076,7 +2224,7 @@ export type CoreAudioAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreAvatar = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreAvatar = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreAvatar';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2128,7 +2276,7 @@ export type CoreAvatarAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreBlock';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2168,7 +2316,7 @@ export type CoreBlockAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreButton = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreButton = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreButton';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2248,7 +2396,7 @@ export type CoreButtonAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreButtons = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreButtons = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreButtons';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2308,7 +2456,7 @@ export type CoreButtonsAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreCalendar = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCalendar = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCalendar';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2362,7 +2510,7 @@ export type CoreCalendarAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCategories = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCategories = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCategories';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2432,7 +2580,7 @@ export type CoreCategoriesAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCode = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCode = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCode';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2494,7 +2642,7 @@ export type CoreCodeAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreColumn = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreColumn = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreColumn';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2558,7 +2706,7 @@ export type CoreColumnAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreColumns = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreColumns = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreColumns';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -2624,7 +2772,7 @@ export type CoreColumnsAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreCommentAuthorName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentAuthorName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentAuthorName';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2682,7 +2830,7 @@ export type CoreCommentAuthorNameAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentContent = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentContent = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentContent';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2736,7 +2884,7 @@ export type CoreCommentContentAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentDate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentDate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentDate';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2792,7 +2940,7 @@ export type CoreCommentDateAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentEditLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentEditLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentEditLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2846,7 +2994,7 @@ export type CoreCommentEditLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentReplyLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentReplyLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentReplyLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2898,7 +3046,7 @@ export type CoreCommentReplyLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentTemplate';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -2946,7 +3094,7 @@ export type CoreCommentTemplateAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreComments';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3004,7 +3152,7 @@ export type CoreCommentsAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentsPagination = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentsPagination = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentsPagination';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3060,7 +3208,7 @@ export type CoreCommentsPaginationAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentsPaginationNext = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentsPaginationNext = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentsPaginationNext';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3110,7 +3258,7 @@ export type CoreCommentsPaginationNextAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentsPaginationNumbers = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentsPaginationNumbers = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentsPaginationNumbers';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3158,7 +3306,7 @@ export type CoreCommentsPaginationNumbersAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentsPaginationPrevious = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentsPaginationPrevious = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentsPaginationPrevious';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3208,7 +3356,7 @@ export type CoreCommentsPaginationPreviousAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCommentsTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCommentsTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCommentsTitle';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3272,7 +3420,7 @@ export type CoreCommentsTitleAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreCover = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreCover = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreCover';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3370,7 +3518,7 @@ export type CoreCoverAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreDetails = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreDetails = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreDetails';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3438,7 +3586,7 @@ export type CoreDetailsAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreEmbed = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreEmbed = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreEmbed';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3494,7 +3642,7 @@ export type CoreEmbedAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreFile = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreFile = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreFile';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3568,7 +3716,7 @@ export type CoreFileAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreFootnotes = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreFootnotes = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreFootnotes';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3618,7 +3766,7 @@ export type CoreFootnotesAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreFreeform = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreFreeform = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreFreeform';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3656,7 +3804,7 @@ export type CoreFreeformAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreGallery = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreGallery = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreGallery';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3753,7 +3901,7 @@ export type CoreGalleryAttributesImages = {
 };
 
 /** A block used for editing the site */
-export type CoreGroup = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreGroup = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreGroup';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3819,7 +3967,7 @@ export type CoreGroupAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreHeading';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -3889,7 +4037,7 @@ export type CoreHeadingAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreHomeLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreHomeLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreHomeLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3935,7 +4083,7 @@ export type CoreHomeLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreHtml = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreHtml = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreHtml';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -3973,7 +4121,7 @@ export type CoreHtmlAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreImage = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreImage = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreImage';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -4061,7 +4209,7 @@ export type CoreImageAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreLatestComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreLatestComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreLatestComments';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4121,7 +4269,7 @@ export type CoreLatestCommentsAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreLatestPosts = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreLatestPosts = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreLatestPosts';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4211,7 +4359,7 @@ export type CoreLatestPostsAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreLegacyWidget = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreLegacyWidget = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreLegacyWidget';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4253,7 +4401,7 @@ export type CoreLegacyWidgetAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreList = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreList = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreList';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -4323,7 +4471,7 @@ export type CoreListAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreListItem = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreListItem = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreListItem';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -4383,7 +4531,7 @@ export type CoreListItemAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreLoginout = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreLoginout = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreLoginout';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4437,7 +4585,7 @@ export type CoreLoginoutAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreMath = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreMath = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreMath';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4479,7 +4627,7 @@ export type CoreMathAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreMediaText = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreMediaText = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreMediaText';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -4573,7 +4721,7 @@ export type CoreMediaTextAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreMissing = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreMissing = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreMissing';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4615,7 +4763,7 @@ export type CoreMissingAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreMore = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreMore = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreMore';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4655,7 +4803,7 @@ export type CoreMoreAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreNavigation = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreNavigation = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreNavigation';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4741,7 +4889,7 @@ export type CoreNavigationAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreNavigationLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreNavigationLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreNavigationLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4805,7 +4953,7 @@ export type CoreNavigationLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreNavigationSubmenu = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreNavigationSubmenu = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreNavigationSubmenu';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4869,7 +5017,7 @@ export type CoreNavigationSubmenuAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreNextpage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreNextpage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreNextpage';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4905,7 +5053,7 @@ export type CoreNextpageAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePageList = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePageList = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePageList';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -4961,7 +5109,7 @@ export type CorePageListAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePageListItem = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePageListItem = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePageListItem';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5009,7 +5157,7 @@ export type CorePageListItemAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreParagraph = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreParagraph = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreParagraph';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -5077,7 +5225,7 @@ export type CoreParagraphAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CorePattern = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePattern = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePattern';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5117,7 +5265,7 @@ export type CorePatternAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostAuthor = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostAuthor = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostAuthor';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5183,7 +5331,7 @@ export type CorePostAuthorAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostAuthorBiography = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostAuthorBiography = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostAuthorBiography';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5237,7 +5385,7 @@ export type CorePostAuthorBiographyAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostAuthorName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostAuthorName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostAuthorName';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5295,7 +5443,7 @@ export type CorePostAuthorNameAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostComments = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostComments';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5347,7 +5495,7 @@ export type CorePostCommentsAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostCommentsCount = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostCommentsCount = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostCommentsCount';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5401,7 +5549,7 @@ export type CorePostCommentsCountAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostCommentsForm = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostCommentsForm = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostCommentsForm';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5453,7 +5601,7 @@ export type CorePostCommentsFormAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostCommentsLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostCommentsLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostCommentsLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5503,7 +5651,7 @@ export type CorePostCommentsLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostContent = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostContent = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostContent';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5561,7 +5709,7 @@ export type CorePostContentAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostDate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostDate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostDate';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5621,7 +5769,7 @@ export type CorePostDateAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostExcerpt = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostExcerpt = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostExcerpt';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5681,7 +5829,7 @@ export type CorePostExcerptAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostFeaturedImage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostFeaturedImage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostFeaturedImage';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5753,7 +5901,7 @@ export type CorePostFeaturedImageAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostNavigationLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostNavigationLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostNavigationLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5815,7 +5963,7 @@ export type CorePostNavigationLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostTemplate';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5871,7 +6019,7 @@ export type CorePostTemplateAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostTerms = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostTerms = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostTerms';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -5992,7 +6140,7 @@ export type CorePostTermsToTermNodeConnectionPageInfo = PageInfo & TermNodeConne
 };
 
 /** A block used for editing the site */
-export type CorePostTimeToRead = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostTimeToRead = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostTimeToRead';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6052,7 +6200,7 @@ export type CorePostTimeToReadAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePostTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePostTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePostTitle';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6118,7 +6266,7 @@ export type CorePostTitleAttributes = {
 };
 
 /** A block used for editing the site */
-export type CorePreformatted = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePreformatted = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePreformatted';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -6176,7 +6324,7 @@ export type CorePreformattedAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CorePullquote = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CorePullquote = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CorePullquote';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -6240,7 +6388,7 @@ export type CorePullquoteAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreQuery = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQuery = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQuery';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6292,7 +6440,7 @@ export type CoreQueryAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryNoResults = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryNoResults = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryNoResults';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6344,7 +6492,7 @@ export type CoreQueryNoResultsAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryPagination = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryPagination = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryPagination';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6402,7 +6550,7 @@ export type CoreQueryPaginationAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryPaginationNext = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryPaginationNext = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryPaginationNext';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6452,7 +6600,7 @@ export type CoreQueryPaginationNextAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryPaginationNumbers = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryPaginationNumbers = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryPaginationNumbers';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6502,7 +6650,7 @@ export type CoreQueryPaginationNumbersAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryPaginationPrevious = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryPaginationPrevious = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryPaginationPrevious';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6552,7 +6700,7 @@ export type CoreQueryPaginationPreviousAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryTitle';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6618,7 +6766,7 @@ export type CoreQueryTitleAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQueryTotal = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQueryTotal = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQueryTotal';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6674,7 +6822,7 @@ export type CoreQueryTotalAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreQuote = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreQuote = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreQuote';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -6742,7 +6890,7 @@ export type CoreQuoteAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreReadMore = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreReadMore = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreReadMore';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6798,7 +6946,7 @@ export type CoreReadMoreAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreRss = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreRss = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreRss';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6868,7 +7016,7 @@ export type CoreRssAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSearch = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSearch = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSearch';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -6942,7 +7090,7 @@ export type CoreSearchAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSeparator = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSeparator = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSeparator';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -6998,7 +7146,7 @@ export type CoreSeparatorAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreShortcode = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreShortcode = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreShortcode';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7036,7 +7184,7 @@ export type CoreShortcodeAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSiteLogo = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSiteLogo = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSiteLogo';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7086,7 +7234,7 @@ export type CoreSiteLogoAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSiteTagline = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSiteTagline = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSiteTagline';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7146,7 +7294,7 @@ export type CoreSiteTaglineAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSiteTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSiteTitle = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSiteTitle';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7210,7 +7358,7 @@ export type CoreSiteTitleAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSocialLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSocialLink = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSocialLink';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7256,7 +7404,7 @@ export type CoreSocialLinkAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreSocialLinks = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSocialLinks = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSocialLinks';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -7328,7 +7476,7 @@ export type CoreSocialLinksAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreSpacer = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreSpacer = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreSpacer';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -7376,7 +7524,7 @@ export type CoreSpacerAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreTable = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTable = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTable';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -7516,7 +7664,7 @@ export type CoreTableAttributesHeadCells = {
 };
 
 /** A block used for editing the site */
-export type CoreTagCloud = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTagCloud = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTagCloud';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7572,7 +7720,7 @@ export type CoreTagCloudAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTemplatePart = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTemplatePart = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTemplatePart';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7620,7 +7768,7 @@ export type CoreTemplatePartAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTermCount = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTermCount = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTermCount';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7674,7 +7822,7 @@ export type CoreTermCountAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTermDescription = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTermDescription = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTermDescription';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7728,7 +7876,7 @@ export type CoreTermDescriptionAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTermName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTermName = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTermName';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7788,7 +7936,7 @@ export type CoreTermNameAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTermTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTermTemplate = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTermTemplate';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7844,7 +7992,7 @@ export type CoreTermTemplateAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTermsQuery = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTermsQuery = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTermsQuery';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7890,7 +8038,7 @@ export type CoreTermsQueryAttributes = {
 };
 
 /** A block used for editing the site */
-export type CoreTextColumns = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreTextColumns = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreTextColumns';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -7941,7 +8089,7 @@ export type CoreTextColumnsAttributesContent = {
 };
 
 /** A block used for editing the site */
-export type CoreVerse = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreVerse = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreVerse';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -8001,7 +8149,7 @@ export type CoreVerseAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreVideo = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreVideo = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreVideo';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -8071,7 +8219,7 @@ export type CoreVideoAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type CoreWidgetGroup = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type CoreWidgetGroup = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'CoreWidgetGroup';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -8170,6 +8318,29 @@ export type CreateCommentPayload = {
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
   success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** Input for the createFan mutation. */
+export type CreateFanInput = {
+  /** The slug that the subject will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the subject object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The name of the subject object to mutate */
+  name: Scalars['String']['input'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createFan mutation. */
+export type CreateFanPayload = {
+  __typename?: 'CreateFanPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created subject */
+  fan?: Maybe<Fan>;
 };
 
 /** Input for the createGraphqlDocumentGroup mutation. */
@@ -8457,6 +8628,37 @@ export type CreateTagPayload = {
   tag?: Maybe<Tag>;
 };
 
+/** Input for the createTextbook mutation. */
+export type CreateTextbookInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** Set connections between the Textbook and fanlar */
+  fanlar?: InputMaybe<TextbookFanlarInput>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createTextbook mutation. */
+export type CreateTextbookPayload = {
+  __typename?: 'CreateTextbookPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  textbook?: Maybe<Textbook>;
+};
+
 /** Input for the createUser mutation. */
 export type CreateUserInput = {
   /** User's AOL IM account. */
@@ -8533,6 +8735,33 @@ export type CreateUserReactionPostPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   userReactionPost?: Maybe<UserReactionPost>;
+};
+
+/** The &quot;DarslikMalumotlari&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type DarslikMalumotlari = AcfFieldGroup & AcfFieldGroupFields & DarslikMalumotlari_Fields & {
+  __typename?: 'DarslikMalumotlari';
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;number&quot; Field Type added to the schema as part of the &quot;DarslikMalumotlari&quot; Field Group */
+  sinf?: Maybe<Scalars['Float']['output']>;
+  /** Field of the &quot;file&quot; Field Type added to the schema as part of the &quot;DarslikMalumotlari&quot; Field Group */
+  textbookFile?: Maybe<AcfMediaItemConnectionEdge>;
+};
+
+/** Interface representing fields of the ACF &quot;DarslikMalumotlari&quot; Field Group */
+export type DarslikMalumotlari_Fields = {
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;number&quot; Field Type added to the schema as part of the &quot;DarslikMalumotlari&quot; Field Group */
+  sinf?: Maybe<Scalars['Float']['output']>;
+  /** Field of the &quot;file&quot; Field Type added to the schema as part of the &quot;DarslikMalumotlari&quot; Field Group */
+  textbookFile?: Maybe<AcfMediaItemConnectionEdge>;
 };
 
 /** An object that has a unique numeric identifier in the database. Provides consistent access to the database ID across different object types. */
@@ -8626,6 +8855,25 @@ export type DeleteCommentPayload = {
   comment?: Maybe<Comment>;
   /** The deleted comment ID */
   deletedId?: Maybe<Scalars['ID']['output']>;
+};
+
+/** Input for the deleteFan mutation. */
+export type DeleteFanInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the fan to delete */
+  id: Scalars['ID']['input'];
+};
+
+/** The payload for the deleteFan mutation. */
+export type DeleteFanPayload = {
+  __typename?: 'DeleteFanPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The deleted term object */
+  fan?: Maybe<Fan>;
 };
 
 /** Input for the deleteGraphqlDocumentGroup mutation. */
@@ -8796,6 +9044,29 @@ export type DeleteTagPayload = {
   deletedId?: Maybe<Scalars['ID']['output']>;
   /** The deleted term object */
   tag?: Maybe<Tag>;
+};
+
+/** Input for the deleteTextbook mutation. */
+export type DeleteTextbookInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The ID of the Textbook to delete */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** The payload for the deleteTextbook mutation. */
+export type DeleteTextbookPayload = {
+  __typename?: 'DeleteTextbookPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The object before it was deleted */
+  textbook?: Maybe<Textbook>;
 };
 
 /** Input for the deleteUser mutation. */
@@ -9059,8 +9330,323 @@ export type EnqueuedStylesheetConnectionPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** The fan type */
+export type Fan = DatabaseIdentifier & MenuItemLinkable & Node & NodeWithRankMathSeo & TermNode & UniformResourceIdentifiable & {
+  __typename?: 'Fan';
+  /** @deprecated Deprecated in favor of using Next.js pages */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /** Connection between the Fan type and the ContentNode type */
+  contentNodes?: Maybe<FanToContentNodeConnection>;
+  /** The number of objects connected to the object */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** The description of the object */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Connection between the TermNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
+  /** Connection between the TermNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  fanId?: Maybe<Scalars['Int']['output']>;
+  /** The globally unique ID for the object */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The link to the term */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The human friendly name of the object. */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathFanTermSeo>;
+  /** An alphanumeric identifier for the object unique to its type. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** Connection between the Fan type and the Taxonomy type */
+  taxonomy?: Maybe<FanToTaxonomyConnectionEdge>;
+  /** The name of the taxonomy that the object is associated with */
+  taxonomyName?: Maybe<Scalars['String']['output']>;
+  templates?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The ID of the term group that this term object belongs to */
+  termGroupId?: Maybe<Scalars['Int']['output']>;
+  /** The taxonomy ID that the object is associated with */
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
+  /** Connection between the Fan type and the Textbook type */
+  textbooks?: Maybe<FanToTextbookConnection>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The fan type */
+export type FanContentNodesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FanToContentNodeConnectionWhereArgs>;
+};
+
+
+/** The fan type */
+export type FanEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The fan type */
+export type FanEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The fan type */
+export type FanTextbooksArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FanToTextbookConnectionWhereArgs>;
+};
+
+/** A paginated collection of fan Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of fan Nodes */
+export type FanConnection = {
+  /** A list of edges (relational context) between RootQuery and connected fan Nodes */
+  edges: Array<FanConnectionEdge>;
+  /** A list of connected fan Nodes */
+  nodes: Array<Fan>;
+  /** Information about pagination in a connection. */
+  pageInfo: FanConnectionPageInfo;
+};
+
+/** Represents a connection to a fan. Contains both the fan Node and metadata about the relationship. */
+export type FanConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected fan Node */
+  node: Fan;
+};
+
+/** Pagination metadata specific to &quot;FanConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;FanConnectionEdge&quot; Nodes. */
+export type FanConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Identifier types for retrieving a specific Fan. Determines which unique property (global ID, database ID, slug, etc.) is used to locate the Fan. */
+export enum FanIdType {
+  /** The Database ID for the node */
+  DatabaseId = 'DATABASE_ID',
+  /** The hashed Global ID */
+  Id = 'ID',
+  /** The name of the node */
+  Name = 'NAME',
+  /** Url friendly name of the node */
+  Slug = 'SLUG',
+  /** The URI for the node */
+  Uri = 'URI'
+}
+
+/** The RankMath SEO meta settings for Fanlar. */
+export type FanMetaSettings = RankMathMetaSettingWithArchive & RankMathMetaSettingWithRobots & {
+  __typename?: 'FanMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** Description for archive pages. */
+  archiveDescription?: Maybe<Scalars['String']['output']>;
+  /** Default title tag for archive page. */
+  archiveTitle?: Maybe<Scalars['String']['output']>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to include snippet data for this taxonomy. */
+  hasSnippetData?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+};
+
+/** Connection between the Fan type and the ContentNode type */
+export type FanToContentNodeConnection = Connection & ContentNodeConnection & {
+  __typename?: 'FanToContentNodeConnection';
+  /** Edges for the FanToContentNodeConnection connection */
+  edges: Array<FanToContentNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<ContentNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: FanToContentNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type FanToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
+  __typename?: 'FanToContentNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: ContentNode;
+};
+
+/** Pagination metadata specific to &quot;FanToContentNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of FanToContentNodeConnection Nodes. */
+export type FanToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'FanToContentNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the FanToContentNodeConnection connection */
+export type FanToContentNodeConnectionWhereArgs = {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<ContentTypesOfFanEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the Fan type and the Taxonomy type */
+export type FanToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
+  __typename?: 'FanToTaxonomyConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: Taxonomy;
+};
+
+/** Connection between the Fan type and the Textbook type */
+export type FanToTextbookConnection = Connection & TextbookConnection & {
+  __typename?: 'FanToTextbookConnection';
+  /** Edges for the FanToTextbookConnection connection */
+  edges: Array<FanToTextbookConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Textbook>;
+  /** Information about pagination in a connection. */
+  pageInfo: FanToTextbookConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type FanToTextbookConnectionEdge = Edge & TextbookConnectionEdge & {
+  __typename?: 'FanToTextbookConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Textbook;
+};
+
+/** Pagination metadata specific to &quot;FanToTextbookConnection&quot; collections. Provides cursors and flags for navigating through sets of FanToTextbookConnection Nodes. */
+export type FanToTextbookConnectionPageInfo = PageInfo & TextbookConnectionPageInfo & WpPageInfo & {
+  __typename?: 'FanToTextbookConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the FanToTextbookConnection connection */
+export type FanToTextbookConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** A block used for editing the site */
-export type FifuImage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type FifuImage = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'FifuImage';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -9101,6 +9687,70 @@ export type FifuImageAttributes = {
   metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
 };
 
+/** A block used for editing the site */
+export type FilebirdBlockFilebirdGallery = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
+  __typename?: 'FilebirdBlockFilebirdGallery';
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** Attributes of the FilebirdBlockFilebirdGallery Block Type */
+  attributes?: Maybe<FilebirdBlockFilebirdGalleryAttributes>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Attributes of the FilebirdBlockFilebirdGallery Block Type */
+export type FilebirdBlockFilebirdGalleryAttributes = {
+  __typename?: 'FilebirdBlockFilebirdGalleryAttributes';
+  /** The &quot;captions&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  captions: Scalars['BlockAttributesObject']['output'];
+  /** The &quot;columns&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  columns: Scalars['Int']['output'];
+  /** The &quot;hasCaption&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  hasCaption: Scalars['Boolean']['output'];
+  /** The &quot;hasLightbox&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  hasLightbox: Scalars['Boolean']['output'];
+  /** The &quot;images&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  images: Scalars['BlockAttributesArray']['output'];
+  /** The &quot;imagesRemoved&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  imagesRemoved: Scalars['BlockAttributesArray']['output'];
+  /** The &quot;imgMinWidth&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  imgMinWidth: Scalars['Int']['output'];
+  /** The &quot;isCropped&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  isCropped: Scalars['Boolean']['output'];
+  /** The &quot;layout&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  layout: Scalars['String']['output'];
+  /** The &quot;linkTo&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  linkTo: Scalars['String']['output'];
+  /** The &quot;lock&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  lock?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;metadata&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  metadata?: Maybe<Scalars['BlockAttributesObject']['output']>;
+  /** The &quot;selectedFolder&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  selectedFolder: Scalars['BlockAttributesArray']['output'];
+  /** The &quot;sortBy&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  sortBy: Scalars['String']['output'];
+  /** The &quot;sortType&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  sortType: Scalars['String']['output'];
+  /** The &quot;spaceAroundImage&quot; field on the &quot;FilebirdBlockFilebirdGalleryAttributes&quot; block or block attributes */
+  spaceAroundImage: Scalars['Int']['output'];
+};
+
 /** The general setting type */
 export type GeneralSettings = {
   __typename?: 'GeneralSettings';
@@ -9112,6 +9762,10 @@ export type GeneralSettings = {
   email?: Maybe<Scalars['String']['output']>;
   /** WordPress locale code. */
   language?: Maybe<Scalars['String']['output']>;
+  /** The media item representing the site icon configured in site settings, used as the site&#039;s favicon and app icon. */
+  siteIcon?: Maybe<GeneralSettingsToMediaItemConnectionEdge>;
+  /** Site icon URL configured in site settings, used as the site&#039;s favicon and app icon. */
+  siteIconUrl?: Maybe<Scalars['String']['output']>;
   /** A day number of the week that the week should start on. */
   startOfWeek?: Maybe<Scalars['Int']['output']>;
   /** A time format for all time strings. */
@@ -9122,6 +9776,21 @@ export type GeneralSettings = {
   title?: Maybe<Scalars['String']['output']>;
   /** Site URL. */
   url?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The general setting type */
+export type GeneralSettingsSiteIconUrlArgs = {
+  size?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Connection between the GeneralSettings type and the MediaItem type */
+export type GeneralSettingsToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & OneToOneConnection & {
+  __typename?: 'GeneralSettingsToMediaItemConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: MediaItem;
 };
 
 /** Input for the generateAuthorizationCode mutation. */
@@ -10249,7 +10918,7 @@ export type HierarchicalTermNodeEnqueuedStylesheetsArgs = {
 };
 
 /** A block used for editing the site */
-export type MailpoetPoweredByMailpoet = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type MailpoetPoweredByMailpoet = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'MailpoetPoweredByMailpoet';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -10289,7 +10958,7 @@ export type MailpoetPoweredByMailpoetAttributes = {
 };
 
 /** A block used for editing the site */
-export type MailpoetSubscriptionFormBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type MailpoetSubscriptionFormBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'MailpoetSubscriptionFormBlock';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -10327,7 +10996,7 @@ export type MailpoetSubscriptionFormBlockAttributes = {
 };
 
 /** A block used for editing the site */
-export type MailpoetSubscriptionFormBlockRender = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type MailpoetSubscriptionFormBlockRender = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'MailpoetSubscriptionFormBlockRender';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -11039,7 +11708,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkable Interface */
-export type MenuItemObjectUnion = Category | Oliygoh | Page | Post | PostFormat | Tag | UserReactionPost;
+export type MenuItemObjectUnion = Category | Fan | Oliygoh | Page | Post | PostFormat | Tag | Textbook | UserReactionPost;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = Edge & MenuConnectionEdge & OneToOneConnection & {
@@ -11619,7 +12288,7 @@ export type NcmazFaustAddSubscriberToMailpoetPayload = {
 };
 
 /** A block used for editing the site */
-export type NcmazFaustBlockCta = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type NcmazFaustBlockCta = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'NcmazFaustBlockCta';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -11665,7 +12334,7 @@ export type NcmazFaustBlockCtaAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type NcmazFaustBlockGroup = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type NcmazFaustBlockGroup = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'NcmazFaustBlockGroup';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -11711,7 +12380,7 @@ export type NcmazFaustBlockGroupAttributes = {
 };
 
 /** A block used for editing the site */
-export type NcmazFaustBlockHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type NcmazFaustBlockHeading = BlockWithSupportsAnchor & EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'NcmazFaustBlockHeading';
   /** The anchor field for the block. */
   anchor?: Maybe<Scalars['String']['output']>;
@@ -11757,7 +12426,7 @@ export type NcmazFaustBlockHeadingAttributes = BlockWithSupportsAnchor & {
 };
 
 /** A block used for editing the site */
-export type NcmazFaustBlockMagazine = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type NcmazFaustBlockMagazine = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'NcmazFaustBlockMagazine';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -11809,7 +12478,7 @@ export type NcmazFaustBlockMagazineAttributes = {
 };
 
 /** A block used for editing the site */
-export type NcmazFaustBlockTerms = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type NcmazFaustBlockTerms = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'NcmazFaustBlockTerms';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -12266,6 +12935,18 @@ export type NodeWithTemplate = {
   id: Scalars['ID']['output'];
   /** The template assigned to the node */
   template?: Maybe<ContentTemplate>;
+};
+
+/** Node that has Textbook content blocks associated with it */
+export type NodeWithTextbookEditorBlocks = {
+  /** List of Textbook editor blocks */
+  editorBlocks?: Maybe<Array<Maybe<TextbookEditorBlock>>>;
+};
+
+
+/** Node that has Textbook content blocks associated with it */
+export type NodeWithTextbookEditorBlocksEditorBlocksArgs = {
+  flat?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Content with a dedicated title field. The title typically serves as the main heading and identifier for the content. */
@@ -14860,6 +15541,8 @@ export type RankMathContentTypeMetaSettings = {
   page?: Maybe<PageMetaSettings>;
   /** The RankMath SEO meta settings for Posts. */
   post?: Maybe<PostMetaSettings>;
+  /** The RankMath SEO meta settings for Darsliklar. */
+  textbook?: Maybe<TextbookMetaSettings>;
   /** The RankMath SEO meta settings for User Reaction Posts. */
   userReactionPost?: Maybe<UserReactionPostMetaSettings>;
 };
@@ -14879,8 +15562,31 @@ export type RankMathDateArchiveMetaSettings = RankMathMetaSettingWithArchive & R
   robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
 };
 
+/** The subject term object SEO data */
+export type RankMathFanTermSeo = RankMathSeo & {
+  __typename?: 'RankMathFanTermSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 /** A block used for editing the site */
-export type RankMathFaqBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type RankMathFaqBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'RankMathFaqBlock';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -15085,7 +15791,7 @@ export type RankMathHomepageMetaSettings = RankMathMetaSettingWithRobots & {
 };
 
 /** A block used for editing the site */
-export type RankMathHowtoBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type RankMathHowtoBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'RankMathHowtoBlock';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -16116,7 +16822,7 @@ export enum RankMathRedirectionTypeEnum {
 }
 
 /** A block used for editing the site */
-export type RankMathRichSnippet = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type RankMathRichSnippet = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'RankMathRichSnippet';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -16544,14 +17250,66 @@ export type RankMathTaxonomyMetaSettings = {
   __typename?: 'RankMathTaxonomyMetaSettings';
   /** The RankMath SEO meta settings for Categories. */
   category?: Maybe<CategoryMetaSettings>;
+  /** The RankMath SEO meta settings for Fanlar. */
+  fan?: Maybe<FanMetaSettings>;
   /** The RankMath SEO meta settings for Formats. */
   postFormat?: Maybe<PostFormatMetaSettings>;
   /** The RankMath SEO meta settings for Tags. */
   tag?: Maybe<TagMetaSettings>;
 };
 
+/** The textbooks post object SEO data */
+export type RankMathTextbookObjectSeo = RankMathContentNodeSeo & RankMathSeo & {
+  __typename?: 'RankMathTextbookObjectSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** Whether the item is considered pillar (cornerstone) content */
+  isPillarContent?: Maybe<Scalars['Boolean']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The SEO score */
+  seoScore?: Maybe<RankMathSeoScore>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** The textbooks post type object SEO data */
+export type RankMathTextbookTypeSeo = RankMathSeo & {
+  __typename?: 'RankMathTextbookTypeSeo';
+  /** The title to use in the breadcrumbs for this post */
+  breadcrumbTitle?: Maybe<Scalars['String']['output']>;
+  /** The canonical url. */
+  canonicalUrl?: Maybe<Scalars['String']['output']>;
+  /** The meta description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The focus keywords you want to rank for */
+  focusKeywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The fully-rendered `head` tag for the given item */
+  fullHead?: Maybe<Scalars['String']['output']>;
+  /** The JSON+LD data */
+  jsonLd?: Maybe<RankMathJsonLd>;
+  /** The open graph meta properties. */
+  openGraph?: Maybe<RankMathOpenGraphMeta>;
+  /** A list of the robots meta properties to output. */
+  robots?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The title. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 /** A block used for editing the site */
-export type RankMathTocBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & {
+export type RankMathTocBlock = EditorBlock & OliygohEditorBlock & PageEditorBlock & PostEditorBlock & TextbookEditorBlock & {
   __typename?: 'RankMathTocBlock';
   /** The API version of the Gutenberg Block */
   apiVersion?: Maybe<Scalars['Int']['output']>;
@@ -16833,6 +17591,8 @@ export type RootMutation = {
   createCategory?: Maybe<CreateCategoryPayload>;
   /** The createComment mutation */
   createComment?: Maybe<CreateCommentPayload>;
+  /** The createFan mutation */
+  createFan?: Maybe<CreateFanPayload>;
   /** The createGraphqlDocument mutation */
   createGraphqlDocument?: Maybe<CreateGraphqlDocumentPayload>;
   /** The createGraphqlDocumentGroup mutation */
@@ -16849,6 +17609,8 @@ export type RootMutation = {
   createPostFormat?: Maybe<CreatePostFormatPayload>;
   /** The createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
+  /** The createTextbook mutation */
+  createTextbook?: Maybe<CreateTextbookPayload>;
   /** The createUser mutation */
   createUser?: Maybe<CreateUserPayload>;
   /** The createUserReactionPost mutation */
@@ -16857,6 +17619,8 @@ export type RootMutation = {
   deleteCategory?: Maybe<DeleteCategoryPayload>;
   /** The deleteComment mutation */
   deleteComment?: Maybe<DeleteCommentPayload>;
+  /** The deleteFan mutation */
+  deleteFan?: Maybe<DeleteFanPayload>;
   /** The deleteGraphqlDocument mutation */
   deleteGraphqlDocument?: Maybe<DeleteGraphqlDocumentPayload>;
   /** The deleteGraphqlDocumentGroup mutation */
@@ -16873,6 +17637,8 @@ export type RootMutation = {
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
   /** The deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
+  /** The deleteTextbook mutation */
+  deleteTextbook?: Maybe<DeleteTextbookPayload>;
   /** The deleteUser mutation */
   deleteUser?: Maybe<DeleteUserPayload>;
   /** The deleteUserReactionPost mutation */
@@ -16903,6 +17669,8 @@ export type RootMutation = {
   updateCategory?: Maybe<UpdateCategoryPayload>;
   /** The updateComment mutation */
   updateComment?: Maybe<UpdateCommentPayload>;
+  /** The updateFan mutation */
+  updateFan?: Maybe<UpdateFanPayload>;
   /** The updateGraphqlDocument mutation */
   updateGraphqlDocument?: Maybe<UpdateGraphqlDocumentPayload>;
   /** The updateGraphqlDocumentGroup mutation */
@@ -16921,6 +17689,8 @@ export type RootMutation = {
   updateSettings?: Maybe<UpdateSettingsPayload>;
   /** The updateTag mutation */
   updateTag?: Maybe<UpdateTagPayload>;
+  /** The updateTextbook mutation */
+  updateTextbook?: Maybe<UpdateTextbookPayload>;
   /** The updateUser mutation */
   updateUser?: Maybe<UpdateUserPayload>;
   /** The updateUserReactionPost mutation */
@@ -16937,6 +17707,12 @@ export type RootMutationCreateCategoryArgs = {
 /** The root mutation */
 export type RootMutationCreateCommentArgs = {
   input: CreateCommentInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateFanArgs = {
+  input: CreateFanInput;
 };
 
 
@@ -16989,6 +17765,12 @@ export type RootMutationCreateTagArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreateTextbookArgs = {
+  input: CreateTextbookInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreateUserArgs = {
   input: CreateUserInput;
 };
@@ -17009,6 +17791,12 @@ export type RootMutationDeleteCategoryArgs = {
 /** The root mutation */
 export type RootMutationDeleteCommentArgs = {
   input: DeleteCommentInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteFanArgs = {
+  input: DeleteFanInput;
 };
 
 
@@ -17057,6 +17845,12 @@ export type RootMutationDeletePostFormatArgs = {
 /** The root mutation */
 export type RootMutationDeleteTagArgs = {
   input: DeleteTagInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteTextbookArgs = {
+  input: DeleteTextbookInput;
 };
 
 
@@ -17151,6 +17945,12 @@ export type RootMutationUpdateCommentArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateFanArgs = {
+  input: UpdateFanInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdateGraphqlDocumentArgs = {
   input: UpdateGraphqlDocumentInput;
 };
@@ -17205,6 +18005,12 @@ export type RootMutationUpdateTagArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateTextbookArgs = {
+  input: UpdateTextbookInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
@@ -17238,6 +18044,10 @@ export type RootQuery = {
   contentTypes?: Maybe<RootQueryToContentTypeConnection>;
   /** Fields of the &#039;DiscussionSettings&#039; settings group */
   discussionSettings?: Maybe<DiscussionSettings>;
+  /** A 0bject */
+  fan?: Maybe<Fan>;
+  /** Connection between the RootQuery type and the fan type */
+  fanlar?: Maybe<RootQueryToFanConnection>;
   /** Fields of the &#039;GeneralSettings&#039; settings group */
   generalSettings?: Maybe<GeneralSettings>;
   /** Returns the stylesheet resulting of merging core, theme, and user data. */
@@ -17339,6 +18149,15 @@ export type RootQuery = {
   termNode?: Maybe<TermNode>;
   /** Connection between the RootQuery type and the TermNode type */
   terms?: Maybe<RootQueryToTermNodeConnection>;
+  /** An object of the Textbook Type.  */
+  textbook?: Maybe<Textbook>;
+  /**
+   * A Textbook object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  textbookBy?: Maybe<Textbook>;
+  /** Connection between the RootQuery type and the Textbook type */
+  textbooks?: Maybe<RootQueryToTextbookConnection>;
   /** A Theme object */
   theme?: Maybe<Theme>;
   /** Connection between the RootQuery type and the Theme type */
@@ -17433,6 +18252,23 @@ export type RootQueryContentTypesArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryFanArgs = {
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<FanIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryFanlarArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToFanConnectionWhereArgs>;
 };
 
 
@@ -17764,6 +18600,33 @@ export type RootQueryTermsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToTermNodeConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTextbookArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<TextbookIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTextbookByArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  textbookId?: InputMaybe<Scalars['Int']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTextbooksArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToTextbookConnectionWhereArgs>;
 };
 
 
@@ -18182,6 +19045,83 @@ export type RootQueryToEnqueuedStylesheetConnectionPageInfo = EnqueuedStylesheet
   hasPreviousPage: Scalars['Boolean']['output'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Connection between the RootQuery type and the fan type */
+export type RootQueryToFanConnection = Connection & FanConnection & {
+  __typename?: 'RootQueryToFanConnection';
+  /** Edges for the RootQueryToFanConnection connection */
+  edges: Array<RootQueryToFanConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Fan>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToFanConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToFanConnectionEdge = Edge & FanConnectionEdge & {
+  __typename?: 'RootQueryToFanConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Fan;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToFanConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToFanConnection Nodes. */
+export type RootQueryToFanConnectionPageInfo = FanConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToFanConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToFanConnection connection */
+export type RootQueryToFanConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the graphqlDocument type */
@@ -19179,6 +20119,77 @@ export type RootQueryToTermNodeConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** Connection between the RootQuery type and the Textbook type */
+export type RootQueryToTextbookConnection = Connection & TextbookConnection & {
+  __typename?: 'RootQueryToTextbookConnection';
+  /** Edges for the RootQueryToTextbookConnection connection */
+  edges: Array<RootQueryToTextbookConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Textbook>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToTextbookConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToTextbookConnectionEdge = Edge & TextbookConnectionEdge & {
+  __typename?: 'RootQueryToTextbookConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Textbook;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToTextbookConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToTextbookConnection Nodes. */
+export type RootQueryToTextbookConnectionPageInfo = PageInfo & TextbookConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToTextbookConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToTextbookConnection connection */
+export type RootQueryToTextbookConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Connection between the RootQuery type and the Theme type */
 export type RootQueryToThemeConnection = Connection & ThemeConnection & {
   __typename?: 'RootQueryToThemeConnection';
@@ -19912,6 +20923,8 @@ export type TaxonomyConnectionPageInfo = {
 export enum TaxonomyEnum {
   /** Taxonomy enum category */
   Category = 'CATEGORY',
+  /** Taxonomy enum subject */
+  Fan = 'FAN',
   /** Taxonomy enum graphql_document_group */
   Graphqldocumentgroup = 'GRAPHQLDOCUMENTGROUP',
   /** Taxonomy enum post_format */
@@ -20208,6 +21221,517 @@ export enum TermObjectsConnectionOrderbyEnum {
   TermOrder = 'TERM_ORDER'
 }
 
+/** The Textbook type */
+export type Textbook = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithEditorBlocks & NodeWithFeaturedImage & NodeWithRankMathSeo & NodeWithTemplate & NodeWithTextbookEditorBlocks & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfDarslikMalumotlari & {
+  __typename?: 'Textbook';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<TextbookToTextbookConnection>;
+  /** @deprecated Deprecated in favor of using Next.js pages */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /** The content of the post. */
+  content?: Maybe<Scalars['String']['output']>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String']['output'];
+  /** Fields of the DarslikMalumotlari ACF Field Group */
+  darslikMalumotlari?: Maybe<DarslikMalumotlari>;
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']['output']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']['output']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']['output']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** List of Textbook editor blocks */
+  editorBlocks?: Maybe<Array<Maybe<TextbookEditorBlock>>>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']['output']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the Textbook type and the fan type */
+  fanlar?: Maybe<TextbookToFanConnection>;
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the textbooks object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
+  /** The globally unique identifier of the textbooks object. */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']['output']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<TextbookToParentConnectionEdge>;
+  /** The password for the textbooks object. */
+  password?: Maybe<Scalars['String']['output']>;
+  /** Connection between the Textbook type and the Textbook type */
+  preview?: Maybe<TextbookToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The RankMath SEO data for the node. */
+  seo?: Maybe<RankMathTextbookObjectSeo>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']['output']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Connection between the Textbook type and the TermNode type */
+  terms?: Maybe<TextbookToTermNodeConnection>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  textbookId: Scalars['Int']['output'];
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The Textbook type */
+export type TextbookAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The Textbook type */
+export type TextbookContentArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+
+/** The Textbook type */
+export type TextbookEditorBlocksArgs = {
+  flat?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** The Textbook type */
+export type TextbookEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The Textbook type */
+export type TextbookEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The Textbook type */
+export type TextbookFanlarArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TextbookToFanConnectionWhereArgs>;
+};
+
+
+/** The Textbook type */
+export type TextbookTermsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<TextbookToTermNodeConnectionWhereArgs>;
+};
+
+
+/** The Textbook type */
+export type TextbookTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** A paginated collection of Textbook Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of Textbook Nodes */
+export type TextbookConnection = {
+  /** A list of edges (relational context) between RootQuery and connected Textbook Nodes */
+  edges: Array<TextbookConnectionEdge>;
+  /** A list of connected Textbook Nodes */
+  nodes: Array<Textbook>;
+  /** Information about pagination in a connection. */
+  pageInfo: TextbookConnectionPageInfo;
+};
+
+/** Represents a connection to a Textbook. Contains both the Textbook Node and metadata about the relationship. */
+export type TextbookConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected Textbook Node */
+  node: Textbook;
+};
+
+/** Pagination metadata specific to &quot;TextbookConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;TextbookConnectionEdge&quot; Nodes. */
+export type TextbookConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** EditorBlock Interface for Textbook Block Type */
+export type TextbookEditorBlock = {
+  /** The API version of the Gutenberg Block */
+  apiVersion?: Maybe<Scalars['Int']['output']>;
+  /** The name of the category the Block belongs to */
+  blockEditorCategoryName?: Maybe<Scalars['String']['output']>;
+  /** The id of the Block */
+  clientId?: Maybe<Scalars['String']['output']>;
+  /** CSS Classnames to apply to the block */
+  cssClassNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The inner blocks of the Block */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /** Whether the block is Dynamic (server rendered) */
+  isDynamic: Scalars['Boolean']['output'];
+  /** The name of the Block */
+  name?: Maybe<Scalars['String']['output']>;
+  /** The parent id of the Block */
+  parentClientId?: Maybe<Scalars['String']['output']>;
+  /** The rendered HTML for the block */
+  renderedHtml?: Maybe<Scalars['String']['output']>;
+  /** The (GraphQL) type of the block */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Set relationships between the Textbook to fanlar */
+export type TextbookFanlarInput = {
+  /** If true, this will append the fan to existing related fanlar. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<TextbookFanlarNodeInput>>>;
+};
+
+/** List of fanlar to connect the Textbook to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type TextbookFanlarNodeInput = {
+  /** The description of the fan. This field is used to set a description of the fan if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the fan. If present, this will be used to connect to the Textbook. If no existing fan exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** The name of the fan. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the fan. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Identifier types for retrieving a specific Textbook. Specifies which unique attribute is used to find an exact Textbook. */
+export enum TextbookIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** The RankMath SEO meta settings for Darsliklar. */
+export type TextbookMetaSettings = RankMathMetaSettingWithRobots & {
+  __typename?: 'TextbookMetaSettings';
+  /** Advanced robots meta tag settings. */
+  advancedRobotsMeta?: Maybe<RankMathAdvancedRobotsMeta>;
+  /** List of custom fields name to include in the Page analysis */
+  analyzedFields?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** Default article type when creating a new Darsliklar. */
+  articleType?: Maybe<RankMathArticleTypeEnum>;
+  /** Default description for single Darsliklar pages. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether to list bulk editing columns to the post listing screen. */
+  hasBulkEditing?: Maybe<RankMathBulkEditingTypeEnum>;
+  /** Whether custom robots meta for author page are set. Otherwise the default meta will be used, as set in the Global Meta tab. */
+  hasCustomRobotsMeta?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether Link Suggestions meta box and the Pillar Content featured are enabled for this post type. */
+  hasLinkSuggestions?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the SEO Controls meta box for user profile pages is enabled. */
+  hasSeoControls?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether to show additional information (name &amp; total number of posts) when an author archive is shared on Slack. */
+  hasSlackEnhancedSharing?: Maybe<Scalars['Boolean']['output']>;
+  /** Custom values for robots meta tag. */
+  robotsMeta?: Maybe<Array<Maybe<RankMathRobotsMetaValueEnum>>>;
+  /** Whether to use the Focus Keyword as the default text for the links instead of the post titles. */
+  shouldUseFocusKeyword?: Maybe<Scalars['Boolean']['output']>;
+  /** Default rich snippet headline. */
+  snippetDescription?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet headline. */
+  snippetHeadline?: Maybe<Scalars['String']['output']>;
+  /** Default rich snippet select when creating a new Darsliklar. */
+  snippetType?: Maybe<RankMathSnippetTypeEnum>;
+  /** The default image to display when sharing this post type on social media */
+  socialImage?: Maybe<MediaItem>;
+  /** Default title tag for single Darsliklar pages. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Connection between the Textbook type and the fan type */
+export type TextbookToFanConnection = Connection & FanConnection & {
+  __typename?: 'TextbookToFanConnection';
+  /** Edges for the TextbookToFanConnection connection */
+  edges: Array<TextbookToFanConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Fan>;
+  /** Information about pagination in a connection. */
+  pageInfo: TextbookToFanConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TextbookToFanConnectionEdge = Edge & FanConnectionEdge & {
+  __typename?: 'TextbookToFanConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Fan;
+};
+
+/** Pagination metadata specific to &quot;TextbookToFanConnection&quot; collections. Provides cursors and flags for navigating through sets of TextbookToFanConnection Nodes. */
+export type TextbookToFanConnectionPageInfo = FanConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'TextbookToFanConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the TextbookToFanConnection connection */
+export type TextbookToFanConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the Textbook type and the Textbook type */
+export type TextbookToParentConnectionEdge = Edge & OneToOneConnection & TextbookConnectionEdge & {
+  __typename?: 'TextbookToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Textbook;
+};
+
+/** Connection between the Textbook type and the Textbook type */
+export type TextbookToPreviewConnectionEdge = Edge & OneToOneConnection & TextbookConnectionEdge & {
+  __typename?: 'TextbookToPreviewConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: Textbook;
+};
+
+/** Connection between the Textbook type and the TermNode type */
+export type TextbookToTermNodeConnection = Connection & TermNodeConnection & {
+  __typename?: 'TextbookToTermNodeConnection';
+  /** Edges for the TextbookToTermNodeConnection connection */
+  edges: Array<TextbookToTermNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<TermNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: TextbookToTermNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TextbookToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
+  __typename?: 'TextbookToTermNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: TermNode;
+};
+
+/** Pagination metadata specific to &quot;TextbookToTermNodeConnection&quot; collections. Provides cursors and flags for navigating through sets of TextbookToTermNodeConnection Nodes. */
+export type TextbookToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
+  __typename?: 'TextbookToTermNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the TextbookToTermNodeConnection connection */
+export type TextbookToTermNodeConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** The Taxonomy to filter terms by */
+  taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the Textbook type and the Textbook type */
+export type TextbookToTextbookConnection = Connection & TextbookConnection & {
+  __typename?: 'TextbookToTextbookConnection';
+  /** Edges for the TextbookToTextbookConnection connection */
+  edges: Array<TextbookToTextbookConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Textbook>;
+  /** Information about pagination in a connection. */
+  pageInfo: TextbookToTextbookConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TextbookToTextbookConnectionEdge = Edge & TextbookConnectionEdge & {
+  __typename?: 'TextbookToTextbookConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Textbook;
+};
+
+/** Pagination metadata specific to &quot;TextbookToTextbookConnection&quot; collections. Provides cursors and flags for navigating through sets of TextbookToTextbookConnection Nodes. */
+export type TextbookToTextbookConnectionPageInfo = PageInfo & TextbookConnectionPageInfo & WpPageInfo & {
+  __typename?: 'TextbookToTextbookConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 /** A theme object */
 export type Theme = Node & {
   __typename?: 'Theme';
@@ -20350,6 +21874,31 @@ export type UpdateCommentPayload = {
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
   success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** Input for the updateFan mutation. */
+export type UpdateFanInput = {
+  /** The slug that the subject will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the subject object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the fan object to update */
+  id: Scalars['ID']['input'];
+  /** The name of the subject object to mutate */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateFan mutation. */
+export type UpdateFanPayload = {
+  __typename?: 'UpdateFanPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created subject */
+  fan?: Maybe<Fan>;
 };
 
 /** Input for the updateGraphqlDocumentGroup mutation. */
@@ -20718,6 +22267,41 @@ export type UpdateTagPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created post_tag */
   tag?: Maybe<Tag>;
+};
+
+/** Input for the updateTextbook mutation. */
+export type UpdateTextbookInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** Set connections between the Textbook and fanlar */
+  fanlar?: InputMaybe<TextbookFanlarInput>;
+  /** The ID of the Textbook object */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateTextbook mutation. */
+export type UpdateTextbookPayload = {
+  __typename?: 'UpdateTextbookPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  textbook?: Maybe<Textbook>;
 };
 
 /** Input for the updateUser mutation. */
@@ -22067,6 +23651,12 @@ export type WpPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** Provides access to fields of the &quot;DarslikMalumotlari&quot; ACF Field Group via the &quot;darslikMalumotlari&quot; field */
+export type WithAcfDarslikMalumotlari = {
+  /** Fields of the DarslikMalumotlari ACF Field Group */
+  darslikMalumotlari?: Maybe<DarslikMalumotlari>;
+};
+
 /** Provides access to fields of the &quot;NcPageMeta&quot; ACF Field Group via the &quot;ncPageMeta&quot; field */
 export type WithAcfNcPageMeta = {
   /** Fields of the NcPageMeta ACF Field Group */
@@ -22221,13 +23811,13 @@ export type NcmazFcPostFullFieldsFragment = { __typename: 'Post', uri?: string |
         & { ' $fragmentRefs'?: { 'NcmazFcImageHasDetailFieldsFragment': NcmazFcImageHasDetailFieldsFragment } }
       ) } | null } | null } & { ' $fragmentName'?: 'NcmazFcPostFullFieldsFragment' };
 
-export type NcmazFcPostFullVsEditorBlocksNoContentFieldsFragment = { __typename: 'Post', uri?: string | null, modified?: string | null, date?: string | null, commentStatus?: string | null, status?: string | null, commentCount?: number | null, excerpt?: string | null, databaseId: number, title?: string | null, editorBlocks?: Array<{ __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+export type NcmazFcPostFullVsEditorBlocksNoContentFieldsFragment = { __typename: 'Post', uri?: string | null, modified?: string | null, date?: string | null, commentStatus?: string | null, status?: string | null, commentCount?: number | null, excerpt?: string | null, databaseId: number, title?: string | null, editorBlocks?: Array<{ __typename: 'AdvancedPostsListingAdvancedPostsListingBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
     { __typename: 'CoreColumn', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'CoreColumnFragmentFragment': CoreColumnFragmentFragment } }
   ) | (
     { __typename: 'CoreColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'CoreColumnsFragmentFragment': CoreColumnsFragmentFragment } }
-  ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+  ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FilebirdBlockFilebirdGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
     { __typename: 'NcmazFaustBlockCta', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
     & { ' $fragmentRefs'?: { 'NcmazFaustBlockCtaFragmentFragment': NcmazFaustBlockCtaFragmentFragment } }
   ) | (
@@ -22364,7 +23954,7 @@ export type NcPrimaryMenuFieldsFragmentFragment = { __typename?: 'MenuItem', id:
           )> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: (
             { __typename?: 'MediaItem' }
             & { ' $fragmentRefs'?: { 'NcmazFcImageFieldsFragment': NcmazFcImageFieldsFragment } }
-          ) } | null, postFormats?: { __typename?: 'PostToPostFormatConnection', nodes: Array<{ __typename?: 'PostFormat', name?: string | null, slug?: string | null }> } | null } | { __typename?: 'UserReactionPost', id: string }> } | null } | null } & { ' $fragmentName'?: 'NcPrimaryMenuFieldsFragmentFragment' };
+          ) } | null, postFormats?: { __typename?: 'PostToPostFormatConnection', nodes: Array<{ __typename?: 'PostFormat', name?: string | null, slug?: string | null }> } | null } | { __typename?: 'Textbook', id: string } | { __typename?: 'UserReactionPost', id: string }> } | null } | null } & { ' $fragmentName'?: 'NcPrimaryMenuFieldsFragmentFragment' };
 
 export type NcFooterMenuFieldsFragmentFragment = { __typename?: 'MenuItem', databaseId: number, uri?: string | null, label?: string | null, target?: string | null, parentId?: string | null, id: string } & { ' $fragmentName'?: 'NcFooterMenuFieldsFragmentFragment' };
 
@@ -22755,6 +24345,50 @@ export type GetReadingListPageQuery = { __typename?: 'RootQuery', generalSetting
       & { ' $fragmentRefs'?: { 'NcFooterMenuFieldsFragmentFragment': NcFooterMenuFieldsFragmentFragment } }
     )> } | null };
 
+export type GetDarsliklarByClassQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  headerLocation: MenuLocationEnum;
+  footerLocation: MenuLocationEnum;
+}>;
+
+
+export type GetDarsliklarByClassQuery = { __typename?: 'RootQuery', contentNodesWithTextbooks?: { __typename?: 'RootQueryToContentNodeConnection', nodes: Array<{ __typename?: 'GraphqlDocument' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh' } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'Textbook', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, darslikMalumotlari?: { __typename?: 'DarslikMalumotlari', sinf?: number | null, textbookFile?: { __typename?: 'AcfMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null } | null, fanlar?: { __typename?: 'TextbookToFanConnection', nodes: Array<{ __typename?: 'Fan', name?: string | null, slug?: string | null, uri?: string | null }> } | null } | { __typename?: 'UserReactionPost' }>, pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+
+export type GetDarslikBySlugQueryVariables = Exact<{
+  uri: Scalars['String']['input'];
+  slug?: InputMaybe<Scalars['String']['input']>;
+  headerLocation: MenuLocationEnum;
+  footerLocation: MenuLocationEnum;
+}>;
+
+
+export type GetDarslikBySlugQuery = { __typename?: 'RootQuery', nodeByUri?: { __typename?: 'Category' } | { __typename?: 'Comment' } | { __typename?: 'ContentType' } | { __typename?: 'Fan' } | { __typename?: 'GraphqlDocument' } | { __typename?: 'GraphqlDocumentGroup' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh' } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'PostFormat' } | { __typename?: 'Tag' } | { __typename?: 'Textbook', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, content?: string | null, darslikMalumotlari?: { __typename?: 'DarslikMalumotlari', sinf?: number | null, textbookFile?: { __typename?: 'AcfMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, mediaItemUrl?: string | null, mimeType?: string | null, fileSize?: number | null } } | null } | null, fanlar?: { __typename?: 'TextbookToFanConnection', nodes: Array<{ __typename?: 'Fan', name?: string | null, slug?: string | null, uri?: string | null }> } | null } | { __typename?: 'User' } | { __typename?: 'UserReactionPost' } | null, textbooks?: { __typename?: 'RootQueryToTextbookConnection', nodes: Array<{ __typename?: 'Textbook', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, content?: string | null, darslikMalumotlari?: { __typename?: 'DarslikMalumotlari', sinf?: number | null, textbookFile?: { __typename?: 'AcfMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, mediaItemUrl?: string | null, mimeType?: string | null, fileSize?: number | null } } | null } | null, fanlar?: { __typename?: 'TextbookToFanConnection', nodes: Array<{ __typename?: 'Fan', name?: string | null, slug?: string | null, uri?: string | null }> } | null }> } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+
+export type GetSimilarTextbooksQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  headerLocation: MenuLocationEnum;
+  footerLocation: MenuLocationEnum;
+}>;
+
+
+export type GetSimilarTextbooksQuery = { __typename?: 'RootQuery', contentNodes?: { __typename?: 'RootQueryToContentNodeConnection', nodes: Array<{ __typename?: 'GraphqlDocument' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh' } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'Textbook', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, darslikMalumotlari?: { __typename?: 'DarslikMalumotlari', sinf?: number | null, textbookFile?: { __typename?: 'AcfMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null } | null, fanlar?: { __typename?: 'TextbookToFanConnection', nodes: Array<{ __typename?: 'Fan', name?: string | null, slug?: string | null }> } | null } | { __typename?: 'UserReactionPost' }> } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+
+export type GetAllDarslikSlugsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetAllDarslikSlugsQuery = { __typename?: 'RootQuery', contentNodes?: { __typename?: 'RootQueryToContentNodeConnection', nodes: Array<{ __typename?: 'GraphqlDocument' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh' } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'Textbook', slug?: string | null, darslikMalumotlari?: { __typename?: 'DarslikMalumotlari', sinf?: number | null } | null } | { __typename?: 'UserReactionPost' }>, pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null };
+
+export type GetMenusQueryVariables = Exact<{
+  headerLocation: MenuLocationEnum;
+  footerLocation: MenuLocationEnum;
+}>;
+
+
+export type GetMenusQuery = { __typename?: 'RootQuery', generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+
 export type ProfilePageGetAuthorProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -22845,15 +24479,7 @@ export type GetAllOliygohQueryVariables = Exact<{
 }>;
 
 
-export type GetAllOliygohQuery = { __typename?: 'RootQuery', contentNodesWithOliygoh?: { __typename?: 'RootQueryToContentNodeConnection', nodes: Array<{ __typename?: 'GraphqlDocument' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, altText?: string | null } } | null, oliygohMalumotlari?: { __typename?: 'OliygohMalumotlari', viloyat?: Array<string | null> | null, universitetTuri?: Array<string | null> | null } | null } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'UserReactionPost' }>, pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
-
-export type GetMenusQueryVariables = Exact<{
-  headerLocation: MenuLocationEnum;
-  footerLocation: MenuLocationEnum;
-}>;
-
-
-export type GetMenusQuery = { __typename?: 'RootQuery', generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+export type GetAllOliygohQuery = { __typename?: 'RootQuery', contentNodesWithOliygoh?: { __typename?: 'RootQueryToContentNodeConnection', nodes: Array<{ __typename?: 'GraphqlDocument' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh', databaseId: number, title?: string | null, slug?: string | null, uri?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, altText?: string | null } } | null, oliygohMalumotlari?: { __typename?: 'OliygohMalumotlari', viloyat?: Array<string | null> | null, universitetTuri?: Array<string | null> | null } | null } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'Textbook' } | { __typename?: 'UserReactionPost' }>, pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null } } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
 
 export type PostsFilterPageQueryGetPostsQueryVariables = Exact<{
   in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>> | InputMaybe<Scalars['ID']['input']>>;
@@ -23006,7 +24632,7 @@ export type SitemapQueryQueryVariables = Exact<{
 }>;
 
 
-export type SitemapQueryQuery = { __typename?: 'RootQuery', contentNodes?: { __typename?: 'RootQueryToContentNodeConnection', pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'GraphqlDocument', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'MediaItem', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Oliygoh', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Page', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Post', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'UserReactionPost', uri?: string | null, modifiedGmt?: string | null }> } | null };
+export type SitemapQueryQuery = { __typename?: 'RootQuery', contentNodes?: { __typename?: 'RootQueryToContentNodeConnection', pageInfo: { __typename?: 'RootQueryToContentNodeConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'GraphqlDocument', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'MediaItem', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Oliygoh', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Page', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Post', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'Textbook', uri?: string | null, modifiedGmt?: string | null } | { __typename?: 'UserReactionPost', uri?: string | null, modifiedGmt?: string | null }> } | null };
 
 export type CoreColumnFragmentFragment = { __typename?: 'CoreColumn', attributes?: { __typename?: 'CoreColumnAttributes', style?: any | null, className?: string | null, cssClassName?: string | null } | null } & { ' $fragmentName'?: 'CoreColumnFragmentFragment' };
 
@@ -23028,13 +24654,13 @@ export type PageArchiveGetArchiveQueryVariables = Exact<{
 }>;
 
 
-export type PageArchiveGetArchiveQuery = { __typename?: 'RootQuery', nodeByUri?: { __typename?: 'Category', uri?: string | null, id: string } | { __typename?: 'Comment', uri?: string | null, id: string } | { __typename?: 'ContentType', uri?: string | null, id: string } | { __typename?: 'GraphqlDocument', uri?: string | null, id: string } | { __typename?: 'GraphqlDocumentGroup', uri?: string | null, id: string } | { __typename?: 'MediaItem', uri?: string | null, id: string } | { __typename?: 'Oliygoh', uri?: string | null, id: string } | { __typename?: 'Page', uri?: string | null, id: string } | { __typename?: 'Post', uri?: string | null, id: string } | (
+export type PageArchiveGetArchiveQuery = { __typename?: 'RootQuery', nodeByUri?: { __typename?: 'Category', uri?: string | null, id: string } | { __typename?: 'Comment', uri?: string | null, id: string } | { __typename?: 'ContentType', uri?: string | null, id: string } | { __typename?: 'Fan', uri?: string | null, id: string } | { __typename?: 'GraphqlDocument', uri?: string | null, id: string } | { __typename?: 'GraphqlDocumentGroup', uri?: string | null, id: string } | { __typename?: 'MediaItem', uri?: string | null, id: string } | { __typename?: 'Oliygoh', uri?: string | null, id: string } | { __typename?: 'Page', uri?: string | null, id: string } | { __typename?: 'Post', uri?: string | null, id: string } | (
     { __typename?: 'PostFormat', uri?: string | null, id: string, posts?: { __typename?: 'PostFormatToPostConnection', nodes: Array<(
         { __typename?: 'Post' }
         & { ' $fragmentRefs'?: { 'NcmazFcPostCardFieldsFragment': NcmazFcPostCardFieldsFragment } }
       )>, pageInfo: { __typename?: 'PostFormatToPostConnectionPageInfo', endCursor?: string | null, hasNextPage: boolean } } | null }
     & { ' $fragmentRefs'?: { 'NcmazFcPostFormatFullFieldsFragmentFragment': NcmazFcPostFormatFullFieldsFragmentFragment } }
-  ) | { __typename?: 'Tag', uri?: string | null, id: string } | { __typename?: 'User', uri?: string | null, id: string } | { __typename?: 'UserReactionPost', uri?: string | null, id: string } | null, categories?: { __typename?: 'RootQueryToCategoryConnection', nodes: Array<(
+  ) | { __typename?: 'Tag', uri?: string | null, id: string } | { __typename?: 'Textbook', uri?: string | null, id: string } | { __typename?: 'User', uri?: string | null, id: string } | { __typename?: 'UserReactionPost', uri?: string | null, id: string } | null, categories?: { __typename?: 'RootQueryToCategoryConnection', nodes: Array<(
       { __typename?: 'Category' }
       & { ' $fragmentRefs'?: { 'NcmazFcCategoryFullFieldsFragmentFragment': NcmazFcCategoryFullFieldsFragmentFragment } }
     )> } | null, generalSettings?: (
@@ -23084,13 +24710,13 @@ export type GetPageQueryVariables = Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', title?: string | null, ncPageMeta?: { __typename?: 'NcPageMeta', isFullWithPage?: boolean | null } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, sourceUrl?: string | null } } | null, editorBlocks?: Array<{ __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+export type GetPageQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', title?: string | null, ncPageMeta?: { __typename?: 'NcPageMeta', isFullWithPage?: boolean | null } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, sourceUrl?: string | null } } | null, editorBlocks?: Array<{ __typename: 'AdvancedPostsListingAdvancedPostsListingBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordion', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAccordionPanel', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreArchives', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAudio', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreAvatar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButton', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreButtons', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCalendar', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCategories', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
       { __typename: 'CoreColumn', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'CoreColumnFragmentFragment': CoreColumnFragmentFragment } }
     ) | (
       { __typename: 'CoreColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'CoreColumnsFragmentFragment': CoreColumnsFragmentFragment } }
-    ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
+    ) | { __typename: 'CoreCommentAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentEditLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentReplyLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCommentsTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreCover', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreDetails', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreEmbed', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFile', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFootnotes', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreFreeform', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHeading', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHomeLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreHtml', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLatestPosts', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLegacyWidget', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreLoginout', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMath', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMediaText', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMissing', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigation', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNavigationSubmenu', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreNextpage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageList', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePageListItem', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreParagraph', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePattern', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthor', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorBiography', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostAuthorName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostComments', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsForm', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostCommentsLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostContent', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostDate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostExcerpt', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostFeaturedImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostNavigationLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTerms', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTimeToRead', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePostTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePreformatted', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CorePullquote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryNoResults', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPagination', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNext', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationNumbers', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryPaginationPrevious', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQueryTotal', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreQuote', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreReadMore', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreRss', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSearch', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSeparator', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreShortcode', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteLogo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTagline', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSiteTitle', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLink', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSocialLinks', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreSpacer', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTable', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTagCloud', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTemplatePart', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermCount', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermDescription', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermName', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermTemplate', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTermsQuery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreTextColumns', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVerse', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreVideo', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'CoreWidgetGroup', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FifuImage', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'FilebirdBlockFilebirdGallery', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetPoweredByMailpoet', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlock', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | { __typename: 'MailpoetSubscriptionFormBlockRender', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null } | (
       { __typename: 'NcmazFaustBlockCta', renderedHtml?: string | null, clientId?: string | null, parentClientId?: string | null }
       & { ' $fragmentRefs'?: { 'NcmazFaustBlockCtaFragmentFragment': NcmazFaustBlockCtaFragmentFragment } }
     ) | (
@@ -23175,7 +24801,7 @@ export type GetUniversitetQueryVariables = Exact<{
 }>;
 
 
-export type GetUniversitetQuery = { __typename?: 'RootQuery', nodeByUri?: { __typename?: 'Category' } | { __typename?: 'Comment' } | { __typename?: 'ContentType' } | { __typename?: 'GraphqlDocument' } | { __typename?: 'GraphqlDocumentGroup' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh', databaseId: number, title?: string | null, content?: string | null, slug?: string | null, uri?: string | null, date?: string | null, modified?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, altText?: string | null } } | null, oliygohMalumotlari?: { __typename?: 'OliygohMalumotlari', manzil?: string | null, viloyat?: Array<string | null> | null, telefon?: string | null, elektronPochta?: string | null, rasmiySayt?: string | null, telegramKanal?: string | null, universitetTuri?: Array<string | null> | null, yotoqxonaBormi?: boolean | null } | null } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'PostFormat' } | { __typename?: 'Tag' } | { __typename?: 'User' } | { __typename?: 'UserReactionPost' } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
+export type GetUniversitetQuery = { __typename?: 'RootQuery', nodeByUri?: { __typename?: 'Category' } | { __typename?: 'Comment' } | { __typename?: 'ContentType' } | { __typename?: 'Fan' } | { __typename?: 'GraphqlDocument' } | { __typename?: 'GraphqlDocumentGroup' } | { __typename?: 'MediaItem' } | { __typename?: 'Oliygoh', databaseId: number, title?: string | null, content?: string | null, slug?: string | null, uri?: string | null, date?: string | null, modified?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null, altText?: string | null } } | null, oliygohMalumotlari?: { __typename?: 'OliygohMalumotlari', manzil?: string | null, viloyat?: Array<string | null> | null, telefon?: string | null, elektronPochta?: string | null, rasmiySayt?: string | null, telegramKanal?: string | null, universitetTuri?: Array<string | null> | null, yotoqxonaBormi?: boolean | null } | null } | { __typename?: 'Page' } | { __typename?: 'Post' } | { __typename?: 'PostFormat' } | { __typename?: 'Tag' } | { __typename?: 'Textbook' } | { __typename?: 'User' } | { __typename?: 'UserReactionPost' } | null, generalSettings?: { __typename?: 'GeneralSettings', title?: string | null, description?: string | null } | null, primaryMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null, parentId?: string | null, childItems?: { __typename?: 'MenuItemToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null }> } | null, footerMenuItems?: { __typename?: 'RootQueryToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', id: string, label?: string | null, uri?: string | null }> } | null };
 
 export const NcgeneralSettingsFieldsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GeneralSettings"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]} as unknown as DocumentNode<NcgeneralSettingsFieldsFragmentFragment, unknown>;
 export const NcmazFcTagShortFieldsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcTagShortFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tag"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode<NcmazFcTagShortFieldsFragmentFragment, unknown>;
@@ -23229,6 +24855,11 @@ export const GetAuthorWithPostsDocument = {"kind":"Document","definitions":[{"ki
 export const QueryGetUsersBySearchOnSearchPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryGetUsersBySearchOnSearchPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"search"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"search"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserFullFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"registeredDate"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buymeacoffeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"facebookUrl"}},{"kind":"Field","name":{"kind":"Name","value":"githubUrl"}},{"kind":"Field","name":{"kind":"Name","value":"instagramUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkedinUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediumUrl"}},{"kind":"Field","name":{"kind":"Name","value":"ncBio"}},{"kind":"Field","name":{"kind":"Name","value":"pinterestUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitchUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitterUrl"}},{"kind":"Field","name":{"kind":"Name","value":"vimeoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"youtubeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"tiktokUrl"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryGetUsersBySearchOnSearchPageQuery, QueryGetUsersBySearchOnSearchPageQueryVariables>;
 export const AuthorsPageQueryGetUsersBySearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AuthorsPageQueryGetUsersBySearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"search"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"search"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserFullFields"}},{"kind":"Field","name":{"kind":"Name","value":"capabilities"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"80"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"registeredDate"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buymeacoffeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"facebookUrl"}},{"kind":"Field","name":{"kind":"Name","value":"githubUrl"}},{"kind":"Field","name":{"kind":"Name","value":"instagramUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkedinUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediumUrl"}},{"kind":"Field","name":{"kind":"Name","value":"ncBio"}},{"kind":"Field","name":{"kind":"Name","value":"pinterestUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitchUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitterUrl"}},{"kind":"Field","name":{"kind":"Name","value":"vimeoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"youtubeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"tiktokUrl"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GeneralSettings"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"cssClasses"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazfaustMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"isMegaMenu"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfMenuColumns"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]} as unknown as DocumentNode<AuthorsPageQueryGetUsersBySearchQuery, AuthorsPageQueryGetUsersBySearchQueryVariables>;
 export const GetReadingListPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetReadingListPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"80"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GeneralSettings"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"cssClasses"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazfaustMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"isMegaMenu"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfMenuColumns"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]} as unknown as DocumentNode<GetReadingListPageQuery, GetReadingListPageQueryVariables>;
+export const GetDarsliklarByClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDarsliklarByClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"contentNodesWithTextbooks"},"name":{"kind":"Name","value":"contentNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contentTypes"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"TEXTBOOKS"}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Textbook"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"darslikMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sinf"}},{"kind":"Field","name":{"kind":"Name","value":"textbookFile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fanlar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetDarsliklarByClassQuery, GetDarsliklarByClassQueryVariables>;
+export const GetDarslikBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDarslikBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodeByUri"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uri"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Textbook"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"darslikMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sinf"}},{"kind":"Field","name":{"kind":"Name","value":"textbookFile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediaItemUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fanlar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"textbooks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"darslikMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sinf"}},{"kind":"Field","name":{"kind":"Name","value":"textbookFile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediaItemUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fanlar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetDarslikBySlugQuery, GetDarslikBySlugQueryVariables>;
+export const GetSimilarTextbooksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSimilarTextbooks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contentNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contentTypes"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"TEXTBOOKS"}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Textbook"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"darslikMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sinf"}},{"kind":"Field","name":{"kind":"Name","value":"textbookFile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fanlar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetSimilarTextbooksQuery, GetSimilarTextbooksQueryVariables>;
+export const GetAllDarslikSlugsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllDarslikSlugs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contentNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contentTypes"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"TEXTBOOKS"}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Textbook"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"darslikMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sinf"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllDarslikSlugsQuery, GetAllDarslikSlugsQueryVariables>;
+export const GetMenusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMenus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetMenusQuery, GetMenusQueryVariables>;
 export const ProfilePageGetAuthorProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ProfilePageGetAuthorProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserFullFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"registeredDate"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buymeacoffeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"facebookUrl"}},{"kind":"Field","name":{"kind":"Name","value":"githubUrl"}},{"kind":"Field","name":{"kind":"Name","value":"instagramUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkedinUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediumUrl"}},{"kind":"Field","name":{"kind":"Name","value":"ncBio"}},{"kind":"Field","name":{"kind":"Name","value":"pinterestUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitchUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitterUrl"}},{"kind":"Field","name":{"kind":"Name","value":"vimeoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"youtubeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"tiktokUrl"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ProfilePageGetAuthorProfileQuery, ProfilePageGetAuthorProfileQueryVariables>;
 export const ProfilePageMutationUpdateViewerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ProfilePageMutationUpdateViewer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBackgroundImgAlt"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBackgroundImgUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBio"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBuymeacoffeUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFacebookUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFeaturedImgAlt"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFeaturedImgUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazGithubUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazInstagramUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazLinkedinUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazMediumUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazPinterestUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTwitchUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTwitterUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazVimeoUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazWebsiteUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazYoutubeUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"nicename"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"nickname"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"websiteUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTiktokUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"displayName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"lastName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazBackgroundImgAlt"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBackgroundImgAlt"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazBackgroundImgUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBackgroundImgUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazBio"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBio"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazBuymeacoffeUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazBuymeacoffeUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazFacebookUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFacebookUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazFeaturedImgAlt"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFeaturedImgAlt"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazFeaturedImgUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazFeaturedImgUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazGithubUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazGithubUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazInstagramUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazInstagramUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazLinkedinUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazLinkedinUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazMediumUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazMediumUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazPinterestUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazPinterestUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazTwitchUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTwitchUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazTwitterUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTwitterUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazVimeoUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazVimeoUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazWebsiteUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazWebsiteUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazYoutubeUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazYoutubeUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"websiteUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"websiteUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ncmazTiktokUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ncmazTiktokUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"nicename"},"value":{"kind":"Variable","name":{"kind":"Name","value":"nicename"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"nickname"},"value":{"kind":"Variable","name":{"kind":"Name","value":"nickname"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"firstName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<ProfilePageMutationUpdateViewerMutation, ProfilePageMutationUpdateViewerMutationVariables>;
 export const ProfilePageMutationGetDeleteAccountNonceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ProfilePageMutationGetDeleteAccountNonce"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ncmazFaustCreateDeleteAccountNonce"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_email"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"nonce"}},{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<ProfilePageMutationGetDeleteAccountNonceMutation, ProfilePageMutationGetDeleteAccountNonceMutationVariables>;
@@ -23236,7 +24867,6 @@ export const ProfilePageMutationDeleteAccountByNonceDocument = {"kind":"Document
 export const ProfilePageGetViewerPostsByStatusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ProfilePageGetViewerPostsByStatus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostStatusEnum"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"orderby"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"field"},"value":{"kind":"EnumValue","value":"DATE"}},{"kind":"ObjectField","name":{"kind":"Name","value":"order"},"value":{"kind":"EnumValue","value":"DESC"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostCardFields"}},{"kind":"Field","name":{"kind":"Name","value":"ncPostMetaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostMetaFullFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostMetaFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NcPostMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"readingTime"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostCardFieldsNOTNcmazGalleryImgs"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"commentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazVideoUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazAudioUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"audioUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncPostMetaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostMetaFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostCardFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostCardFieldsNOTNcmazGalleryImgs"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazGalleryImgs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image1"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image2"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image3"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image4"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image5"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image6"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image7"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image8"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostMetaFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NcPostMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"readingTime"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"savedsCount"}},{"kind":"Field","name":{"kind":"Name","value":"showRightSidebar"}},{"kind":"Field","name":{"kind":"Name","value":"template"}}]}}]} as unknown as DocumentNode<ProfilePageGetViewerPostsByStatusQuery, ProfilePageGetViewerPostsByStatusQueryVariables>;
 export const GetPostForEditPostPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPostForEditPostPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"databaseId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"databaseId"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"DATABASE_ID"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostFullFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcTagShortFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tag"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"mediaDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostMetaFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NcPostMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"readingTime"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"savedsCount"}},{"kind":"Field","name":{"kind":"Name","value":"showRightSidebar"}},{"kind":"Field","name":{"kind":"Name","value":"template"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"commentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"20"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcTagShortFieldsFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazVideoUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazAudioUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"audioUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncPostMetaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostMetaFullFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazGalleryImgs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image1"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image2"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image3"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image4"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image5"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image6"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image7"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image8"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageHasDetailFields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostForEditPostPageQuery, GetPostForEditPostPageQueryVariables>;
 export const GetAllOliygohDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllOliygoh"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"contentNodesWithOliygoh"},"name":{"kind":"Name","value":"contentNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contentTypes"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"OLIYGOH"}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Oliygoh"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"oliygohMalumotlari"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viloyat"}},{"kind":"Field","name":{"kind":"Name","value":"universitetTuri"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllOliygohQuery, GetAllOliygohQueryVariables>;
-export const GetMenusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMenus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"childItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}}]}}]}}]}}]} as unknown as DocumentNode<GetMenusQuery, GetMenusQueryVariables>;
 export const PostsFilterPageQueryGetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostsFilterPageQueryGetPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"in"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"20"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authorIn"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryIn"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tagIn"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tagId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"day"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"month"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"year"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"NullValue"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"search"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"field"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostObjectsConnectionOrderbyEnum"}},"defaultValue":{"kind":"EnumValue","value":"DATE"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderEnum"}},"defaultValue":{"kind":"EnumValue","value":"DESC"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"in"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"authorIn"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authorIn"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"categoryIn"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryIn"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tagIn"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tagIn"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"categoryId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"categoryName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryName"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tagId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tagId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"dateQuery"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"day"},"value":{"kind":"Variable","name":{"kind":"Name","value":"day"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"month"},"value":{"kind":"Variable","name":{"kind":"Name","value":"month"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"year"},"value":{"kind":"Variable","name":{"kind":"Name","value":"year"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"search"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"orderby"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"field"},"value":{"kind":"Variable","name":{"kind":"Name","value":"field"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"order"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostCardFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"80"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostMetaFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NcPostMetaData"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewsCount"}},{"kind":"Field","name":{"kind":"Name","value":"readingTime"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostCardFieldsNOTNcmazGalleryImgs"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"commentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserShortForPostCardFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazVideoUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncmazAudioUrl"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"audioUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ncPostMetaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostMetaFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcPostCardFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcPostCardFieldsNOTNcmazGalleryImgs"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazGalleryImgs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image1"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image2"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image3"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image4"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image5"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image6"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image7"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image8"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GeneralSettings"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"cssClasses"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazfaustMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"isMegaMenu"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfMenuColumns"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]} as unknown as DocumentNode<PostsFilterPageQueryGetPostsQuery, PostsFilterPageQueryGetPostsQueryVariables>;
 export const MutationSendPasswordResetEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"mutationSendPasswordResetEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendPasswordResetEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clientMutationId"}},{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<MutationSendPasswordResetEmailMutation, MutationSendPasswordResetEmailMutationVariables>;
 export const SearchPageQueryGetUsersBySearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPageQueryGetUsersBySearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"search"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"search"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcUserFullFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"orderby"},"value":{"kind":"EnumValue","value":"COUNT"}},{"kind":"ObjectField","name":{"kind":"Name","value":"order"},"value":{"kind":"EnumValue","value":"DESC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryFullFieldsFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"primaryMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"headerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"80"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"footerMenuItems"},"name":{"kind":"Name","value":"menuItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"footerLocation"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"50"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcImageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcUserFullFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"registeredDate"}},{"kind":"Field","name":{"kind":"Name","value":"ncUserMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buymeacoffeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"facebookUrl"}},{"kind":"Field","name":{"kind":"Name","value":"githubUrl"}},{"kind":"Field","name":{"kind":"Name","value":"instagramUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkedinUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediumUrl"}},{"kind":"Field","name":{"kind":"Name","value":"ncBio"}},{"kind":"Field","name":{"kind":"Name","value":"pinterestUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitchUrl"}},{"kind":"Field","name":{"kind":"Name","value":"twitterUrl"}},{"kind":"Field","name":{"kind":"Name","value":"vimeoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"youtubeUrl"}},{"kind":"Field","name":{"kind":"Name","value":"tiktokUrl"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"backgroundImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcmazFcCategoryFullFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"ncTaxonomyMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcgeneralSettingsFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GeneralSettings"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcPrimaryMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"path"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"cssClasses"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"ncmazfaustMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"isMegaMenu"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfMenuColumns"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcCategoryCardFieldsNotImage"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NcmazFcImageFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"postFormats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NcFooterMenuFieldsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MenuItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]} as unknown as DocumentNode<SearchPageQueryGetUsersBySearchQuery, SearchPageQueryGetUsersBySearchQueryVariables>;

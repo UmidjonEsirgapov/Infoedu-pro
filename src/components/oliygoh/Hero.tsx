@@ -11,9 +11,8 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ title, bgImage, viloyat }) => {
   const academicYear = useMemo(() => {
-    const currentYear = new Date().getFullYear(); 
-    const nextYear = currentYear + 1;
-    return `${currentYear}-${nextYear}`;
+    // O'quv yili (2025-2026)
+    return '2025-2026';
   }, []);
 
   return (

@@ -3,9 +3,11 @@ import { getApolloClient } from '@faustwp/core';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
+import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
 
 // Lazy load komponentlar
 const UniversitetFilters = dynamic(() => import('@/components/oliygoh/UniversitetFilters'), {
@@ -14,6 +16,10 @@ const UniversitetFilters = dynamic(() => import('@/components/oliygoh/Universite
 
 const UniversitetListItem = dynamic(() => import('@/components/oliygoh/UniversitetListItem'), {
   loading: () => <div className="bg-white rounded-xl border border-slate-200 p-4 animate-pulse"><div className="h-32 bg-slate-100 rounded"></div></div>
+});
+
+const Pagination = dynamic(() => import('@/components/oliygoh/Pagination'), {
+  loading: () => <div className="h-10"></div>
 });
 
 interface OliygohNode {
@@ -118,6 +124,8 @@ interface FilterState {
 }
 
 export default function OliygohlarPage(props: PageProps) {
+  const router = useRouter();
+  
   // Get all universities from contentNodes - memoize
   const allUniversities = useMemo(() => {
     return props.data?.contentNodesWithOliygoh?.nodes?.filter((node: any) => node.__typename === 'Oliygoh') || [];
@@ -128,6 +136,16 @@ export default function OliygohlarPage(props: PageProps) {
     viloyat: '',
     turi: '',
   });
+
+  // Pagination settings
+  const ITEMS_PER_PAGE = 12;
+  
+  // Get current page from URL query or default to 1
+  const currentPage = useMemo(() => {
+    const page = router.query.page;
+    const pageNum = typeof page === 'string' ? parseInt(page, 10) : 1;
+    return isNaN(pageNum) || pageNum < 1 ? 1 : pageNum;
+  }, [router.query.page]);
 
   // Header balandligini o'lchash va top value hisoblash
   const [stickyTop, setStickyTop] = useState(120);
@@ -176,7 +194,14 @@ export default function OliygohlarPage(props: PageProps) {
   // Memoize filter handler
   const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
-  }, []);
+    // Reset to page 1 when filters change
+    if (currentPage > 1) {
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, page: 1 },
+      }, undefined, { scroll: false });
+    }
+  }, [currentPage, router]);
 
   // Filter universities based on filters - optimized
   const filteredUniversities = useMemo(() => {
@@ -211,6 +236,36 @@ export default function OliygohlarPage(props: PageProps) {
       return true;
     });
   }, [allUniversities, filters]);
+
+  // Pagination calculations
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredUniversities.length / ITEMS_PER_PAGE);
+  }, [filteredUniversities.length]);
+
+  // Get paginated universities
+  const paginatedUniversities = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredUniversities.slice(startIndex, endIndex);
+  }, [filteredUniversities, currentPage]);
+
+  // Handle page change
+  const handlePageChange = useCallback((page: number) => {
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, page },
+    }, undefined, { scroll: false });
+  }, [router]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage > 1 && (filters.search || filters.viloyat || filters.turi)) {
+      const newTotalPages = Math.ceil(filteredUniversities.length / ITEMS_PER_PAGE);
+      if (currentPage > newTotalPages) {
+        handlePageChange(1);
+      }
+    }
+  }, [filters, filteredUniversities.length, currentPage, handlePageChange]);
 
   const siteTitle = props.data?.generalSettings?.title || 'Infoedu';
   const pageTitle = `Barcha Oliy Ta'lim Muassasalari | ${siteTitle}`;
@@ -313,6 +368,54 @@ export default function OliygohlarPage(props: PageProps) {
 
               {/* Universities List */}
               <div className="lg:col-span-3 order-1 lg:order-2">
+                {/* Telegram Reklama Banner */}
+                <div className="mb-6 sm:mb-8">
+                  <a
+                    href={TELEGRAM_LINKS.channel}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] border border-blue-400/20 dark:border-blue-500/30"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4 sm:gap-5 flex-1">
+                        {/* Telegram Icon */}
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 dark:border-white/20">
+                            <svg
+                              className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.174 1.858-.926 6.655-1.31 8.82-.168.929-.5 1.238-.82 1.27-.697.062-1.225-.46-1.9-.902-1.056-.705-1.653-1.143-2.678-1.83-1.185-.8-.418-1.241.259-1.96.178-.188 3.246-2.977 3.307-3.23.007-.031.014-.15-.056-.212-.07-.062-.173-.041-.248-.024-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.429-.008-1.253-.242-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.895-.662 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.64.099-.003.321.024.465.14.118.095.15.223.165.312.015.09.033.297.018.461z" />
+                            </svg>
+                          </div>
+                        </div>
+                        {/* Text Content */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1 sm:mb-1.5">
+                            {BUTTON_TEXTS.telegramSubscribe}
+                          </h3>
+                          <p className="text-white/90 dark:text-white/80 text-sm sm:text-base line-clamp-2">
+                            {BUTTON_TEXTS.telegramSubscribeDescription}
+                          </p>
+                        </div>
+                      </div>
+                      {/* Arrow Icon */}
+                      <div className="flex-shrink-0 hidden sm:block">
+                        <svg
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white/80 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
                 {/* Results Header */}
                 {filteredUniversities.length > 0 && (
                   <div className="mb-4 sm:mb-6 flex items-center justify-between flex-wrap gap-3">
@@ -323,6 +426,11 @@ export default function OliygohlarPage(props: PageProps) {
                           : `Barcha muassasalar (${filteredUniversities.length})`
                         }
                       </h2>
+                      {totalPages > 1 && (
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          Sahifa {currentPage} / {totalPages} (Jami {filteredUniversities.length} ta)
+                        </p>
+                      )}
                       {(filters.search || filters.viloyat || filters.turi) && (
                         <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
                           Qidiruv natijalari
@@ -333,17 +441,28 @@ export default function OliygohlarPage(props: PageProps) {
                 )}
 
                 {filteredUniversities.length > 0 ? (
-                  <div className="space-y-3 sm:space-y-4">
-                    {filteredUniversities.map((university, index) => (
-                      <UniversitetListItem
-                        key={university.databaseId}
-                        title={university.title}
-                        slug={university.slug}
-                        featuredImage={university.featuredImage}
-                        oliygohMalumotlari={(university as any).oliygohMalumotlari}
+                  <>
+                    <div className="space-y-3 sm:space-y-4">
+                      {paginatedUniversities.map((university, index) => (
+                        <UniversitetListItem
+                          key={university.databaseId}
+                          title={university.title}
+                          slug={university.slug}
+                          featuredImage={university.featuredImage}
+                          oliygohMalumotlari={(university as any).oliygohMalumotlari}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
                       />
-                    ))}
-                  </div>
+                    )}
+                  </>
                 ) : (
                   <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 sm:p-12 md:p-16 text-center shadow-lg">
                     <div className="max-w-md mx-auto">
@@ -368,7 +487,7 @@ export default function OliygohlarPage(props: PageProps) {
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
-                          Filtrlarni tozalash
+                          {BUTTON_TEXTS.clearFilters}
                         </button>
                       )}
                     </div>

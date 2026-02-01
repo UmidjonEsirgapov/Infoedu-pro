@@ -27,9 +27,9 @@ const Universitet: FaustTemplate<any> = (props) => {
   const bgImage = featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000';
   const info = oliygohMalumotlari || {};
 
-  // Dinamik yillar
-  const currentYear = new Date().getFullYear();
-  const nextYear = currentYear + 1;
+  // O'quv yili (2025-2026)
+  const currentYear = 2025;
+  const nextYear = 2026;
 
   // Header balandligini o'lchash va top value hisoblash
   const [stickyTop, setStickyTop] = useState(120);
@@ -78,10 +78,13 @@ const Universitet: FaustTemplate<any> = (props) => {
   // SEO
   const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz';
   
-  // Title - H1 bilan bir xil (faqat title o'zi)
-  const seoTitle = title || 'Universitet';
+  // Optimallashtirilgan SEO Title: "Universitet nomi Kirish ballari 2025-2026"
+  const seoTitle = useMemo(() => {
+    const universityName = title || 'Universitet';
+    return `${universityName} Kirish ballari ${currentYear}-${nextYear}`;
+  }, [title, currentYear, nextYear]);
   
-  // Description - sarlavha ostidagi content'dan olinadi - memoized
+  // Optimallashtirilgan SEO Description
   const seoDesc = useMemo(() => {
     const getDescriptionFromContent = (htmlContent: string | null | undefined): string => {
       if (!htmlContent) return '';
@@ -97,13 +100,39 @@ const Universitet: FaustTemplate<any> = (props) => {
         .replace(/&#39;/g, "'") // &#39; ni ' ga o'zgartirish
         .trim();
       
-      // Birinchi paragrafni olish (160 belgigacha)
+      // Birinchi paragrafni olish (155 belgigacha - SEO uchun optimal)
       const firstParagraph = textContent.split('\n').find(p => p.trim().length > 0) || textContent;
-      return firstParagraph.substring(0, 160).trim();
+      return firstParagraph.substring(0, 155).trim();
     };
     
-    return getDescriptionFromContent(content) || `${title || 'Universitet'} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun o'tish ballari, kvotalar va fakultetlar ro'yxati.`;
+    const universityName = title || 'Universitet';
+    const defaultDesc = `${universityName} ${currentYear}-${nextYear} o'quv yili uchun kirish ballari, qabul kvotalari va ta'lim yo'nalishlari. Barcha fakultetlar bo'yicha o'tish ballari, grant va kontrakt kvotalari haqida to'liq ma'lumot.`;
+    
+    const contentDesc = getDescriptionFromContent(content);
+    return contentDesc || defaultDesc;
   }, [content, title, currentYear, nextYear]);
+  
+  // SEO Keywords
+  const seoKeywords = useMemo(() => {
+    const universityName = title || 'Universitet';
+    const viloyat = Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat;
+    const keywords = [
+      `${universityName} kirish ballari`,
+      `${universityName} ${currentYear}-${nextYear}`,
+      `${universityName} qabul kvotalari`,
+      `${universityName} o'tish ballari`,
+      `${universityName} grant kvotasi`,
+      `${universityName} kontrakt kvotasi`,
+      `${universityName} fakultetlar`,
+      `${universityName} ta'lim yo'nalishlari`,
+    ];
+    
+    if (viloyat) {
+      keywords.push(`${universityName} ${viloyat}`);
+    }
+    
+    return keywords.join(', ');
+  }, [title, info.viloyat, currentYear, nextYear]);
   
   const seoImage = useMemo(() => {
     return bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
@@ -277,20 +306,40 @@ const Universitet: FaustTemplate<any> = (props) => {
 
   return (
     <>
-      {/* --- SCHEMA MARKUPNI QO'SHISH --- */}
+      {/* --- OPTIMALLASHTIRILGAN SEO META TAGS --- */}
       <Head>
+        {/* Primary Meta Tags */}
         <title>{seoTitle}</title>
+        <meta name="title" content={seoTitle} />
         <meta name="description" content={seoDesc} />
+        <meta name="keywords" content={seoKeywords} />
+        <meta name="author" content="InfoEdu.uz" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="Uzbek" />
+        <meta name="revisit-after" content="7 days" />
+        <link rel="canonical" href={seoUrl} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={seoUrl} />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDesc} />
         <meta property="og:image" content={seoImage} />
-        <meta property="og:url" content={seoUrl} />
-        <meta property="og:type" content="website" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="uz_UZ" />
+        <meta property="og:site_name" content="InfoEdu.uz" />
+        
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={seoUrl} />
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={seoDesc} />
         <meta name="twitter:image" content={seoImage} />
+        
+        {/* Additional SEO */}
+        <meta name="geo.region" content="UZ" />
+        <meta name="geo.placename" content={Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat || "O'zbekiston"} />
         
         {/* Organization/CollegeOrUniversity Schema */}
         <script
@@ -342,6 +391,11 @@ const Universitet: FaustTemplate<any> = (props) => {
                       <div dangerouslySetInnerHTML={{ __html: content }} />
                     </article>
 
+                    {/* Mobile versiyada ContactCard - universitet haqida ma'lumot va kirish ballari orasida */}
+                    <div className="lg:hidden mb-10">
+                      <ContactCard info={info} />
+                    </div>
+
                     <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
                     {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
@@ -349,8 +403,8 @@ const Universitet: FaustTemplate<any> = (props) => {
                   </div>
                 </div>
 
-                {/* Sidebar - Qabul Komissiyasi */}
-                <div className="lg:col-span-1">
+                {/* Sidebar - Qabul Komissiyasi (faqat desktop) */}
+                <div className="hidden lg:block lg:col-span-1">
                   <div className="lg:sticky" style={{ top: `${stickyTop}px` }}>
                     <ContactCard info={info} />
                   </div>

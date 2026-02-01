@@ -9,6 +9,7 @@ import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import GenerativeBookCover from '@/components/GenerativeBookCover';
 import SEOContentExpander from '@/components/SEOContentExpander';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
+import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
 
 interface Darslik {
   databaseId: number;
@@ -650,45 +651,67 @@ export default function DarslikDetailPage(props: PageProps) {
                   </p>
                 </div>
 
-                {/* Primary Action Button */}
-                {fileUrl ? (
-                  <button
-                    onClick={handleDownload}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold text-base sm:text-lg rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500/50"
-                  >
-                    <svg
-                      className="w-5 h-5 sm:w-6 sm:h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                    <span className="text-sm sm:text-base md:text-lg">Yuklab olish (PDF)</span>
-                  </button>
-                ) : (
-                  <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-400">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                      />
-                    </svg>
-                    <span>PDF fayl mavjud emas</span>
-                  </div>
-                )}
+                {/* Primary Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  {fileUrl ? (
+                    <>
+                      <button
+                        onClick={handleDownload}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold text-base sm:text-lg rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500/50"
+                      >
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        <span className="text-sm sm:text-base md:text-lg">{BUTTON_TEXTS.downloadPdf}</span>
+                      </button>
+                      
+                      {/* Telegram orqali yuklab olish tugmasi */}
+                      <a
+                        href={TELEGRAM_LINKS.channel}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-base sm:text-lg rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
+                      >
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.174 1.858-.926 6.655-1.31 8.82-.168.929-.5 1.238-.82 1.27-.697.062-1.225-.46-1.9-.902-1.056-.705-1.653-1.143-2.678-1.83-1.185-.8-.418-1.241.259-1.96.178-.188 3.246-2.977 3.307-3.23.007-.031.014-.15-.056-.212-.07-.062-.173-.041-.248-.024-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.429-.008-1.253-.242-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.895-.662 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.64.099-.003.321.024.465.14.118.095.15.223.165.312.015.09.033.297.018.461z" />
+                        </svg>
+                        <span className="text-sm sm:text-base md:text-lg">{BUTTON_TEXTS.downloadViaTelegram}</span>
+                      </a>
+                    </>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-400">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                      <span>{BUTTON_TEXTS.fileNotFound}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -778,7 +801,7 @@ export default function DarslikDetailPage(props: PageProps) {
                   href="/darsliklar"
                   className="inline-flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg sm:rounded-xl shadow hover:shadow-lg transition-all duration-200 text-sm sm:text-base"
                 >
-                  Barcha sinflar →
+                  {BUTTON_TEXTS.allClasses} →
                 </Link>
               </div>
             </div>
@@ -802,7 +825,7 @@ export default function DarslikDetailPage(props: PageProps) {
                     d="M10 19l-7-7m0 0l7-7m-7 7h18"
                   />
                 </svg>
-                <span>Sinf sahifasiga qaytish</span>
+                <span>{BUTTON_TEXTS.backToClassPage}</span>
               </Link>
             </div>
           </div>

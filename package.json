@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rimraf .next",
     "dev": "npm run generate && concurrently \"faust dev\" \"npm run watch-codegen\"",
+    "dev:next": "concurrently \"next dev\" \"npm run watch-codegen\"",
     "build": "faust build",
     "postbuild": "next-sitemap",
     "generate": "faust generatePossibleTypes",

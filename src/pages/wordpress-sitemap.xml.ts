@@ -8,7 +8,7 @@ const client = getApolloClient()
 const SITEMAP_QUERY = gql`
 	query SitemapQuery($after: String) {
 		contentNodes(
-			where: { contentTypes: [POST, PAGE] }
+			where: { contentTypes: [POST, PAGE, OLIYGOH, TEXTBOOKS] }
 			first: 50
 			after: $after
 		) {
@@ -19,6 +19,19 @@ const SITEMAP_QUERY = gql`
 			nodes {
 				uri
 				modifiedGmt
+				__typename
+				... on Oliygoh {
+					slug
+					darslikMalumotlari {
+						sinf
+					}
+				}
+				... on Textbook {
+					slug
+					darslikMalumotlari {
+						sinf
+					}
+				}
 			}
 		}
 	}
@@ -41,17 +54,37 @@ async function getAllWPContent(after = null, acc: any[] = []) {
 	return acc
 }
 
-// Function to format the date to `m/d/Y g:i a`
+// Function to format the date to ISO 8601 format (Google uchun to'g'ri)
 function formatDate(dateString: string): string {
-	const date = new Date(dateString)
-	const month = date.getMonth() + 1
-	const day = date.getDate()
-	const year = date.getFullYear()
-	const hours = date.getHours()
-	const minutes = date.getMinutes().toString().padStart(2, '0')
-	const period = hours >= 12 ? 'PM' : 'AM'
+	if (!dateString) return new Date().toISOString()
+	
+	try {
+		const date = new Date(dateString)
+		// ISO 8601 format: YYYY-MM-DDTHH:mm:ss.sssZ
+		return date.toISOString()
+	} catch (error) {
+		// Agar xatolik bo'lsa, hozirgi sanani qaytar
+		return new Date().toISOString()
+	}
+}
 
-	return `${month}/${day}/${year} ${hours % 12 || 12}:${minutes} ${period}`
+// Universitetlar va darsliklar uchun to'g'ri URL yaratish
+function getCorrectUrl(node: any, baseUrl: string): string {
+	if (!node.uri) return ''
+	
+	// Agar Oliygoh bo'lsa, /oliygoh/[slug]/ formatida
+	if (node.__typename === 'Oliygoh' && node.slug) {
+		return `${baseUrl}/oliygoh/${node.slug}/`
+	}
+	
+	// Agar Textbook bo'lsa, /darsliklar/[sinf]/[slug]/ formatida
+	if (node.__typename === 'Textbook' && node.slug) {
+		const sinf = node.darslikMalumotlari?.sinf || 1
+		return `${baseUrl}/darsliklar/${sinf}/${node.slug}/`
+	}
+	
+	// Boshqa content typelar uchun oddiy URI
+	return `${baseUrl}${node.uri}`
 }
 
 // Sitemap component
@@ -65,20 +98,69 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	const BASE_URL = process.env.NEXT_PUBLIC_URL
 
 	const allRoutes = nodes.reduce((acc, node) => {
-		if (!node.uri) {
+		// Universitetlar va darsliklar uchun to'g'ri URL yaratish
+		const url = getCorrectUrl(node, BASE_URL)
+		
+		if (!url) {
 			return acc
 		}
 
-		// Prepend the BASE_URL to the `uri`
+		// Priority va changefreq ni content type bo'yicha belgilash
+		let priority = 0.8
+		let changefreq: 'daily' | 'weekly' | 'monthly' = 'daily'
+		
+		if (node.__typename === 'Oliygoh') {
+			priority = 0.9 // Universitetlar uchun yuqoriroq priority
+			changefreq = 'weekly'
+		} else if (node.__typename === 'Textbook') {
+			priority = 0.85 // Darsliklar uchun yuqoriroq priority
+			changefreq = 'monthly' // Darsliklar kamroq o'zgaradi
+		} else if (node.__typename === 'Post') {
+			priority = 0.8
+			changefreq = 'daily'
+		} else if (node.__typename === 'Page') {
+			priority = 0.7
+			changefreq = 'monthly'
+		}
+
+		// ISO 8601 formatda sana (Google uchun to'g'ri)
+		const lastmod = node.modifiedGmt ? formatDate(node.modifiedGmt) : new Date().toISOString()
+
 		acc.push({
-			loc: `${BASE_URL}${node.uri}`, // Ensure full URL is used
-			lastmod: node.modifiedGmt ? formatDate(node.modifiedGmt) : undefined, // Format lastmod date
-			changefreq: 'daily', // Set the change frequency to daily
-			priority: 0.8, // Set the priority to 0.8
+			loc: url,
+			lastmod, // ISO 8601 formatda
+			changefreq,
+			priority,
 		})
 
 		return acc
 	}, [])
 
-	return await getServerSideSitemapLegacy(ctx, allRoutes)
+	// Index sahifalarni qo'shish (universitetlar va darsliklar)
+	const indexPages = [
+		{
+			loc: `${BASE_URL}/oliygoh/`,
+			lastmod: new Date().toISOString(),
+			changefreq: 'weekly' as const,
+			priority: 0.9,
+		},
+		{
+			loc: `${BASE_URL}/darsliklar/`,
+			lastmod: new Date().toISOString(),
+			changefreq: 'weekly' as const,
+			priority: 0.9,
+		},
+		// Sinflar sahifalari (1-sinfdan 11-sinfgacha)
+		...Array.from({ length: 11 }, (_, i) => i + 1).map((sinf) => ({
+			loc: `${BASE_URL}/darsliklar/${sinf}/`,
+			lastmod: new Date().toISOString(),
+			changefreq: 'monthly' as const,
+			priority: 0.85,
+		})),
+	]
+
+	// Barcha route'larni birlashtirish
+	const finalRoutes = [...indexPages, ...allRoutes]
+
+	return await getServerSideSitemapLegacy(ctx, finalRoutes)
 }

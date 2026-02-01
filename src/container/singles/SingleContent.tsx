@@ -20,6 +20,7 @@ import { flatListToHierarchical } from '@faustwp/core'
 import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 import { ContentBlock } from '@faustwp/blocks/dist/mjs/components/WordPressBlocksViewer'
 import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
+import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts'
 
 export interface SingleContentProps {
 	post: GetPostSiglePageQuery['post']
@@ -195,6 +196,32 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
 					ref={contentRef}
 				>
 					<MyWordPressBlockViewer blocks={blocks} />
+				</div>
+
+				{/* Telegram Reklama Banner */}
+				<div className="mx-auto max-w-screen-md my-8">
+					<a
+						href={TELEGRAM_LINKS.channel}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="group block w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+					>
+						<div className="flex items-center justify-center gap-3 sm:gap-4">
+							{/* Telegram Icon */}
+							<svg
+								className="w-8 h-8 sm:w-10 sm:h-10 text-white flex-shrink-0"
+								fill="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.174 1.858-.926 6.655-1.31 8.82-.168.929-.5 1.238-.82 1.27-.697.062-1.225-.46-1.9-.902-1.056-.705-1.653-1.143-2.678-1.83-1.185-.8-.418-1.241.259-1.96.178-.188 3.246-2.977 3.307-3.23.007-.031.014-.15-.056-.212-.07-.062-.173-.041-.248-.024-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.429-.008-1.253-.242-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.895-.662 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.64.099-.003.321.024.465.14.118.095.15.223.165.312.015.09.033.297.018.461z" />
+							</svg>
+							{/* Text */}
+							<span className="text-white font-semibold text-sm sm:text-base md:text-lg text-center">
+								{BUTTON_TEXTS.telegramSubscribe}
+							</span>
+						</div>
+					</a>
 				</div>
 
 				{/* TAGS */}
