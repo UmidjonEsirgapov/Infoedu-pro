@@ -38,6 +38,25 @@ export default class Document extends NextDocument {
 				/>
 				{/* End Google Tag Manager */}
 
+				{/* OneSignal Push Notifications */}
+				<script
+					src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+					defer
+				/>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							window.OneSignalDeferred = window.OneSignalDeferred || [];
+							OneSignalDeferred.push(async function(OneSignal) {
+								await OneSignal.init({
+									appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
+								});
+							});
+						`,
+					}}
+				/>
+				{/* End OneSignal */}
+
 					<link
 						href={`${SITE_URL}/api/feeds/feed.json`}
 						rel="alternate"
@@ -112,7 +131,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://cdn.onesignal.com" 
         />
 
 {/* Monetag reklama vaqtincha o'chirilgan */}
