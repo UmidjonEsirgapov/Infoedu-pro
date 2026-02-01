@@ -23,6 +23,8 @@ interface Darslik {
       node?: {
         sourceUrl?: string | null;
         mediaItemUrl?: string | null;
+        mimeType?: string | null;
+        fileSize?: string | null;
       } | null;
     } | string | null;
   } | null;
@@ -70,6 +72,8 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
               node {
                 sourceUrl
                 mediaItemUrl
+                mimeType
+                fileSize
               }
             }
           }
@@ -113,7 +117,7 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
       }
     }
   }
-  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT || ''}
+  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
 `;
 
 export default function SinfDarsliklarPage(props: PageProps) {
@@ -211,11 +215,13 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   const subjectLink = subjectSlug ? `/darsliklar/${sinfRaqami}/${subjectSlug}/` : null;
                   const gradientClass = getGradientBySubject(darslik.title);
                   
-                  // Xavfsiz va sodda file check
-                  const textbookFile = darslik.darslikMalumotlari?.textbookFile;
-                  const fileUrl = typeof textbookFile === 'string' 
-                    ? textbookFile 
-                    : textbookFile?.node?.sourceUrl || textbookFile?.node?.mediaItemUrl || null;
+                  // Xavfsiz file ma'lumotlarini olish (WordPress JSON strukturasi bo'yicha)
+                  const textbookFile = darslik?.darslikMalumotlari?.textbookFile;
+                  const fileNode = typeof textbookFile === 'object' && textbookFile !== null 
+                    ? textbookFile.node 
+                    : null;
+                  const fileUrl = fileNode?.mediaItemUrl || fileNode?.sourceUrl || null;
+                  const coverImg = fileNode?.sourceUrl || null;
                   const hasFile = !!fileUrl;
                   
                   return (
@@ -412,12 +418,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
   }
 
   try {
-    // Fragment importini tekshirish
-    if (!NC_GENERAL_SETTINGS_FIELDS_FRAGMENT) {
-      console.error('[SERVER] NC_GENERAL_SETTINGS_FIELDS_FRAGMENT is undefined!');
-      throw new Error('GraphQL fragment import failed');
-    }
-
     // Fetch textbooks with pagination (optimized - stop early if we find enough)
     let allDarsliklar: Darslik[] = [];
     let hasNextPage = true;
@@ -454,16 +454,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       // Filter by sinf immediately to reduce memory usage
       // Xavfsiz data access uchun optional chaining ishlatamiz
       const filteredNodes = nodes.filter((darslik: any) => {
-        // Xavfsiz textbookFile strukturasini normalizatsiya qilish
-        if (darslik?.darslikMalumotlari?.textbookFile && 
-            typeof darslik.darslikMalumotlari.textbookFile === 'object' &&
-            darslik.darslikMalumotlari.textbookFile !== null) {
-          // Agar node mavjud bo'lmasa, null qilamiz (xatolarni oldini olish uchun)
-          if (!darslik.darslikMalumotlari.textbookFile.node) {
-            darslik.darslikMalumotlari.textbookFile = null;
-          }
-        }
-        
         const classNum = darslik?.darslikMalumotlari?.sinf;
         const classNumAsNumber = typeof classNum === 'string' ? parseInt(classNum, 10) : classNum;
         const matches = classNumAsNumber === sinfRaqami;
