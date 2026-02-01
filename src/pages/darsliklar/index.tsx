@@ -7,7 +7,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
-import { NC_GENERAL_SETTINGS_FIELDS_FRAGMENT } from '@/fragments/general';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 
 interface PageProps {
@@ -25,7 +24,10 @@ interface PageProps {
 const GET_MENUS = gql`
   query GetMenus($headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
     generalSettings {
-      ...NcgeneralSettingsFieldsFragment
+      title
+      description
+      url
+      language
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -50,7 +52,6 @@ const GET_MENUS = gql`
       }
     }
   }
-  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
 `;
 
 export default function DarsliklarPage(props: PageProps) {
