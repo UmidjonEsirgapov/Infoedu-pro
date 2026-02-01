@@ -210,7 +210,9 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   const gradientClass = getGradientBySubject(darslik.title);
                   const hasFile = darslik.darslikMalumotlari?.textbookFile && 
                     (typeof darslik.darslikMalumotlari.textbookFile === 'string' || 
-                     darslik.darslikMalumotlari.textbookFile?.node);
+                     (typeof darslik.darslikMalumotlari.textbookFile === 'object' && 
+                      (darslik.darslikMalumotlari.textbookFile.sourceUrl || 
+                       darslik.darslikMalumotlari.textbookFile.mediaItemUrl)));
                   
                   return (
                     <Link
