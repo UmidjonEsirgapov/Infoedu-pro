@@ -8,7 +8,6 @@ import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import GenerativeBookCover from '@/components/GenerativeBookCover';
 import SEOContentExpander from '@/components/SEOContentExpander';
-import { NC_GENERAL_SETTINGS_FIELDS_FRAGMENT } from '@/fragments/general';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 
 interface Darslik {
@@ -111,7 +110,10 @@ const GET_DARSLIK_BY_SLUG = gql`
       }
     }
     generalSettings {
-      ...NcgeneralSettingsFieldsFragment
+      title
+      description
+      url
+      language
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -170,7 +172,10 @@ const GET_SIMILAR_TEXTBOOKS = gql`
       }
     }
     generalSettings {
-      ...NcgeneralSettingsFieldsFragment
+      title
+      description
+      url
+      language
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -195,7 +200,6 @@ const GET_SIMILAR_TEXTBOOKS = gql`
       }
     }
   }
-  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
 `;
 
 const GET_ALL_DARSLIK_SLUGS = gql`
