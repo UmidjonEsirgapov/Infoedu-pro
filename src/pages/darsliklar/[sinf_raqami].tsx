@@ -69,6 +69,10 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
                 sourceUrl
                 mediaItemUrl
               }
+              ... on File {
+                sourceUrl
+                mediaItemUrl
+              }
             }
           }
           fanlar {
