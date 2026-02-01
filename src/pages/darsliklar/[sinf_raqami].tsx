@@ -9,6 +9,8 @@ import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import ClassSeoContent from '@/components/ClassSeoContent';
 import { getGradientBySubject } from '@/components/GenerativeBookCover';
+import { NC_GENERAL_SETTINGS_FIELDS_FRAGMENT } from '@/fragments/general';
+import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 
 interface Darslik {
   databaseId: number;
@@ -35,10 +37,7 @@ interface Darslik {
 interface PageProps {
   data: {
     darsliklar?: Darslik[];
-    generalSettings?: {
-      title?: string | null;
-      description?: string | null;
-    } | null;
+    generalSettings?: NcgeneralSettingsFieldsFragmentFragment | null;
     primaryMenuItems?: {
       nodes?: any[];
     } | null;
@@ -87,8 +86,7 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
       }
     }
     generalSettings {
-      title
-      description
+      ...NcgeneralSettingsFieldsFragment
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -113,6 +111,7 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
       }
     }
   }
+  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
 `;
 
 export default function SinfDarsliklarPage(props: PageProps) {

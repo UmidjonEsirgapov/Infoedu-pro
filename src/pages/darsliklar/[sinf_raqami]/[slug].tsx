@@ -8,6 +8,8 @@ import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import GenerativeBookCover from '@/components/GenerativeBookCover';
 import SEOContentExpander from '@/components/SEOContentExpander';
+import { NC_GENERAL_SETTINGS_FIELDS_FRAGMENT } from '@/fragments/general';
+import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 
 interface Darslik {
   databaseId: number;
@@ -39,10 +41,7 @@ interface PageProps {
   data: {
     darslik?: Darslik | null;
     similarTextbooks?: Darslik[];
-    generalSettings?: {
-      title?: string | null;
-      description?: string | null;
-    } | null;
+    generalSettings?: NcgeneralSettingsFieldsFragmentFragment | null;
     primaryMenuItems?: {
       nodes?: any[];
     } | null;
@@ -112,8 +111,7 @@ const GET_DARSLIK_BY_SLUG = gql`
       }
     }
     generalSettings {
-      title
-      description
+      ...NcgeneralSettingsFieldsFragment
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -172,8 +170,7 @@ const GET_SIMILAR_TEXTBOOKS = gql`
       }
     }
     generalSettings {
-      title
-      description
+      ...NcgeneralSettingsFieldsFragment
     }
     primaryMenuItems: menuItems(where: { location: $headerLocation }, first: 50) {
       nodes {
@@ -198,6 +195,7 @@ const GET_SIMILAR_TEXTBOOKS = gql`
       }
     }
   }
+  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
 `;
 
 const GET_ALL_DARSLIK_SLUGS = gql`
@@ -568,7 +566,7 @@ export default function DarslikDetailPage(props: PageProps) {
         pageDescription={seoMetaDescription}
         headerMenuItems={props.data?.primaryMenuItems?.nodes || []}
         footerMenuItems={props.data?.footerMenuItems?.nodes || []}
-        generalSettings={props.data?.generalSettings as any || null}
+        generalSettings={props.data?.generalSettings || null}
       >
         <div className="nc-Page-Darslik-Detail">
           <div className="container py-8 sm:py-12 lg:py-16">
