@@ -20,8 +20,10 @@ interface Darslik {
   darslikMalumotlari?: {
     sinf?: number | null;
     textbookFile?: {
-      sourceUrl?: string | null;
-      mediaItemUrl?: string | null;
+      node?: {
+        sourceUrl?: string | null;
+        mediaItemUrl?: string | null;
+      } | null;
     } | string | null;
   } | null;
   fanlar?: {
@@ -65,7 +67,7 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
           darslikMalumotlari {
             sinf
             textbookFile {
-              ... on MediaItem {
+              node {
                 sourceUrl
                 mediaItemUrl
               }
@@ -211,8 +213,9 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   const hasFile = darslik.darslikMalumotlari?.textbookFile && 
                     (typeof darslik.darslikMalumotlari.textbookFile === 'string' || 
                      (typeof darslik.darslikMalumotlari.textbookFile === 'object' && 
-                      (darslik.darslikMalumotlari.textbookFile.sourceUrl || 
-                       darslik.darslikMalumotlari.textbookFile.mediaItemUrl)));
+                      darslik.darslikMalumotlari.textbookFile.node &&
+                      (darslik.darslikMalumotlari.textbookFile.node.sourceUrl || 
+                       darslik.darslikMalumotlari.textbookFile.node.mediaItemUrl)));
                   
                   return (
                     <Link
