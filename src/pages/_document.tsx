@@ -125,7 +125,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com" 
         />
          
         <script
@@ -134,12 +134,13 @@ export default class Document extends NextDocument {
            crossOrigin="anonymous"
          />
 
-<script
+{/* Monetag reklama vaqtincha o'chirilgan */}
+{/* <script
   src="https://quge5.com/88/tag.min.js"
   data-zone="206210"
   async
   data-cfasync="false"
-/>
+/> */}
 
 
 				</Head>
