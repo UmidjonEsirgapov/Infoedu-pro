@@ -95,7 +95,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	const nodes = await getAllWPContent()
 
 	// Define your WordPress base URL
-	const BASE_URL = process.env.NEXT_PUBLIC_URL
+	const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz'
+	
+	// Agar BASE_URL bo'lmasa, sitemap yaratishni to'xtatish
+	if (!BASE_URL) {
+		return {
+			notFound: true,
+		}
+	}
 
 	const allRoutes = nodes.reduce((acc, node) => {
 		// Universitetlar va darsliklar uchun to'g'ri URL yaratish
