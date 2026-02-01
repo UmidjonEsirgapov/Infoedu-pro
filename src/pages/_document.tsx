@@ -24,6 +24,20 @@ export default class Document extends NextDocument {
 				dir={process.env.NEXT_PUBLIC_SITE_DIRECTION}
 			>
 				<Head>
+				{/* Google Tag Manager */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+							new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+							j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+							'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+							})(window,document,'script','dataLayer','GTM-TVR2C49D');
+						`,
+					}}
+				/>
+				{/* End Google Tag Manager */}
+
 				<script
   dangerouslySetInnerHTML={{
     __html: `
@@ -125,7 +139,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://www.googletagmanager.com" 
         />
          
         <script
@@ -145,6 +159,16 @@ export default class Document extends NextDocument {
 
 				</Head>
 				<body className="relative bg-white text-base text-neutral-900 dark:bg-neutral-900/95 dark:text-neutral-100">
+					{/* Google Tag Manager (noscript) */}
+					<noscript>
+						<iframe
+							src="https://www.googletagmanager.com/ns.html?id=GTM-TVR2C49D"
+							height="0"
+							width="0"
+							style={{ display: 'none', visibility: 'hidden' }}
+						/>
+					</noscript>
+					{/* End Google Tag Manager (noscript) */}
 					<Main />
 					<NextScript />
 				</body>
