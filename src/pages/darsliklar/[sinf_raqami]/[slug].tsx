@@ -244,7 +244,7 @@ export default function DarslikDetailPage(props: PageProps) {
   
   // ACF file field - sourceUrl orqali fayl URL'ini olamiz
   const textbookFile = darslik.darslikMalumotlari?.textbookFile;
-  const fileNode = typeof textbookFile === 'string' ? null : textbookFile?.node;
+  const fileNode = typeof textbookFile === 'string' ? null : (typeof textbookFile === 'object' ? textbookFile?.node : null);
   let fileUrl = typeof textbookFile === 'string' 
     ? textbookFile 
     : (fileNode?.sourceUrl || fileNode?.mediaItemUrl || null);

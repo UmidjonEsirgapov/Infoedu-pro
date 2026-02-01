@@ -211,6 +211,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   const hasFile = darslik.darslikMalumotlari?.textbookFile && 
                     (typeof darslik.darslikMalumotlari.textbookFile === 'string' || 
                      (typeof darslik.darslikMalumotlari.textbookFile === 'object' && 
+                      darslik.darslikMalumotlari.textbookFile !== null &&
                       (darslik.darslikMalumotlari.textbookFile.sourceUrl || 
                        darslik.darslikMalumotlari.textbookFile.mediaItemUrl)));
                   
