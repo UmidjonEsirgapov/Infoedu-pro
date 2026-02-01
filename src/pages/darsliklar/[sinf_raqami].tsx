@@ -113,7 +113,7 @@ const GET_DARSLIKLAR_BY_CLASS = gql`
       }
     }
   }
-  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT}
+  ${NC_GENERAL_SETTINGS_FIELDS_FRAGMENT || ''}
 `;
 
 export default function SinfDarsliklarPage(props: PageProps) {
@@ -210,13 +210,13 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   const subjectSlug = darslik.fanlar?.nodes?.[0]?.slug;
                   const subjectLink = subjectSlug ? `/darsliklar/${sinfRaqami}/${subjectSlug}/` : null;
                   const gradientClass = getGradientBySubject(darslik.title);
-                  const hasFile = darslik.darslikMalumotlari?.textbookFile && 
-                    (typeof darslik.darslikMalumotlari.textbookFile === 'string' || 
-                     (typeof darslik.darslikMalumotlari.textbookFile === 'object' && 
-                      darslik.darslikMalumotlari.textbookFile !== null &&
-                      darslik.darslikMalumotlari.textbookFile.node &&
-                      (darslik.darslikMalumotlari.textbookFile.node.sourceUrl || 
-                       darslik.darslikMalumotlari.textbookFile.node.mediaItemUrl)));
+                  
+                  // Xavfsiz va sodda file check
+                  const textbookFile = darslik.darslikMalumotlari?.textbookFile;
+                  const fileUrl = typeof textbookFile === 'string' 
+                    ? textbookFile 
+                    : textbookFile?.node?.sourceUrl || textbookFile?.node?.mediaItemUrl || null;
+                  const hasFile = !!fileUrl;
                   
                   return (
                     <Link
@@ -412,6 +412,12 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
   }
 
   try {
+    // Fragment importini tekshirish
+    if (!NC_GENERAL_SETTINGS_FIELDS_FRAGMENT) {
+      console.error('[SERVER] NC_GENERAL_SETTINGS_FIELDS_FRAGMENT is undefined!');
+      throw new Error('GraphQL fragment import failed');
+    }
+
     // Fetch textbooks with pagination (optimized - stop early if we find enough)
     let allDarsliklar: Darslik[] = [];
     let hasNextPage = true;
@@ -434,7 +440,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       });
 
       const nodes = (data?.contentNodesWithTextbooks?.nodes || []).filter(
-        (node: any) => node.__typename === 'Textbook'
+        (node: any) => node?.__typename === 'Textbook'
       ) as Darslik[];
 
       // Safety check: if no nodes returned, break the loop
@@ -446,14 +452,25 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       }
 
       // Filter by sinf immediately to reduce memory usage
+      // Xavfsiz data access uchun optional chaining ishlatamiz
       const filteredNodes = nodes.filter((darslik: any) => {
-        const classNum = darslik.darslikMalumotlari?.sinf;
+        // Xavfsiz textbookFile strukturasini normalizatsiya qilish
+        if (darslik?.darslikMalumotlari?.textbookFile && 
+            typeof darslik.darslikMalumotlari.textbookFile === 'object' &&
+            darslik.darslikMalumotlari.textbookFile !== null) {
+          // Agar node mavjud bo'lmasa, null qilamiz (xatolarni oldini olish uchun)
+          if (!darslik.darslikMalumotlari.textbookFile.node) {
+            darslik.darslikMalumotlari.textbookFile = null;
+          }
+        }
+        
+        const classNum = darslik?.darslikMalumotlari?.sinf;
         const classNumAsNumber = typeof classNum === 'string' ? parseInt(classNum, 10) : classNum;
         const matches = classNumAsNumber === sinfRaqami;
         
         // Debug for all sinflar
         if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Darslik "${darslik.title}": sinf=${classNum} (type: ${typeof classNum}), parsed=${classNumAsNumber}, target=${sinfRaqami}, matches=${matches}`);
+          console.log(`[SERVER] Darslik "${darslik?.title}": sinf=${classNum} (type: ${typeof classNum}), parsed=${classNumAsNumber}, target=${sinfRaqami}, matches=${matches}`);
         }
         
         return matches;
