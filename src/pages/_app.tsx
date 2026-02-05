@@ -39,18 +39,21 @@ function OneSignalInit() {
 			// Type guard: OneSignal SDK yuklanganda, window.OneSignal obyekt bo'ladi
 			// Array emas, obyekt bo'lishini tekshiramiz
 			if (window.OneSignal && !Array.isArray(window.OneSignal) && typeof window.OneSignal.init === 'function') {
-				window.OneSignal.init({
-					appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
-					allowLocalhostAsSecureOrigin: true,
-				}).then(() => {
+				try {
+					window.OneSignal.init({
+						appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
+						allowLocalhostAsSecureOrigin: true,
+					})
 					// OneSignal init qilingandan keyin, Notifications obyekti mavjud bo'ladi
-					// Bu yerda boshqa OneSignal funksiyalarini chaqirish mumkin
-					if (window.OneSignal && !Array.isArray(window.OneSignal) && window.OneSignal.Notifications) {
-						// Notifications obyekti mavjud, endi xavfsiz ishlatish mumkin
-					}
-				}).catch((error: any) => {
+					// setTimeout orqali init qilingandan keyin kutamiz
+					setTimeout(() => {
+						if (window.OneSignal && !Array.isArray(window.OneSignal) && window.OneSignal.Notifications) {
+							// Notifications obyekti mavjud, endi xavfsiz ishlatish mumkin
+						}
+					}, 100)
+				} catch (error) {
 					console.error('OneSignal initialization error:', error)
-				})
+				}
 			}
 		})
 	}, [])
