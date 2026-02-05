@@ -125,7 +125,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com https://yohle.com https://glempirteechacm.com https://roagrofoogrobo.com https://ep2.adtrafficquality.google" 
         />
          
         <script

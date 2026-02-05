@@ -42,6 +42,14 @@ function OneSignalInit() {
 				window.OneSignal.init({
 					appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
 					allowLocalhostAsSecureOrigin: true,
+				}).then(() => {
+					// OneSignal init qilingandan keyin, Notifications obyekti mavjud bo'ladi
+					// Bu yerda boshqa OneSignal funksiyalarini chaqirish mumkin
+					if (window.OneSignal && !Array.isArray(window.OneSignal) && window.OneSignal.Notifications) {
+						// Notifications obyekti mavjud, endi xavfsiz ishlatish mumkin
+					}
+				}).catch((error: any) => {
+					console.error('OneSignal initialization error:', error)
 				})
 			}
 		})
