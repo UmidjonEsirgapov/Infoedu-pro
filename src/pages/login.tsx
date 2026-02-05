@@ -86,15 +86,43 @@ export default function Login() {
 					clearInterval(checkAuth)
 					console.warn('Authentication timeout - checking server status')
 					
-					// Server holatini tekshirish
+					// Server holatini tekshirish va batafsil error logging
 					fetch('/api/faust/auth/token', {
 						method: 'GET',
 						credentials: 'include',
-					}).then(response => {
+					}).then(async response => {
+						// 500 xatosi bo'lsa, batafsil ma'lumot olish
 						if (response.status === 500) {
-							console.error('Server error (500) - WordPress/Faust.js server issue')
+							let errorDetails = ''
+							try {
+								const errorData = await response.json()
+								errorDetails = JSON.stringify(errorData, null, 2)
+								console.error('Server error (500) details:', errorData)
+							} catch (e) {
+								const errorText = await response.text()
+								errorDetails = errorText
+								console.error('Server error (500) text:', errorText)
+							}
+							
+							console.error('=== 500 ERROR DETAILS ===')
+							console.error('Status:', response.status)
+							console.error('Status Text:', response.statusText)
+							console.error('Response:', errorDetails)
+							console.error('URL:', response.url)
+							console.error('========================')
+							
+							// WordPress REST API test qilish
+							fetch('/api/test-wordpress-rest')
+								.then(res => res.json())
+								.then(testResults => {
+									console.log('WordPress REST API Test Results:', testResults)
+								})
+								.catch(err => {
+									console.error('WordPress REST API test failed:', err)
+								})
+							
 							toast.error(
-								'Server error occurred. Please try again later or contact support.',
+								'Server error occurred. Please check console for details or contact support.',
 								{
 									position: 'bottom-center',
 									duration: 5000,
