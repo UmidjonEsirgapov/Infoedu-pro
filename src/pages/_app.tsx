@@ -40,17 +40,29 @@ function OneSignalInit() {
 			// Array emas, obyekt bo'lishini tekshiramiz
 			if (window.OneSignal && !Array.isArray(window.OneSignal) && typeof window.OneSignal.init === 'function') {
 				try {
+					// Use init() promise to ensure OneSignal is fully initialized before accessing its properties
 					window.OneSignal.init({
 						appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
 						allowLocalhostAsSecureOrigin: true,
-					})
-					// OneSignal init qilingandan keyin, Notifications obyekti mavjud bo'ladi
-					// setTimeout orqali init qilingandan keyin kutamiz
-					setTimeout(() => {
-						if (window.OneSignal && !Array.isArray(window.OneSignal) && window.OneSignal.Notifications) {
-							// Notifications obyekti mavjud, endi xavfsiz ishlatish mumkin
+					}).then(() => {
+						// OneSignal is now fully initialized, emitter and other properties are available
+						if (window.OneSignal && !Array.isArray(window.OneSignal)) {
+							// Now it's safe to use OneSignal.emitter, OneSignal.EVENTS, etc.
+							// Example: Subscribe to notification permission changes
+							if (window.OneSignal.emitter && window.OneSignal.EVENTS) {
+								// OneSignal.emitter is now available and can be used safely
+								// Example usage:
+								// window.OneSignal.emitter.on(
+								//   window.OneSignal.EVENTS.NOTIFICATION_PERMISSION_CHANGED_AS_AS_STRING,
+								//   (permissionNative: NotificationPermission) => {
+								//     // Handle permission change
+								//   }
+								// )
+							}
 						}
-					}, 100)
+					}).catch((error: Error) => {
+						console.error('OneSignal initialization failed:', error)
+					})
 				} catch (error) {
 					console.error('OneSignal initialization error:', error)
 				}
