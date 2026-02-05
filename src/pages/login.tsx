@@ -87,11 +87,12 @@ export default function Login() {
 					console.warn('Authentication timeout - reloading page to check auth state')
 					setIsProcessingLogin(false)
 					// Reload qilish authentication holatini yangilash uchun
-					toast.info(
+					toast(
 						'Verifying login, please wait...',
 						{
 							position: 'bottom-center',
 							duration: 2000,
+							icon: '⏳',
 						},
 					)
 					setTimeout(() => {
