@@ -125,7 +125,7 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com https://yohle.com https://glempirteechacm.com https://roagrofoogrobo.com https://ep2.adtrafficquality.google" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://ep2.adtrafficquality.google" 
         />
          
         <script
@@ -133,92 +133,6 @@ export default class Document extends NextDocument {
            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258193393152528"
            crossOrigin="anonymous"
          />
-
-<script
-  src="https://quge5.com/88/tag.min.js"
-  data-zone="206210"
-  async
-  data-cfasync="false"
-/>
-<script
-  dangerouslySetInnerHTML={{
-    __html: `
-      // Monetag: Faqat Banner reklamani qoldirish, qolganlarini o'chirish
-      (function() {
-        // Skript yuklangandan keyin kutish
-        function disableNonBannerAds() {
-          // Popup va overlay reklamalarni o'chirish
-          const popupSelectors = [
-            '[id*="popup"]',
-            '[id*="overlay"]',
-            '[id*="interstitial"]',
-            '[class*="popup"]',
-            '[class*="overlay"]',
-            '[class*="interstitial"]',
-            '[class*="modal"]',
-            'iframe[src*="yohle"]',
-            'iframe[src*="glempirteechacm"]',
-            'iframe[src*="roagrofoogrobo"]',
-          ];
-          
-          popupSelectors.forEach(selector => {
-            try {
-              const elements = document.querySelectorAll(selector);
-              elements.forEach(el => {
-                // Banner emas bo'lsa, o'chirish
-                const isBanner = el.offsetWidth > 200 && el.offsetHeight < 1000 && 
-                                 !el.style.position || el.style.position !== 'fixed';
-                if (!isBanner && (el.style.position === 'fixed' || 
-                    el.style.zIndex > 1000 || 
-                    el.classList.contains('popup') ||
-                    el.classList.contains('overlay') ||
-                    el.classList.contains('interstitial'))) {
-                  el.remove();
-                }
-              });
-            } catch(e) {}
-          });
-          
-          // Fixed position va z-index yuqori bo'lgan elementlarni tekshirish
-          const allElements = document.querySelectorAll('*');
-          allElements.forEach(el => {
-            const style = window.getComputedStyle(el);
-            if (style.position === 'fixed' && 
-                parseInt(style.zIndex) > 1000 && 
-                el.offsetWidth < window.innerWidth * 0.9) {
-              // Bu popup yoki overlay bo'lishi mumkin
-              const isBanner = el.offsetWidth > 200 && el.offsetHeight < 1000;
-              if (!isBanner) {
-                el.remove();
-              }
-            }
-          });
-        }
-        
-        // DOM yuklangandan keyin
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(disableNonBannerAds, 1000);
-            setInterval(disableNonBannerAds, 2000);
-          });
-        } else {
-          setTimeout(disableNonBannerAds, 1000);
-          setInterval(disableNonBannerAds, 2000);
-        }
-        
-        // MutationObserver orqali yangi elementlarni kuzatish
-        const observer = new MutationObserver(function(mutations) {
-          disableNonBannerAds();
-        });
-        
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-      })();
-    `,
-  }}
-/>
 
 
 				</Head>
