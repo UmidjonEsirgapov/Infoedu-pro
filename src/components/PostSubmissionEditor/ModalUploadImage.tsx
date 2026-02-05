@@ -15,6 +15,8 @@ import {
 	NC_SITE_SETTINGS,
 } from '@/contains/site-settings'
 import Button from '../Button/Button'
+import { useAuth } from '@faustwp/core'
+import { useLoginModal } from '@/hooks/useLoginModal'
 
 interface MenuItemImageProps {
 	onClickApply: ({ url, alt, title }: EditorItemImageAttrs) => void
@@ -36,6 +38,8 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 	enableUpload = true,
 }) => {
 	const T = getTrans()
+	const { isAuthenticated, isReady } = useAuth()
+	const { openLoginModal } = useLoginModal()
 
 	let [catImages] = useState(['Upload', 'Insert from URL'])
 
@@ -122,6 +126,15 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 			)
 
 		const getAccessToken = async () => {
+			// Authentication holatini tekshirish
+			if (!isReady) {
+				throw new Error('Authentication is not ready yet')
+			}
+
+			if (!isAuthenticated) {
+				throw new Error('User is not authenticated')
+			}
+
 			try {
 				const response = await fetch('/api/faust/auth/token', {
 					method: 'GET',
@@ -132,6 +145,10 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 				})
 				
 				if (!response.ok) {
+					if (response.status === 401) {
+						console.error('Token fetch error: 401 Unauthorized - User is not authenticated')
+						throw new Error('UNAUTHORIZED')
+					}
 					console.error('Token fetch error:', response.status, response.statusText)
 					throw new Error(`Failed to get access token: ${response.status}`)
 				}
@@ -153,6 +170,17 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 		) => {
 			if (IS_CHISNGHIAX_DEMO_SITE) {
 				return toast.error('This is a demo site. Uploading file is disabled.')
+			}
+
+			// Authentication holatini tekshirish
+			if (!isReady) {
+				return toast.error('Please wait, authentication is loading...')
+			}
+
+			if (!isAuthenticated) {
+				closeModal()
+				openLoginModal()
+				return toast.error('Please login to upload files')
 			}
 
 			try {
@@ -212,11 +240,21 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 					toast.success('File Uploaded')
 					setUrlState(sourceUrl)
 				}
-			} catch (err) {
+			} catch (err: any) {
 				console.log('File Upload error___', err)
 				setFileLoading(false)
 				setUrlState(defaultImage?.url || '')
-				return toast.error('Error in Uploading File')
+				
+				// 401 xatosi bo'lsa, login modalini ochish
+				if (err?.message === 'UNAUTHORIZED' || err?.message?.includes('401')) {
+					closeModal()
+					openLoginModal()
+					return toast.error('Your session has expired. Please login again to upload files.')
+				}
+				
+				return toast.error(
+					err?.message || 'Error in Uploading File'
+				)
 			}
 		}
 

@@ -40,21 +40,32 @@ export default function Login() {
 				/<[^>]+>/g,
 				'',
 			)
+			console.error('Login error:', errorMessage, data?.generateAuthorizationCode)
 			toast.error(errorMessage, {
 				position: 'bottom-center',
+				duration: 5000,
 			})
 			setIsProcessingLogin(false)
 			return
 		}
 
+		// Authorization code olingandan keyin token exchange jarayonini kutish
 		if (!!data?.generateAuthorizationCode.code && !isProcessingLogin) {
 			setIsProcessingLogin(true)
-			console.log('Authorization code received, waiting for authentication...')
+			console.log('Authorization code received:', data?.generateAuthorizationCode.code)
+			console.log('Waiting for token exchange and authentication...')
 			
-			// Wait for token processing and authentication state update
+			// Token exchange va authentication holatini kuzatish
+			let checkCount = 0
+			const maxChecks = 20 // 10 soniya (20 * 500ms)
+			
 			const checkAuth = setInterval(() => {
+				checkCount++
+				console.log(`Auth check ${checkCount}/${maxChecks}: isReady=${isReady}, isAuthenticated=${isAuthenticated}`)
+				
 				if (isReady && isAuthenticated) {
 					clearInterval(checkAuth)
+					console.log('Authentication successful!')
 					toast.success(
 						'Login successful, redirecting...',
 						{
@@ -62,27 +73,37 @@ export default function Login() {
 							duration: 3000,
 						},
 					)
-					router.replace('/')
 					setIsProcessingLogin(false)
+					// Kichik kechikish bilan redirect qilish
+					setTimeout(() => {
+						router.replace('/')
+					}, 500)
+					return
 				}
-			}, 500)
-
-			// Timeout after 5 seconds
-			setTimeout(() => {
-				clearInterval(checkAuth)
-				if (!isAuthenticated) {
-					// If still not authenticated, reload to trigger auth check
-					toast.success(
-						'Login successful, reloading page...',
+				
+				// Timeout bo'lganda
+				if (checkCount >= maxChecks) {
+					clearInterval(checkAuth)
+					console.warn('Authentication timeout - reloading page to check auth state')
+					setIsProcessingLogin(false)
+					// Reload qilish authentication holatini yangilash uchun
+					toast.info(
+						'Verifying login, please wait...',
 						{
 							position: 'bottom-center',
-							duration: 3000,
+							duration: 2000,
 						},
 					)
-					router.reload()
+					setTimeout(() => {
+						router.reload()
+					}, 1000)
 				}
-				setIsProcessingLogin(false)
-			}, 5000)
+			}, 500) // Har 500ms tekshirish
+
+			// Cleanup function
+			return () => {
+				clearInterval(checkAuth)
+			}
 		}
 	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, router, isAuthenticated, isReady, isProcessingLogin])
 
@@ -143,9 +164,16 @@ export default function Login() {
 								/>
 							</div>
 							<div className="grid">
-								<ButtonPrimary loading={loading}>{T.Login}</ButtonPrimary>
+								<ButtonPrimary loading={loading || isProcessingLogin} disabled={loading || isProcessingLogin}>
+									{isProcessingLogin ? 'Logging in...' : T.Login}
+								</ButtonPrimary>
 								{!!errorMessage && (
 									<Error className="mt-2 text-center" error={errorMessage} />
+								)}
+								{isProcessingLogin && (
+									<p className="mt-2 text-center text-sm text-neutral-500 dark:text-neutral-400">
+										Please wait, verifying your credentials...
+									</p>
 								)}
 							</div>
 						</div>

@@ -33,19 +33,29 @@ const LoginModal: FC<LoginModalProps> = () => {
 			console.error('Login error:', errorMessage, data?.generateAuthorizationCode)
 			toast.error(errorMessage, {
 				position: 'bottom-center',
+				duration: 5000,
 			})
 			setIsProcessingLogin(false)
 			return
 		}
 
+		// Authorization code olingandan keyin token exchange jarayonini kutish
 		if (!!data?.generateAuthorizationCode.code && !isProcessingLogin) {
 			setIsProcessingLogin(true)
-			console.log('Authorization code received, waiting for authentication...')
+			console.log('Authorization code received:', data?.generateAuthorizationCode.code)
+			console.log('Waiting for token exchange and authentication...')
 			
-			// Wait a bit for token to be processed
-			setTimeout(() => {
-				// Check if authenticated after token processing
+			// Token exchange va authentication holatini kuzatish
+			let checkCount = 0
+			const maxChecks = 20 // 10 soniya (20 * 500ms)
+			
+			const checkAuth = setInterval(() => {
+				checkCount++
+				console.log(`Auth check ${checkCount}/${maxChecks}: isReady=${isReady}, isAuthenticated=${isAuthenticated}`)
+				
 				if (isReady && isAuthenticated) {
+					clearInterval(checkAuth)
+					console.log('Authentication successful!')
 					toast.success(
 						'Login successful, redirecting...',
 						{
@@ -53,49 +63,54 @@ const LoginModal: FC<LoginModalProps> = () => {
 							duration: 3000,
 						},
 					)
+					setIsProcessingLogin(false)
 					closeLoginModal()
-					if (urlRiderect) {
-						router.push(urlRiderect)
-					} else {
-						router.push('/')
-					}
-				} else {
-					// If not authenticated yet, reload to trigger auth check
-					toast.success(
-						'Login successful, reloading page...',
+					// Kichik kechikish bilan redirect qilish
+					setTimeout(() => {
+						if (urlRiderect) {
+							router.push(urlRiderect)
+						} else {
+							router.push('/')
+						}
+					}, 500)
+					return
+				}
+				
+				// Timeout bo'lganda
+				if (checkCount >= maxChecks) {
+					clearInterval(checkAuth)
+					console.warn('Authentication timeout - reloading page to check auth state')
+					setIsProcessingLogin(false)
+					closeLoginModal()
+					// Reload qilish authentication holatini yangilash uchun
+					toast.info(
+						'Verifying login, please wait...',
 						{
 							position: 'bottom-center',
-							duration: 3000,
+							duration: 2000,
 						},
 					)
-					closeLoginModal()
-					router.reload()
+					setTimeout(() => {
+						router.reload()
+					}, 1000)
 				}
-				setIsProcessingLogin(false)
-			}, 1000) // Wait 1 second for token processing
-			return
+			}, 500) // Har 500ms tekshirish
+
+			// Cleanup function
+			return () => {
+				clearInterval(checkAuth)
+			}
 		}
 	}, [data?.generateAuthorizationCode.code, data?.generateAuthorizationCode.error, urlRiderect, router, closeLoginModal, isAuthenticated, isReady, isProcessingLogin])
 
-	// Also check authentication state directly
+	// Authentication holati o'zgarganda qo'shimcha tekshirish
 	useEffect(() => {
+		// Faqat processing jarayonida va authentication muvaffaqiyatli bo'lganda
 		if (isProcessingLogin && isReady && isAuthenticated) {
-			toast.success(
-				'Login successful, redirecting...',
-				{
-					position: 'bottom-center',
-					duration: 3000,
-				},
-			)
-			closeLoginModal()
-			if (urlRiderect) {
-				router.push(urlRiderect)
-			} else {
-				router.push('/')
-			}
-			setIsProcessingLogin(false)
+			console.log('Authentication state changed to authenticated during processing')
+			// Asosiy useEffect bu holatni boshqaradi, shuning uchun bu yerda faqat log qilamiz
 		}
-	}, [isAuthenticated, isReady, isProcessingLogin, urlRiderect, router, closeLoginModal])
+	}, [isAuthenticated, isReady, isProcessingLogin])
 
 	// Debug: error handling
 	useEffect(() => {
@@ -173,9 +188,16 @@ const LoginModal: FC<LoginModalProps> = () => {
 									/>
 								</div>
 								<div className="grid">
-									<ButtonPrimary loading={loading}>{T.Login}</ButtonPrimary>
+									<ButtonPrimary loading={loading || isProcessingLogin} disabled={loading || isProcessingLogin}>
+										{isProcessingLogin ? 'Logging in...' : T.Login}
+									</ButtonPrimary>
 									{!!errorMessage && (
 										<Error className="mt-2 text-center" error={errorMessage} />
+									)}
+									{isProcessingLogin && (
+										<p className="mt-2 text-center text-sm text-neutral-500 dark:text-neutral-400">
+											Please wait, verifying your credentials...
+										</p>
 									)}
 								</div>
 							</div>
