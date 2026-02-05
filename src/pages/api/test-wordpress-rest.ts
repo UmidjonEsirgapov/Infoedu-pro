@@ -48,11 +48,31 @@ export default async function handler(
 					'Content-Type': 'application/json',
 				},
 			})
+			
+			let responseBody = null
+			try {
+				responseBody = await faustAuthResponse.text()
+				// JSON bo'lsa parse qilish
+				try {
+					responseBody = JSON.parse(responseBody)
+				} catch {
+					// JSON emas, text qilib qoldirish
+				}
+			} catch {
+				// Response body o'qib bo'lmasa
+			}
+			
 			results.tests.faustAuthEndpoint = {
 				status: faustAuthResponse.status,
 				statusText: faustAuthResponse.statusText,
 				ok: faustAuthResponse.ok,
 				url: `${wordPressUrl}/wp-json/faustwp/v1/auth/token`,
+				response: responseBody,
+				issue: faustAuthResponse.status === 404 
+					? 'Faust.js auth endpoint not found. Check if Faust.js plugin is properly installed and activated, and if auth endpoints are enabled.'
+					: faustAuthResponse.status === 500
+					? 'Faust.js auth endpoint returns 500 error. Check WordPress server logs.'
+					: null,
 			}
 		} catch (error: any) {
 			results.tests.faustAuthEndpoint = {

@@ -87,6 +87,43 @@ const LoginModal: FC<LoginModalProps> = () => {
 						credentials: 'include',
 					}).then(async response => {
 						// 500 xatosi bo'lsa, batafsil ma'lumot olish
+						// 404 xatosi - Faust.js auth endpoint topilmadi
+						if (response.status === 404) {
+							console.error('=== 404 ERROR: Faust.js Auth Endpoint Not Found ===')
+							console.error('The endpoint /wp-json/faustwp/v1/auth/token is not available.')
+							console.error('This means Faust.js plugin auth endpoints are not properly configured.')
+							console.error('Please check:')
+							console.error('1. Faust.js plugin is installed and activated')
+							console.error('2. Faust.js plugin version is compatible')
+							console.error('3. Auth endpoints are enabled in plugin settings')
+							console.error('====================================================')
+							
+							// WordPress REST API test qilish
+							fetch('/api/test-wordpress-rest')
+								.then(res => res.json())
+								.then(testResults => {
+									console.log('WordPress REST API Test Results:', testResults)
+									if (testResults.tests?.faustAuthEndpoint?.status === 404) {
+										console.error('CONFIRMED: Faust.js auth endpoint returns 404')
+									}
+								})
+								.catch(err => {
+									console.error('WordPress REST API test failed:', err)
+								})
+							
+							toast.error(
+								'Faust.js authentication endpoint not found. Please check WordPress plugin configuration.',
+								{
+									position: 'bottom-center',
+									duration: 7000,
+								},
+							)
+							setIsProcessingLogin(false)
+							closeLoginModal()
+							return
+						}
+						
+						// 500 xatosi
 						if (response.status === 500) {
 							let errorDetails = ''
 							try {
