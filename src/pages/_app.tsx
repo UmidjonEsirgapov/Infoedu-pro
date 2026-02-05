@@ -36,10 +36,14 @@ function OneSignalInit() {
 		// Initialize OneSignal using push method (safe way)
 		// This ensures OneSignal SDK is fully loaded before executing
 		window.OneSignal.push(function() {
-			window.OneSignal.init({
-				appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
-				allowLocalhostAsSecureOrigin: true,
-			})
+			// Type guard: OneSignal SDK yuklanganda, window.OneSignal obyekt bo'ladi
+			// Array emas, obyekt bo'lishini tekshiramiz
+			if (window.OneSignal && !Array.isArray(window.OneSignal) && typeof window.OneSignal.init === 'function') {
+				window.OneSignal.init({
+					appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
+					allowLocalhostAsSecureOrigin: true,
+				})
+			}
 		})
 	}, [])
 
