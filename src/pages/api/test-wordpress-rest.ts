@@ -91,11 +91,25 @@ export default async function handler(
 					'Content-Type': 'application/json',
 				},
 			})
+			
+			let pluginResponseBody: string | object | null = null
+			try {
+				const textResponse = await faustPluginResponse.text()
+				try {
+					pluginResponseBody = JSON.parse(textResponse)
+				} catch {
+					pluginResponseBody = textResponse
+				}
+			} catch {
+				pluginResponseBody = null
+			}
+			
 			results.tests.faustPlugin = {
 				status: faustPluginResponse.status,
 				statusText: faustPluginResponse.statusText,
 				ok: faustPluginResponse.ok,
 				url: `${wordPressUrl}/wp-json/faustwp/v1`,
+				response: pluginResponseBody,
 			}
 		} catch (error: any) {
 			results.tests.faustPlugin = {
@@ -104,11 +118,90 @@ export default async function handler(
 			}
 		}
 
-		// 4. Environment variables check
+		// 4. Alternative auth endpoint test (POST method)
+		try {
+			const faustAuthPostResponse = await fetch(`${wordPressUrl}/wp-json/faustwp/v1/auth/token`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+			
+			let postResponseBody: string | object | null = null
+			try {
+				const textResponse = await faustAuthPostResponse.text()
+				try {
+					postResponseBody = JSON.parse(textResponse)
+				} catch {
+					postResponseBody = textResponse
+				}
+			} catch {
+				postResponseBody = null
+			}
+			
+			results.tests.faustAuthEndpointPOST = {
+				status: faustAuthPostResponse.status,
+				statusText: faustAuthPostResponse.statusText,
+				ok: faustAuthPostResponse.ok,
+				url: `${wordPressUrl}/wp-json/faustwp/v1/auth/token`,
+				method: 'POST',
+				response: postResponseBody,
+			}
+		} catch (error: any) {
+			results.tests.faustAuthEndpointPOST = {
+				error: error.message,
+				url: `${wordPressUrl}/wp-json/faustwp/v1/auth/token`,
+				method: 'POST',
+			}
+		}
+
+		// 5. Check available Faust.js routes
+		try {
+			const faustRoutesResponse = await fetch(`${wordPressUrl}/wp-json/faustwp/v1`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+			
+			if (faustRoutesResponse.ok) {
+				const routesData = await faustRoutesResponse.json()
+				results.tests.availableRoutes = {
+					status: faustRoutesResponse.status,
+					routes: routesData,
+					note: 'Check if auth/token route is listed in available routes',
+				}
+			}
+		} catch (error: any) {
+			results.tests.availableRoutes = {
+				error: error.message,
+			}
+		}
+
+		// 6. Environment variables check
 		results.environment = {
 			hasWordPressUrl: !!process.env.NEXT_PUBLIC_WORDPRESS_URL,
 			hasFaustSecretKey: !!process.env.FAUST_SECRET_KEY,
 			wordPressUrl: process.env.NEXT_PUBLIC_WORDPRESS_URL || 'NOT SET',
+		}
+
+		// 7. Summary and recommendations
+		results.summary = {
+			issue: results.tests.faustAuthEndpoint?.status === 404
+				? 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available. This is a WordPress plugin configuration issue.'
+				: results.tests.faustAuthEndpoint?.status === 500
+				? 'Faust.js auth endpoint returns 500 error. Check WordPress server logs.'
+				: 'All endpoints are working correctly.',
+			recommendations: results.tests.faustAuthEndpoint?.status === 404
+				? [
+					'1. Check Faust.js plugin version - ensure it\'s the latest version',
+					'2. Verify plugin is activated in WordPress admin',
+					'3. Check plugin settings - auth endpoints may need to be enabled',
+					'4. Try deactivating and reactivating the plugin',
+					'5. Check WordPress REST API is enabled (Settings > Permalinks)',
+					'6. Verify FAUST_SECRET_KEY matches between WordPress and Next.js',
+				]
+				: [],
 		}
 
 		return res.status(200).json(results)
