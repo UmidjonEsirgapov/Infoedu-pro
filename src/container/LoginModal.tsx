@@ -105,19 +105,44 @@ const LoginModal: FC<LoginModalProps> = () => {
 									console.log('WordPress REST API Test Results:', testResults)
 									if (testResults.tests?.faustAuthEndpoint?.status === 404) {
 										console.error('CONFIRMED: Faust.js auth endpoint returns 404')
+										
+										// Versiya nomuvofiqlik xabari
+										if (testResults.summary?.hasAuthorizeRoute) {
+											console.error('⚠️ VERSION MISMATCH DETECTED:')
+											console.error('Your Faust.js plugin uses /authorize endpoint instead of /auth/token')
+											console.error('This means your WordPress plugin version is outdated.')
+											console.error('SOLUTION: Update Faust.js plugin to the latest version in WordPress admin.')
+											console.error('Current Next.js Faust.js version:', '3.3.1')
+											console.error('Required WordPress plugin version: Latest (with /auth/token endpoint)')
+											
+											toast.error(
+												'⚠️ Faust.js plugin version mismatch! Please update WordPress plugin to latest version.',
+												{
+													position: 'bottom-center',
+													duration: 10000,
+												},
+											)
+										} else {
+											toast.error(
+												'Faust.js authentication endpoint not found. Please check WordPress plugin configuration.',
+												{
+													position: 'bottom-center',
+													duration: 7000,
+												},
+											)
+										}
 									}
 								})
 								.catch(err => {
 									console.error('WordPress REST API test failed:', err)
+									toast.error(
+										'Faust.js authentication endpoint not found. Please check WordPress plugin configuration.',
+										{
+											position: 'bottom-center',
+											duration: 7000,
+										},
+									)
 								})
-							
-							toast.error(
-								'Faust.js authentication endpoint not found. Please check WordPress plugin configuration.',
-								{
-									position: 'bottom-center',
-									duration: 7000,
-								},
-							)
 							setIsProcessingLogin(false)
 							closeLoginModal()
 							return
