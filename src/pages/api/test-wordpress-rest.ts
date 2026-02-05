@@ -186,21 +186,43 @@ export default async function handler(
 		}
 
 		// 7. Summary and recommendations
+		const availableRoutes = results.tests.availableRoutes?.routes?.routes || {}
+		const hasAuthTokenRoute = Object.keys(availableRoutes).some(route => route.includes('auth/token'))
+		const hasAuthorizeRoute = Object.keys(availableRoutes).some(route => route.includes('authorize'))
+		
 		results.summary = {
 			issue: results.tests.faustAuthEndpoint?.status === 404
-				? 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available. This is a WordPress plugin configuration issue.'
+				? hasAuthorizeRoute
+					? 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available, but /authorize endpoint exists. This suggests you may be using an older version of Faust.js plugin that uses /authorize instead of /auth/token. Consider updating the plugin to the latest version.'
+					: 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available. This is a WordPress plugin configuration issue. The endpoint is not registered in the available routes.'
 				: results.tests.faustAuthEndpoint?.status === 500
 				? 'Faust.js auth endpoint returns 500 error. Check WordPress server logs.'
 				: 'All endpoints are working correctly.',
+			availableEndpoints: Object.keys(availableRoutes).filter(route => 
+				route.includes('auth') || route.includes('authorize') || route.includes('token')
+			),
+			hasAuthTokenRoute,
+			hasAuthorizeRoute,
 			recommendations: results.tests.faustAuthEndpoint?.status === 404
-				? [
-					'1. Check Faust.js plugin version - ensure it\'s the latest version',
-					'2. Verify plugin is activated in WordPress admin',
-					'3. Check plugin settings - auth endpoints may need to be enabled',
-					'4. Try deactivating and reactivating the plugin',
-					'5. Check WordPress REST API is enabled (Settings > Permalinks)',
-					'6. Verify FAUST_SECRET_KEY matches between WordPress and Next.js',
-				]
+				? hasAuthorizeRoute
+					? [
+						'⚠️ CRITICAL: Your Faust.js plugin version is outdated or uses different endpoint structure.',
+						'1. Update Faust.js plugin to the latest version from WordPress.org or GitHub',
+						'2. The /authorize endpoint exists but /auth/token does not - this indicates version mismatch',
+						'3. After updating, verify /auth/token endpoint appears in available routes',
+						'4. Check Faust.js plugin documentation for your version',
+						'5. Verify FAUST_SECRET_KEY matches between WordPress and Next.js',
+					]
+					: [
+						'⚠️ CRITICAL: Faust.js auth endpoints are not registered.',
+						'1. Update Faust.js plugin to the latest version',
+						'2. Deactivate and reactivate the plugin to re-register endpoints',
+						'3. Check plugin settings - auth endpoints may need to be enabled',
+						'4. Verify plugin is fully activated (not just installed)',
+						'5. Check WordPress REST API is enabled (Settings > Permalinks > Save Changes)',
+						'6. Verify FAUST_SECRET_KEY matches between WordPress and Next.js',
+						'7. Check for plugin conflicts - temporarily disable other plugins',
+					]
 				: [],
 		}
 
