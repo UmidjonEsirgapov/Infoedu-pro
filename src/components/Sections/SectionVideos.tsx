@@ -85,6 +85,13 @@ const SectionVideos: FC<SectionVideosProps> = ({
 							controls
 							width="100%"
 							height="100%"
+							config={{
+								youtube: {
+									playerVars: {
+										origin: typeof window !== 'undefined' ? window.location.origin : 'https://infoedu.uz',
+									},
+								},
+							}}
 						/>
 						{!isPlay && (
 							<Fragment>
@@ -114,6 +121,13 @@ const SectionVideos: FC<SectionVideosProps> = ({
 						height="100%"
 						light={video.thumbnail}
 						playIcon={<NcPlayIcon />}
+						config={{
+							youtube: {
+								playerVars: {
+									origin: typeof window !== 'undefined' ? window.location.origin : 'https://infoedu.uz',
+								},
+							},
+						}}
 					/>
 				)}
 			</div>

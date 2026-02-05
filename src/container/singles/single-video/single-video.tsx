@@ -38,6 +38,13 @@ const SingleTypeVideo: FC<Props> = ({ post }) => {
 					width="100%"
 					height="100%"
 					controls
+					config={{
+						youtube: {
+							playerVars: {
+								origin: typeof window !== 'undefined' ? window.location.origin : 'https://infoedu.uz',
+							},
+						},
+					}}
 				/>
 			) : null
 		}

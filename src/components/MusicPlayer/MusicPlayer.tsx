@@ -150,6 +150,13 @@ const MusicPlayer: FC<MusicPlayerProps> = ({}) => {
 					playbackRate={playbackRate}
 					volume={volume}
 					muted={muted}
+					config={{
+						youtube: {
+							playerVars: {
+								origin: typeof window !== 'undefined' ? window.location.origin : 'https://infoedu.uz',
+							},
+						},
+					}}
 					onReady={() => console.log('___onReady')}
 					onStart={() => {
 						console.log('___onStart')

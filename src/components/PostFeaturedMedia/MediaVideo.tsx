@@ -34,6 +34,13 @@ const MediaVideo: FC<MediaVideoProps> = ({ videoUrl, isHover }) => {
 				className={`absolute inset-0 bg-neutral-900 transition-opacity`}
 				width="100%"
 				height="100%"
+				config={{
+					youtube: {
+						playerVars: {
+							origin: typeof window !== 'undefined' ? window.location.origin : 'https://infoedu.uz',
+						},
+					},
+				}}
 				onStart={() => {
 					setIsPlaying(true)
 					__timeOut && clearTimeout(__timeOut)
