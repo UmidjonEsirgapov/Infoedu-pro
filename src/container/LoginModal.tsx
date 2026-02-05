@@ -79,21 +79,54 @@ const LoginModal: FC<LoginModalProps> = () => {
 				// Timeout bo'lganda
 				if (checkCount >= maxChecks) {
 					clearInterval(checkAuth)
-					console.warn('Authentication timeout - reloading page to check auth state')
-					setIsProcessingLogin(false)
-					closeLoginModal()
-					// Reload qilish authentication holatini yangilash uchun
-					toast(
-						'Verifying login, please wait...',
-						{
-							position: 'bottom-center',
-							duration: 2000,
-							icon: '⏳',
-						},
-					)
-					setTimeout(() => {
-						router.reload()
-					}, 1000)
+					console.warn('Authentication timeout - checking server status')
+					
+					// Server holatini tekshirish
+					fetch('/api/faust/auth/token', {
+						method: 'GET',
+						credentials: 'include',
+					}).then(response => {
+						if (response.status === 500) {
+							console.error('Server error (500) - WordPress/Faust.js server issue')
+							toast.error(
+								'Server error occurred. Please try again later or contact support.',
+								{
+									position: 'bottom-center',
+									duration: 5000,
+								},
+							)
+							setIsProcessingLogin(false)
+							closeLoginModal()
+							return
+						}
+						
+						// Agar 401 yoki boshqa xato bo'lsa, reload qilish
+						console.warn('Authentication timeout - reloading page to check auth state')
+						setIsProcessingLogin(false)
+						closeLoginModal()
+						toast(
+							'Verifying login, please wait...',
+							{
+								position: 'bottom-center',
+								duration: 2000,
+								icon: '⏳',
+							},
+						)
+						setTimeout(() => {
+							router.reload()
+						}, 1000)
+					}).catch(error => {
+						console.error('Error checking server status:', error)
+						setIsProcessingLogin(false)
+						closeLoginModal()
+						toast.error(
+							'Network error. Please check your connection and try again.',
+							{
+								position: 'bottom-center',
+								duration: 5000,
+							},
+						)
+					})
 				}
 			}, 500) // Har 500ms tekshirish
 

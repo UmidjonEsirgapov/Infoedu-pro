@@ -47,17 +47,24 @@ function OneSignalInit() {
 					}).then(() => {
 						// OneSignal is now fully initialized, emitter and other properties are available
 						if (window.OneSignal && !Array.isArray(window.OneSignal)) {
-							// Now it's safe to use OneSignal.emitter, OneSignal.EVENTS, etc.
-							// Example: Subscribe to notification permission changes
+							// Notifications API mavjudligini tekshirish va xavfsiz ishlatish
+							// OneSignal SDK v16 da Notifications API o'zgargan bo'lishi mumkin
+							if (window.OneSignal.Notifications && typeof window.OneSignal.Notifications.on === 'function') {
+								try {
+									// Notifications event listener'larini qo'shish
+									// Masalan: notification permission changes, click events, va hokazo
+									console.log('OneSignal Notifications API is available')
+								} catch (error) {
+									console.warn('OneSignal Notifications API error:', error)
+								}
+							} else {
+								console.warn('OneSignal Notifications API is not available - this is normal for some SDK versions')
+							}
+							
+							// Emitter API mavjudligini tekshirish
 							if (window.OneSignal.emitter && window.OneSignal.EVENTS) {
 								// OneSignal.emitter is now available and can be used safely
-								// Example usage:
-								// window.OneSignal.emitter.on(
-								//   window.OneSignal.EVENTS.NOTIFICATION_PERMISSION_CHANGED_AS_AS_STRING,
-								//   (permissionNative: NotificationPermission) => {
-								//     // Handle permission change
-								//   }
-								// )
+								console.log('OneSignal emitter API is available')
 							}
 						}
 					}).catch((error: Error) => {
