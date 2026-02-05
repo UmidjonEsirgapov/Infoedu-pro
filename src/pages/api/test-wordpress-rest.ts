@@ -49,17 +49,19 @@ export default async function handler(
 				},
 			})
 			
-			let responseBody = null
+			let responseBody: string | object | null = null
 			try {
-				responseBody = await faustAuthResponse.text()
+				const textResponse = await faustAuthResponse.text()
 				// JSON bo'lsa parse qilish
 				try {
-					responseBody = JSON.parse(responseBody)
+					responseBody = JSON.parse(textResponse)
 				} catch {
 					// JSON emas, text qilib qoldirish
+					responseBody = textResponse
 				}
 			} catch {
 				// Response body o'qib bo'lmasa
+				responseBody = null
 			}
 			
 			results.tests.faustAuthEndpoint = {
