@@ -140,6 +140,85 @@ export default class Document extends NextDocument {
   async
   data-cfasync="false"
 />
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      // Monetag: Faqat Banner reklamani qoldirish, qolganlarini o'chirish
+      (function() {
+        // Skript yuklangandan keyin kutish
+        function disableNonBannerAds() {
+          // Popup va overlay reklamalarni o'chirish
+          const popupSelectors = [
+            '[id*="popup"]',
+            '[id*="overlay"]',
+            '[id*="interstitial"]',
+            '[class*="popup"]',
+            '[class*="overlay"]',
+            '[class*="interstitial"]',
+            '[class*="modal"]',
+            'iframe[src*="yohle"]',
+            'iframe[src*="glempirteechacm"]',
+            'iframe[src*="roagrofoogrobo"]',
+          ];
+          
+          popupSelectors.forEach(selector => {
+            try {
+              const elements = document.querySelectorAll(selector);
+              elements.forEach(el => {
+                // Banner emas bo'lsa, o'chirish
+                const isBanner = el.offsetWidth > 200 && el.offsetHeight < 1000 && 
+                                 !el.style.position || el.style.position !== 'fixed';
+                if (!isBanner && (el.style.position === 'fixed' || 
+                    el.style.zIndex > 1000 || 
+                    el.classList.contains('popup') ||
+                    el.classList.contains('overlay') ||
+                    el.classList.contains('interstitial'))) {
+                  el.remove();
+                }
+              });
+            } catch(e) {}
+          });
+          
+          // Fixed position va z-index yuqori bo'lgan elementlarni tekshirish
+          const allElements = document.querySelectorAll('*');
+          allElements.forEach(el => {
+            const style = window.getComputedStyle(el);
+            if (style.position === 'fixed' && 
+                parseInt(style.zIndex) > 1000 && 
+                el.offsetWidth < window.innerWidth * 0.9) {
+              // Bu popup yoki overlay bo'lishi mumkin
+              const isBanner = el.offsetWidth > 200 && el.offsetHeight < 1000;
+              if (!isBanner) {
+                el.remove();
+              }
+            }
+          });
+        }
+        
+        // DOM yuklangandan keyin
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(disableNonBannerAds, 1000);
+            setInterval(disableNonBannerAds, 2000);
+          });
+        } else {
+          setTimeout(disableNonBannerAds, 1000);
+          setInterval(disableNonBannerAds, 2000);
+        }
+        
+        // MutationObserver orqali yangi elementlarni kuzatish
+        const observer = new MutationObserver(function(mutations) {
+          disableNonBannerAds();
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      })();
+    `,
+  }}
+/>
 
 
 				</Head>
