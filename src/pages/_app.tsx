@@ -30,12 +30,13 @@ function OneSignalInit() {
 		if (typeof window === 'undefined') return
 
 		// Initialize OneSignal array if it doesn't exist
+		// window.OneSignal.push() SDK yuklanguncha funksiyalarni saqlaydi
 		window.OneSignal = window.OneSignal || []
-		window.OneSignalDeferred = window.OneSignalDeferred || []
 
-		// Initialize OneSignal when SDK is loaded
-		window.OneSignalDeferred.push(async function(OneSignal: any) {
-			await OneSignal.init({
+		// Initialize OneSignal using push method (safe way)
+		// This ensures OneSignal SDK is fully loaded before executing
+		window.OneSignal.push(function() {
+			window.OneSignal.init({
 				appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
 				allowLocalhostAsSecureOrigin: true,
 			})

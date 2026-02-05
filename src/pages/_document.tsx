@@ -24,38 +24,32 @@ export default class Document extends NextDocument {
 				dir={process.env.NEXT_PUBLIC_SITE_DIRECTION}
 			>
 				<Head>
-				{/* Google Tag Manager */}
 				<script
-					dangerouslySetInnerHTML={{
-						__html: `
-							(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-							new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-							j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-							'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-							})(window,document,'script','dataLayer','GTM-TVR2C49D');
-						`,
-					}}
-				/>
-				{/* End Google Tag Manager */}
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {
+              if (document.scripts[j].src === r) { return; }
+          }
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+          k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=106513328', 'ym');
 
-				{/* OneSignal Push Notifications */}
-				<script
-					src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-					defer
-				/>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `
-							window.OneSignalDeferred = window.OneSignalDeferred || [];
-							OneSignalDeferred.push(async function(OneSignal) {
-								await OneSignal.init({
-									appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
-								});
-							});
-						`,
-					}}
-				/>
-				{/* End OneSignal */}
+      ym(106513328, 'init', {
+          ssr:true,
+          webvisor:true,
+          clickmap:true,
+          ecommerce:"dataLayer",
+          referrer: document.referrer,
+          url: location.href,
+          accurateTrackBounce:true,
+          trackLinks:true
+      });
+    `,
+  }}
+/>
 
 					<link
 						href={`${SITE_URL}/api/feeds/feed.json`}
@@ -131,30 +125,25 @@ export default class Document extends NextDocument {
 
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://cdn.onesignal.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://quge5.com" 
         />
+         
+        <script
+           async
+           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258193393152528"
+           crossOrigin="anonymous"
+         />
 
-{/* Monetag reklama vaqtincha o'chirilgan */}
-{/* <script
+<script
   src="https://quge5.com/88/tag.min.js"
   data-zone="206210"
   async
   data-cfasync="false"
-/> */}
+/>
 
 
 				</Head>
 				<body className="relative bg-white text-base text-neutral-900 dark:bg-neutral-900/95 dark:text-neutral-100">
-					{/* Google Tag Manager (noscript) */}
-					<noscript>
-						<iframe
-							src="https://www.googletagmanager.com/ns.html?id=GTM-TVR2C49D"
-							height="0"
-							width="0"
-							style={{ display: 'none', visibility: 'hidden' }}
-						/>
-					</noscript>
-					{/* End Google Tag Manager (noscript) */}
 					<Main />
 					<NextScript />
 				</body>
