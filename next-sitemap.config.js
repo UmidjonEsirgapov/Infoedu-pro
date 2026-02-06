@@ -21,10 +21,16 @@ module.exports = {
     '/home-*',
     '/sample-page',
     '/ncmaz_for_ncmazfc_preview_blocks',
+    '/sitemap.xml', // next-sitemap tomonidan yaratilgan sitemap'ni o'chirish
   ],
   robotsTxtOptions: {
-    // WordPress sitemap asosiy sitemap bo'ladi
-    additionalSitemaps: [`${SITE_URL}/wordpress-sitemap.xml`],
+    // Asosiy sitemap - /sitemap.xml (wordpress-sitemap.xml bilan bir xil)
+    policies: [
+      {
+        userAgent: '*',
+        allow: '/',
+      },
+    ],
   },
   transform: async (config, path) => {
     const currentDate = new Date()
