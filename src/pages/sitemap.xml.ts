@@ -180,7 +180,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	// Index sahifalarni qo'shish (trailing slash yo'q, chunki trailingSlash: false)
 	const indexPages = [
 		{
-			loc: `${BASE_URL}/`,
+			loc: `${BASE_URL}`, // Bosh sahifa - trailing slash yo'q
 			lastmod: new Date().toISOString(),
 			changefreq: 'always' as const,
 			priority: 1.0, // Bosh sahifa uchun eng yuqori priority
