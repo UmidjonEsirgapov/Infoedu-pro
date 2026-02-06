@@ -65,23 +65,55 @@ function formatDate(dateString: string): string {
 	}
 }
 
+// URL'ni decode qilish va trailing slash'ni olib tashlash
+function normalizeUrl(url: string, baseUrl: string): string {
+	// URL'ni decode qilish (%2F -> /)
+	let decodedUrl = decodeURIComponent(url)
+	
+	// Trailing slash'ni olib tashlash (next.config.js da trailingSlash: false)
+	decodedUrl = decodedUrl.replace(/\/$/, '')
+	
+	// Base URL bilan birlashtirish
+	return `${baseUrl}${decodedUrl}`
+}
+
 // Universitetlar va darsliklar uchun to'g'ri URL yaratish
 function getCorrectUrl(node: any, baseUrl: string): string {
 	if (!node.uri) return ''
 	
-	// Agar Oliygoh bo'lsa, /oliygoh/[slug]/ formatida
+	// Agar Oliygoh bo'lsa, /oliygoh/[slug] formatida (trailing slash yo'q)
 	if (node.__typename === 'Oliygoh' && node.slug) {
-		return `${baseUrl}/oliygoh/${node.slug}/`
+		return `${baseUrl}/oliygoh/${node.slug}`
 	}
 	
-	// Agar Textbook bo'lsa, /darsliklar/[sinf]/[slug]/ formatida
+	// Agar Textbook bo'lsa, /darsliklar/[sinf]/[slug] formatida
 	if (node.__typename === 'Textbook' && node.slug) {
 		const sinf = node.darslikMalumotlari?.sinf || 1
-		return `${baseUrl}/darsliklar/${sinf}/${node.slug}/`
+		return `${baseUrl}/darsliklar/${sinf}/${node.slug}`
 	}
 	
-	// Boshqa content typelar uchun oddiy URI
-	return `${baseUrl}${node.uri}`
+	// Boshqa content typelar uchun URI'ni normalize qilish
+	return normalizeUrl(node.uri, baseUrl)
+}
+
+// Sahifani filtrlash - preview va tizim sahifalarini olib tashlash
+function shouldExcludeUrl(url: string): boolean {
+	const excludePatterns = [
+		'/magazine-variations-preview',
+		'/block-term-variations-preview',
+		'/home-',
+		'/sample-page',
+		'/ncmaz_for_ncmazfc_preview_blocks',
+		'/login',
+		'/sign-up',
+		'/preview',
+		'/submission',
+		'/dashboard',
+		'/reset-password',
+		'/readinglist',
+	]
+	
+	return excludePatterns.some(pattern => url.includes(pattern))
 }
 
 // Sitemap component
@@ -109,6 +141,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			return acc
 		}
 
+		// Filtrlash - preview va tizim sahifalarini olib tashlash
+		if (shouldExcludeUrl(url)) {
+			return acc
+		}
+
 		// Priority va changefreq ni content type bo'yicha belgilash
 		let priority = 0.8
 		let changefreq: 'daily' | 'weekly' | 'monthly' = 'daily'
@@ -117,22 +154,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			priority = 0.9 // Universitetlar uchun yuqoriroq priority
 			changefreq = 'weekly'
 		} else if (node.__typename === 'Textbook') {
-			priority = 0.85 // Darsliklar uchun yuqoriroq priority
+			priority = 0.8 // Darsliklar uchun priority
 			changefreq = 'monthly' // Darsliklar kamroq o'zgaradi
 		} else if (node.__typename === 'Post') {
-			priority = 0.8
+			priority = 0.8 // Maqolalar uchun priority
 			changefreq = 'daily'
 		} else if (node.__typename === 'Page') {
 			priority = 0.7
 			changefreq = 'monthly'
 		}
 
-		// ISO 8601 formatda sana (Google uchun to'g'ri)
+		// WordPress'dan kelgan modified sanasini ishlatish
 		const lastmod = node.modifiedGmt ? formatDate(node.modifiedGmt) : new Date().toISOString()
 
 		acc.push({
 			loc: url,
-			lastmod, // ISO 8601 formatda
+			lastmod, // WordPress'dan kelgan modified sana
 			changefreq,
 			priority,
 		})
@@ -140,26 +177,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 		return acc
 	}, [])
 
-	// Index sahifalarni qo'shish (universitetlar va darsliklar)
+	// Index sahifalarni qo'shish (trailing slash yo'q, chunki trailingSlash: false)
 	const indexPages = [
 		{
-			loc: `${BASE_URL}/oliygoh/`,
+			loc: `${BASE_URL}/`,
 			lastmod: new Date().toISOString(),
-			changefreq: 'weekly' as const,
-			priority: 0.9,
+			changefreq: 'always' as const,
+			priority: 1.0, // Bosh sahifa uchun eng yuqori priority
 		},
 		{
-			loc: `${BASE_URL}/darsliklar/`,
+			loc: `${BASE_URL}/oliygoh`,
 			lastmod: new Date().toISOString(),
 			changefreq: 'weekly' as const,
-			priority: 0.9,
+			priority: 0.9, // Asosiy bo'limlar uchun yuqori priority
+		},
+		{
+			loc: `${BASE_URL}/darsliklar`,
+			lastmod: new Date().toISOString(),
+			changefreq: 'weekly' as const,
+			priority: 0.9, // Asosiy bo'limlar uchun yuqori priority
 		},
 		// Sinflar sahifalari (1-sinfdan 11-sinfgacha)
 		...Array.from({ length: 11 }, (_, i) => i + 1).map((sinf) => ({
-			loc: `${BASE_URL}/darsliklar/${sinf}/`,
+			loc: `${BASE_URL}/darsliklar/${sinf}`,
 			lastmod: new Date().toISOString(),
 			changefreq: 'monthly' as const,
-			priority: 0.85,
+			priority: 0.8, // Darsliklar/maqolalar uchun priority
 		})),
 	]
 
