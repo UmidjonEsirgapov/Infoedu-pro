@@ -13,6 +13,8 @@ import { PostDataFragmentType } from "@/data/types";
 import { getTagDataFromTagFragment } from "@/utils/getTagDataFromTagFragment";
 import { FaustTemplate } from "@faustwp/core";
 import { FireIcon, HashtagIcon } from "@heroicons/react/24/outline";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import Link from "next/link";
 
 const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
   // LOADING ----------
@@ -31,6 +33,8 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
   const posts = props.data?.tag?.posts;
   const _top10Categories =
     (props.data?.categories?.nodes as TCategoryCardFull[]) || [];
+  const _topTags = props.data?.tags?.nodes || [];
+  
   return (
     <>
       <PageLayout
@@ -42,16 +46,26 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
         generalSettings={
           props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
         }
-      >
-        <ArchiveLayout
-          name={name}
-          initPosts={posts?.nodes as PostDataFragmentType[] | null}
-          initPostsPageInfo={initPostsPageInfo}
-          tagDatabaseId={databaseId}
-          taxonomyType="tag"
-          top10Categories={_top10Categories}
         >
-          <div className="container mt-4 md:mt-10">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb
+            items={[
+              {
+                label: name || "Tag",
+                href: uri || "/",
+              },
+            ]}
+          />
+          
+          <ArchiveLayout
+            name={name}
+            initPosts={posts?.nodes as PostDataFragmentType[] | null}
+            initPostsPageInfo={initPostsPageInfo}
+            tagDatabaseId={databaseId}
+            taxonomyType="tag"
+            top10Categories={_top10Categories}
+          >
+            <div className="container mt-4 md:mt-10">
             <div className="relative border border-neutral-200/70 dark:border-neutral-700 p-5 lg:p-7 rounded-3xl md:rounded-[2rem] flex flex-col md:flex-row gap-4 md:gap-6 xl:gap-12">
               <div className="flex-shrink-0">
                 <div className="wil-avatar relative flex-shrink-0 overflow-hidden rounded-3xl w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 ring-4 ring-white dark:ring-0 z-0">
@@ -85,6 +99,36 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
               </div>
             </div>
           </div>
+          
+          {/* Related Tags Section */}
+          {_topTags && _topTags.length > 0 && (
+            <div className="container mt-12 mb-8">
+              <div className="rounded-2xl border border-neutral-200/70 bg-neutral-50/50 p-6 dark:border-neutral-700 dark:bg-neutral-800/50">
+                <h2 className="text-lg font-semibold mb-4 text-neutral-900 dark:text-neutral-100">
+                  Teglar
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {_topTags
+                    .filter((tag: any) => tag.databaseId !== databaseId)
+                    .slice(0, 12)
+                    .map((tag: any) => (
+                      <Link
+                        key={tag.databaseId}
+                        href={tag.uri || "/"}
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-700 bg-white rounded-lg border border-neutral-200 hover:bg-neutral-50 hover:text-blue-600 transition-colors dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:hover:text-blue-400"
+                      >
+                        #{tag.name}
+                        {tag.count && (
+                          <span className="ml-2 text-xs text-neutral-500 dark:text-neutral-400">
+                            ({tag.count})
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                </div>
+              </div>
+            </div>
+          )}
           {/* ====================== END HEADER ====================== */}
         </ArchiveLayout>
       </PageLayout>
@@ -117,6 +161,14 @@ Tag.query = gql(`
     categories(first:10, where: { orderby: COUNT, order: DESC }) {
       nodes {
         ...NcmazFcCategoryFullFieldsFragment
+      }
+    }
+    tags(first: 20, where: { orderby: COUNT, order: DESC }) {
+      nodes {
+        databaseId
+        name
+        uri
+        count
       }
     }
      # common query for all page 

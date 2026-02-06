@@ -13,7 +13,7 @@ import { Sidebar } from '@/container/singles/Sidebar'
 import PageLayout from '@/container/PageLayout'
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import dynamic from 'next/dynamic'
-import { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { NC_MUTATION_UPDATE_USER_REACTION_POST_COUNT } from '@/fragments/mutations'
 import { useMutation } from '@apollo/client'
 import { useSelector } from 'react-redux'
@@ -27,6 +27,7 @@ import SingleTypeVideo from '@/container/singles/single-video/single-video'
 import SingleTypeGallery from '@/container/singles/single-gallery/single-gallery'
 import Head from 'next/head'
 import { useCanonicalUrl } from '@/utils/getCanonicalUrl'
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
 
 const DynamicSingleRelatedPosts = dynamic(
 	() => import('@/container/singles/SingleRelatedPosts'),
@@ -77,6 +78,19 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 	const _relatedPosts = (props.data?.posts?.nodes as TPostCard[]) || []
 	const _top10Categories =
 		(props.data?.categories?.nodes as TCategoryCardFull[]) || []
+	
+	// Popular posts - sort by viewsCount
+	const _popularPosts = React.useMemo(() => {
+		const posts = (props.data?.popularPosts?.nodes as TPostCard[]) || []
+		// Sort by viewsCount (descending) and take top 5
+		return posts
+			.sort((a, b) => {
+				const aViews = getPostDataFromPostFragment(a).ncPostMetaData?.viewsCount || 0
+				const bViews = getPostDataFromPostFragment(b).ncPostMetaData?.viewsCount || 0
+				return bViews - aViews
+			})
+			.slice(0, 5)
+	}, [props.data?.popularPosts?.nodes])
 
 	const {
 		title,
@@ -267,6 +281,22 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}
 			>
+				{/* Breadcrumb Navigation */}
+				{categories?.nodes?.[0] && (
+					<Breadcrumb
+						items={[
+							{
+								label: categories.nodes[0].name || 'Kategoriya',
+								href: categories.nodes[0].uri || '/',
+							},
+							{
+								label: title || 'Maqola',
+								href: uri || '/',
+							},
+						]}
+					/>
+				)}
+				
 				{ncPostMetaData?.showRightSidebar ? (
 					<div>
 						<div className={`relative`}>
@@ -277,7 +307,10 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 									<SingleContent post={_post} />
 								</div>
 								<div className="mt-12 w-full lg:mt-0 lg:w-2/5 lg:ps-10 xl:w-1/3 xl:ps-0">
-									<Sidebar categories={_top10Categories} />
+									<Sidebar 
+										categories={_top10Categories} 
+										popularPosts={_popularPosts}
+									/>
 								</div>
 							</div>
 
@@ -327,6 +360,14 @@ Component.query = gql(`
     posts(where: {isRelatedOfPostId:$post_databaseId}) {
       nodes {
       ...PostCardFieldsNOTNcmazMEDIA
+      }
+    }
+    popularPosts: posts(first: 5, where: {orderby: {field: DATE, order: DESC}, status: PUBLISH}) {
+      nodes {
+        ...PostCardFieldsNOTNcmazMEDIA
+        ncPostMetaData {
+          viewsCount
+        }
       }
     }
     categories(first:10, where: { orderby: COUNT, order: DESC }) {

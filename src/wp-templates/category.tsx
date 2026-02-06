@@ -15,6 +15,8 @@ import { getCatgoryDataFromCategoryFragment } from '@/utils/getCatgoryDataFromCa
 import { getImageDataFromImageFragment } from '@/utils/getImageDataFromImageFragment'
 import { FaustTemplate } from '@faustwp/core'
 import { FireIcon, FolderIcon } from '@heroicons/react/24/outline'
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
+import Link from 'next/link'
 
 const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 	// LOADING ----------
@@ -34,6 +36,7 @@ const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 		name,
 		ncTaxonomyMeta,
 		featuredImageMeta,
+		uri,
 	} = getCatgoryDataFromCategoryFragment(props.data.category)
 	const initPostsPageInfo = props.data?.category?.posts?.pageInfo
 	const posts = props.data?.category?.posts
@@ -51,6 +54,16 @@ const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 				props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 			}
 		>
+			{/* Breadcrumb Navigation */}
+			<Breadcrumb
+				items={[
+					{
+						label: name || 'Kategoriya',
+						href: uri || '/',
+					},
+				]}
+			/>
+			
 			<ArchiveLayout
 				name={name}
 				initPosts={posts?.nodes as PostDataFragmentType[] | null}
@@ -114,6 +127,36 @@ const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 						</div>
 					</div>
 				</div>
+				
+				{/* Related Categories Section */}
+				{_top10Categories && _top10Categories.length > 0 && (
+					<div className="container mt-12 mb-8">
+						<div className="rounded-2xl border border-neutral-200/70 bg-neutral-50/50 p-6 dark:border-neutral-700 dark:bg-neutral-800/50">
+							<h2 className="text-lg font-semibold mb-4 text-neutral-900 dark:text-neutral-100">
+								Boshqa kategoriyalar
+							</h2>
+							<div className="flex flex-wrap gap-2">
+								{_top10Categories
+									.filter((cat) => cat.databaseId !== databaseId)
+									.slice(0, 8)
+									.map((category) => (
+										<Link
+											key={category.databaseId}
+											href={category.uri || '/'}
+											className="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-700 bg-white rounded-lg border border-neutral-200 hover:bg-neutral-50 hover:text-blue-600 transition-colors dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:hover:text-blue-400"
+										>
+											{category.name}
+											{category.count && (
+												<span className="ml-2 text-xs text-neutral-500 dark:text-neutral-400">
+													({category.count})
+												</span>
+											)}
+										</Link>
+									))}
+							</div>
+						</div>
+					</div>
+				)}
 			</ArchiveLayout>
 		</PageLayout>
 	)
