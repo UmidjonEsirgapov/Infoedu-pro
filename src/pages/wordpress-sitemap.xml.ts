@@ -22,9 +22,6 @@ const SITEMAP_QUERY = gql`
 				__typename
 				... on Oliygoh {
 					slug
-					darslikMalumotlari {
-						sinf
-					}
 				}
 				... on Textbook {
 					slug

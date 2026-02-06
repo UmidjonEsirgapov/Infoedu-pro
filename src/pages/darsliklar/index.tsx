@@ -22,7 +22,7 @@ interface PageProps {
 }
 
 const GET_MENUS = gql`
-  query GetMenus($headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
+  query GetDarsliklarMenus($headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
     generalSettings {
       title
       description

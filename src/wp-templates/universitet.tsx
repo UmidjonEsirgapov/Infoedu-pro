@@ -341,6 +341,21 @@ const Universitet: FaustTemplate<any> = (props) => {
         <meta name="geo.region" content="UZ" />
         <meta name="geo.placename" content={Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat || "O'zbekiston"} />
         
+        {/* Content Freshness - Modified Date */}
+        {modified && (() => {
+          try {
+            const formattedDate = new Date(modified).toISOString();
+            return (
+              <>
+                <meta property="og:updated_time" content={formattedDate} />
+                <meta property="article:modified_time" content={formattedDate} />
+              </>
+            );
+          } catch (error) {
+            return null;
+          }
+        })()}
+        
         {/* Organization/CollegeOrUniversity Schema */}
         <script
           type="application/ld+json"

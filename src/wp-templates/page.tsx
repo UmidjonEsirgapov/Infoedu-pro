@@ -1,7 +1,7 @@
 import { gql } from '@/__generated__'
 import EntryHeader from '../components/entry-header'
 import {
-	GetPageQuery,
+	GetPageTemplateQuery,
 	NcgeneralSettingsFieldsFragmentFragment,
 } from '../__generated__/graphql'
 import { FaustTemplate, flatListToHierarchical } from '@faustwp/core'
@@ -9,14 +9,14 @@ import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import PageLayout from '@/container/PageLayout'
 import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 
-const Page: FaustTemplate<GetPageQuery> = (props) => {
+const Page: FaustTemplate<GetPageTemplateQuery> = (props) => {
 	// LOADING ----------
 	if (props.loading) {
 		return <>Loading...</>
 	}
 
 	// for this page
-	const { title, editorBlocks, featuredImage, ncPageMeta } =
+	const { title, editorBlocks, featuredImage, ncPageMeta, modified } =
 		props.data?.page || {}
 
 	const isGutenbergPage =
@@ -34,6 +34,7 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={featuredImage?.node?.sourceUrl}
 				pageTitle={title}
+				pageModifiedDate={modified || null}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}
@@ -85,9 +86,10 @@ Page.variables = ({ databaseId }, ctx) => {
 
 // Note***: tat ca cac query trong cac page deu phai co generalSettings, no duoc su dung o compoent Wrap
 Page.query = gql(`
-  query GetPage($databaseId: ID!, $asPreview: Boolean = false, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
+  query GetPageTemplate($databaseId: ID!, $asPreview: Boolean = false, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
+      modified
       ncPageMeta {
         isFullWithPage
       }

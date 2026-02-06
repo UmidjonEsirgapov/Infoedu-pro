@@ -83,6 +83,7 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		featuredImage,
 		databaseId,
 		excerpt,
+		modified,
 	} = getPostDataFromPostFragment(_post)
 
 	//
@@ -183,6 +184,7 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 				pageFeaturedImageUrl={featuredImage?.sourceUrl}
 				pageTitle={title}
 				pageDescription={excerpt || ''}
+				pageModifiedDate={modified || null}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

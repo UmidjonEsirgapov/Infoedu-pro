@@ -17,6 +17,7 @@ interface Props {
   pageFeaturedImageUrl?: string | null | undefined;
   generalSettings?: NcgeneralSettingsFieldsFragmentFragment | null | undefined;
   pageDescription?: string | null | undefined;
+  pageModifiedDate?: string | null | undefined;
 }
 
 const PageLayout: FC<Props> = ({
@@ -27,6 +28,7 @@ const PageLayout: FC<Props> = ({
   pageTitle,
   generalSettings,
   pageDescription,
+  pageModifiedDate,
 }) => {
   return (
     <>
@@ -34,6 +36,7 @@ const PageLayout: FC<Props> = ({
         title={(pageTitle || "") + " - " + (generalSettings?.title || "")}
         description={pageDescription || generalSettings?.description || ""}
         imageUrl={pageFeaturedImageUrl}
+        modifiedDate={pageModifiedDate}
       />
 
       <SiteHeader
