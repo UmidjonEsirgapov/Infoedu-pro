@@ -13,7 +13,7 @@ import { Sidebar } from '@/container/singles/Sidebar'
 import PageLayout from '@/container/PageLayout'
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { NC_MUTATION_UPDATE_USER_REACTION_POST_COUNT } from '@/fragments/mutations'
 import { useMutation } from '@apollo/client'
 import { useSelector } from 'react-redux'
@@ -25,6 +25,8 @@ import { TCategoryCardFull } from '@/components/CardCategory1/CardCategory1'
 import SingleTypeAudio from '@/container/singles/single-audio/single-audio'
 import SingleTypeVideo from '@/container/singles/single-video/single-video'
 import SingleTypeGallery from '@/container/singles/single-gallery/single-gallery'
+import Head from 'next/head'
+import { useCanonicalUrl } from '@/utils/getCanonicalUrl'
 
 const DynamicSingleRelatedPosts = dynamic(
 	() => import('@/container/singles/SingleRelatedPosts'),
@@ -84,6 +86,10 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		databaseId,
 		excerpt,
 		modified,
+		date,
+		uri,
+		author,
+		categories,
 	} = getPostDataFromPostFragment(_post)
 
 	//
@@ -176,8 +182,80 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		)
 	}
 
+	// NewsArticle JSON-LD Schema
+	const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz'
+	const canonicalUrl = useCanonicalUrl(uri || undefined)
+	
+	const newsArticleSchema = useMemo(() => {
+		if (!title || !date) return null
+
+		const schema: any = {
+			'@context': 'https://schema.org',
+			'@type': 'NewsArticle',
+			headline: title,
+			description: excerpt || '',
+			datePublished: date,
+			...(modified && { dateModified: modified }),
+			author: {
+				'@type': 'Person',
+				name: author?.name || author?.username || 'InfoEdu.uz',
+				...(author?.uri && { url: `${BASE_URL}${author.uri}` }),
+			},
+			publisher: {
+				'@type': 'Organization',
+				name: (props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment)?.title || 'InfoEdu.uz',
+				url: BASE_URL,
+				logo: {
+					'@type': 'ImageObject',
+					url: `${BASE_URL}/logo.png`,
+				},
+			},
+			mainEntityOfPage: {
+				'@type': 'WebPage',
+				'@id': canonicalUrl,
+			},
+			url: canonicalUrl,
+			...(featuredImage?.sourceUrl && {
+				image: {
+					'@type': 'ImageObject',
+					url: featuredImage.sourceUrl,
+					width: 1200,
+					height: 630,
+					...(featuredImage.altText && { caption: featuredImage.altText }),
+				},
+			}),
+			articleSection: categories?.nodes?.[0]?.name || '',
+			keywords: categories?.nodes?.map((cat: any) => cat.name).join(', ') || '',
+			inLanguage: 'uz',
+		}
+
+		return schema
+	}, [
+		title,
+		date,
+		modified,
+		excerpt,
+		author,
+		featuredImage,
+		categories,
+		canonicalUrl,
+		BASE_URL,
+		props.data?.generalSettings,
+	])
+
 	return (
 		<>
+			{/* NewsArticle JSON-LD Schema */}
+			{newsArticleSchema && (
+				<Head>
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify(newsArticleSchema),
+						}}
+					/>
+				</Head>
+			)}
 			<PageLayout
 				headerMenuItems={props.data?.primaryMenuItems?.nodes || []}
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
