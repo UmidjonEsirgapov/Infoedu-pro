@@ -82,8 +82,8 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 	// Popular posts - sort by viewsCount
 	const _popularPosts = React.useMemo(() => {
 		const posts = (props.data?.popularPosts?.nodes as TPostCard[]) || []
-		// Sort by viewsCount (descending) and take top 5
-		return posts
+		// Create a copy of the array before sorting (GraphQL responses are read-only)
+		return [...posts]
 			.sort((a, b) => {
 				const aViews = getPostDataFromPostFragment(a).ncPostMetaData?.viewsCount || 0
 				const bViews = getPostDataFromPostFragment(b).ncPostMetaData?.viewsCount || 0

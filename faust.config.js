@@ -8,5 +8,7 @@ import possibleTypes from "./possibleTypes.json";
 export default setConfig({
   templates,
   possibleTypes,
-  usePersistedQueries: true,
+  // Disable persisted queries to avoid PersistedQueryNotFound errors during build/SSG
+  // Persisted queries require server-side setup and may not work during static generation
+  usePersistedQueries: false,
 });
