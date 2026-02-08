@@ -371,7 +371,7 @@ export default function OliygohlarPage(props: PageProps) {
                 {/* Telegram Reklama Banner */}
                 <div className="mb-6 sm:mb-8">
                   <a
-                    href={TELEGRAM_LINKS.channel}
+                    href={TELEGRAM_LINKS.subscribeChannel}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group block w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] border border-blue-400/20 dark:border-blue-500/30"

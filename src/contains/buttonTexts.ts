@@ -31,6 +31,7 @@ export const BUTTON_TEXTS = {
 
 // Telegram havolalari
 export const TELEGRAM_LINKS = {
-  channel: 'https://t.me/darslik_maktab_bot',
+  channel: 'https://t.me/darslik_maktab_bot', // Darsliklar uchun yuklab olish bot
+  subscribeChannel: 'https://t.me/+N0iZB3Ypnhk3MDUy', // Post tagidagi obuna kanali
   oldChannel: 'https://t.me/info_edu_uz', // Eski kanal (agar kerak bo'lsa)
 } as const;

@@ -201,7 +201,7 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
 				{/* Telegram Reklama Banner */}
 				<div className="mx-auto max-w-screen-md my-8">
 					<a
-						href={TELEGRAM_LINKS.channel}
+						href={TELEGRAM_LINKS.subscribeChannel}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="group block w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
