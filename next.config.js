@@ -35,4 +35,23 @@ module.exports = withFaust({
 			},
 		]
 	},
+	async redirects() {
+		return [
+			{
+				source: '/9-sinf-algebra-pdf',
+				destination: '/darsliklar/9/9-sinf-algebra',
+				permanent: true, // 301 redirect
+			},
+			{
+				source: '/9-sinf-onatili-pdf',
+				destination: '/darsliklar/9/9-sinf-ona-tili',
+				permanent: true, // 301 redirect
+			},
+			{
+				source: '/9-sinf-adabiyot-pdf',
+				destination: '/darsliklar/9/9-sinf-adabiyot',
+				permanent: true, // 301 redirect
+			},
+		]
+	},
 })
