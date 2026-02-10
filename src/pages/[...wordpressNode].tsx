@@ -21,44 +21,58 @@ async function fetchWithRetry(url: string, retries = 3): Promise<Response> {
 	throw new Error('fetchWithRetry failed')
 }
 
+const PER_PAGE = 100 // WP REST max odatda 100
+
+async function fetchAllPaginated(
+	base: string,
+	path: string,
+	fields = 'slug',
+): Promise<{ slug: string }[]> {
+	const acc: { slug: string }[] = []
+	let page = 1
+	while (true) {
+		const url = `${base}${path}per_page=${PER_PAGE}&page=${page}&_fields=${fields}`
+		const res = await fetchWithRetry(url)
+		const data = (await res.json()) as { slug?: string }[]
+		if (!Array.isArray(data) || data.length === 0) break
+		const withSlug = data.filter((x): x is { slug: string } => typeof x?.slug === 'string')
+		acc.push(...withSlug)
+		if (data.length < PER_PAGE) break
+		page++
+	}
+	return acc
+}
+
 export async function myGetPaths() {
 	const base = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/\/$/, '') ?? ''
-	let posts: any[] = []
-	let categories: any[] = []
+	let posts: { slug: string }[] = []
+	let categories: { slug: string }[] = []
 	try {
-		const response = await fetchWithRetry(
-			base + '/wp-json/wp/v2/posts?per_page=50&_fields=slug',
+		// Build vaqtida BARCHA sahifalar yaratiladi (Vercel'dagi kabi).
+		// Barcha kategoriyalar va barcha postlar — cheklov yo'q.
+		categories = await fetchAllPaginated(
+			base,
+			'/wp-json/wp/v2/categories?',
 		)
-		const getAllCategories = await fetchWithRetry(
-			base + '/wp-json/wp/v2/categories?per_page=20&_fields=slug',
+		posts = await fetchAllPaginated(
+			base,
+			'/wp-json/wp/v2/posts?status=publish&',
 		)
-		posts = (await response.json()) as any[]
-		categories = (await getAllCategories.json()) as any[]
 	} catch (e) {
 		console.warn('[wordpressNode] myGetPaths fetch failed, using empty paths:', (e as Error)?.message)
 	}
 
-	// NOTE: Universitetlar (oliygoh) endi /oliygoh/[slug] route'ida ishlaydi
-	// Shuning uchun ularni bu yerda qo'shishimiz shart emas
+	if (!categories?.length) categories = []
+	if (!posts?.length) posts = []
 
-	if (!categories?.length) {
-		categories = []
-	}
-	if (!posts?.length) {
-		posts = []
-	}
-
-	posts = [
-		...categories.map((category) => ({ slug: 'category/' + category.slug })),
+	let pathSlugs = [
+		...categories.map((c) => ({ slug: 'category/' + c.slug })),
 		...posts,
-		// Universitetlar endi /oliygoh/[slug] route'ida ishlaydi
-		// src/pages/oliygoh/[slug].tsx faylida handle qilinadi
 	]
 
 	if (IS_CHISNGHIAX_DEMO_SITE) {
-		posts = [
-			...posts,
-			// Add more demo pages
+		pathSlugs = [
+			...pathSlugs,
 			{ slug: 'home-2' },
 			{ slug: 'home-3-podcast' },
 			{ slug: 'home-4-video' },
@@ -68,7 +82,7 @@ export async function myGetPaths() {
 		]
 	}
 
-	return posts.map((page) => ({
+	return pathSlugs.map((page) => ({
 		params: { wordpressNode: [page.slug] },
 	}))
 }

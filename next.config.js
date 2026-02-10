@@ -27,16 +27,36 @@ module.exports = withFaust({
 		],
 	},
 	async headers() {
+		const secureHeaders = createSecureHeaders({
+			xssProtection: false,
+			frameGuard: [
+				'allow-from',
+				{ uri: process.env.NEXT_PUBLIC_WORDPRESS_URL },
+			],
+		})
 		return [
 			{
 				source: '/:path*',
-				headers: createSecureHeaders({
-					xssProtection: false,
-					frameGuard: [
-						'allow-from',
-						{ uri: process.env.NEXT_PUBLIC_WORDPRESS_URL },
-					],
-				}),
+				headers: secureHeaders,
+			},
+			// Rasmlar va static — brauzer/proxy cache (Hostinger Vercel kabi CDN bermaydi)
+			{
+				source: '/_next/image',
+				headers: [
+					{
+						key: 'Cache-Control',
+						value: 'public, max-age=31536000, stale-while-revalidate=86400',
+					},
+				],
+			},
+			{
+				source: '/_next/static/:path*',
+				headers: [
+					{
+						key: 'Cache-Control',
+						value: 'public, max-age=31536000, immutable',
+					},
+				],
 			},
 		]
 	},

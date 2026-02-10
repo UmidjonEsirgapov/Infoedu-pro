@@ -45,8 +45,6 @@
     "@tiptap/pm": "^2.3.1",
     "@tiptap/react": "^2.3.1",
     "@tiptap/starter-kit": "^2.3.1",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
     "@wordpress/style-engine": "^2.25.0",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.1.1",
