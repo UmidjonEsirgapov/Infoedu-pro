@@ -36,9 +36,8 @@ yarn-error.log*
 .next
 .faust
 
-## Build artifacts for sitemaps
+## Build artifacts for sitemaps (next-sitemap ishlatilmasa)
 /public/sitemap*.xml
-/public/robots.txt
 
 ## code editors
 .idea
