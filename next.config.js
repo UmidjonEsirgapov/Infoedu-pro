@@ -57,6 +57,27 @@ module.exports = withFaust({
 				destination: '/darsliklar/9/9-sinf-adabiyot',
 				permanent: true, // 301 redirect
 			},
+			// Oliygoh sahifalari: eski URL → /oliygoh/[slug]
+			{
+				source: '/jizzax-davlat-pedagogika-universiteti',
+				destination: '/oliygoh/jizzax-davlat-pedagogika-universiteti',
+				permanent: true,
+			},
+			{
+				source: '/ozbekiston-davlat-jahon-tillari-universiteti',
+				destination: '/oliygoh/ozbekiston-davlat-jahon-tillari-universiteti',
+				permanent: true,
+			},
+			{
+				source: '/yunus-rajabiy-nomidagi-ozbek-milliy-musiqa-sanati-instituti',
+				destination: '/oliygoh/ozbek-milliy-musiqa-san%CA%BCati-instituti',
+				permanent: true,
+			},
+			{
+				source: '/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali',
+				destination: '/oliygoh/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali',
+				permanent: true,
+			},
 		]
 	},
 })
