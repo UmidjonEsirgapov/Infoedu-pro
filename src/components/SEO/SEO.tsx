@@ -5,9 +5,16 @@ interface Props {
   title?: string | null;
   description?: string | null;
   imageUrl?: string | null;
+  /** og:image uchun tavsiya etilgan o'lcham (Google Discover: min 1200px kenglik) */
+  imageWidth?: number | null;
+  imageHeight?: number | null;
   url?: string | null;
   canonicalUrl?: string | null;
   modifiedDate?: string | null;
+  /** Maqola sahifalari uchun: article:published_time va og:type="article" (Google Discover) */
+  publishedDate?: string | null;
+  /** og:type - maqolalar uchun "article", boshqa sahifalar uchun "website" */
+  type?: 'website' | 'article';
 }
 
 /**
@@ -39,7 +46,18 @@ function formatDateForMeta(dateString: string | null | undefined): string | null
  *
  * @returns {React.ReactElement} The SEO component
  */
-export default function SEO({ title, description, imageUrl, url, canonicalUrl, modifiedDate }: Props) {
+export default function SEO({
+  title,
+  description,
+  imageUrl,
+  imageWidth,
+  imageHeight,
+  url,
+  canonicalUrl,
+  modifiedDate,
+  publishedDate,
+  type = 'website',
+}: Props) {
   // Auto-generate canonical URL if not provided
   const autoCanonicalUrl = useCanonicalUrl(canonicalUrl || undefined);
   const finalCanonicalUrl = canonicalUrl || autoCanonicalUrl;
@@ -47,8 +65,9 @@ export default function SEO({ title, description, imageUrl, url, canonicalUrl, m
   // Use canonical URL for og:url and twitter:url if url is not explicitly provided
   const finalUrl = url || finalCanonicalUrl;
 
-  // Format modified date to ISO 8601
+  // Format dates to ISO 8601
   const formattedModifiedDate = formatDateForMeta(modifiedDate);
+  const formattedPublishedDate = formatDateForMeta(publishedDate);
 
   if (!title && !description && !imageUrl && !finalUrl) {
     return null;
@@ -59,7 +78,7 @@ export default function SEO({ title, description, imageUrl, url, canonicalUrl, m
   return (
     <>
       <Head>
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={type} />
         <meta property="twitter:card" content="summary_large_image" />
 
         {title && (
@@ -86,6 +105,13 @@ export default function SEO({ title, description, imageUrl, url, canonicalUrl, m
           <>
             <meta property="og:image" content={imageUrl} />
             <meta property="twitter:image" content={imageUrl} />
+            {/* Google Discover: rasm min 1200px kenglik tavsiya; og:image o'lchamlari indexlashga yordam beradi */}
+            {(imageWidth != null && imageWidth > 0) && (
+              <meta property="og:image:width" content={String(imageWidth)} />
+            )}
+            {(imageHeight != null && imageHeight > 0) && (
+              <meta property="og:image:height" content={String(imageHeight)} />
+            )}
           </>
         )}
 
@@ -96,7 +122,10 @@ export default function SEO({ title, description, imageUrl, url, canonicalUrl, m
           </>
         )}
 
-        {/* Content Freshness - Modified Date */}
+        {/* Maqola sanalari - Google Discover va indekslash uchun */}
+        {formattedPublishedDate && (
+          <meta property="article:published_time" content={formattedPublishedDate} />
+        )}
         {formattedModifiedDate && (
           <>
             <meta property="og:updated_time" content={formattedModifiedDate} />

@@ -314,7 +314,7 @@ const Universitet: FaustTemplate<any> = (props) => {
         <meta name="description" content={seoDesc} />
         <meta name="keywords" content={seoKeywords} />
         <meta name="author" content="InfoEdu.uz" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="language" content="Uzbek" />
         <meta name="revisit-after" content="7 days" />
         <link rel="canonical" href={seoUrl} />

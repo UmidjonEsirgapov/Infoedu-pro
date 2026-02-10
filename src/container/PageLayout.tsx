@@ -15,9 +15,16 @@ interface Props {
   headerMenuItems?: FragmentType<typeof NC_PRIMARY_MENU_QUERY_FRAGMENT>[];
   footerMenuItems?: FragmentType<typeof NC_FOOTER_MENU_QUERY_FRAGMENT>[] | null;
   pageFeaturedImageUrl?: string | null | undefined;
+  /** og:image o'lchamlari (Google Discover: 1200x630 tavsiya) */
+  pageImageWidth?: number | null | undefined;
+  pageImageHeight?: number | null | undefined;
   generalSettings?: NcgeneralSettingsFieldsFragmentFragment | null | undefined;
   pageDescription?: string | null | undefined;
   pageModifiedDate?: string | null | undefined;
+  /** Maqola sahifalari uchun - Google Discover: article:published_time */
+  pagePublishedDate?: string | null | undefined;
+  /** og:type - maqolalar uchun "article" */
+  seoType?: 'website' | 'article';
 }
 
 const PageLayout: FC<Props> = ({
@@ -25,10 +32,14 @@ const PageLayout: FC<Props> = ({
   footerMenuItems,
   headerMenuItems,
   pageFeaturedImageUrl,
+  pageImageWidth,
+  pageImageHeight,
   pageTitle,
   generalSettings,
   pageDescription,
   pageModifiedDate,
+  pagePublishedDate,
+  seoType = 'website',
 }) => {
   return (
     <>
@@ -36,7 +47,11 @@ const PageLayout: FC<Props> = ({
         title={(pageTitle || "") + " - " + (generalSettings?.title || "")}
         description={pageDescription || generalSettings?.description || ""}
         imageUrl={pageFeaturedImageUrl}
+        imageWidth={pageImageWidth}
+        imageHeight={pageImageHeight}
         modifiedDate={pageModifiedDate}
+        publishedDate={pagePublishedDate}
+        type={seoType}
       />
 
       <SiteHeader

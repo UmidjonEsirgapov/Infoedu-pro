@@ -274,9 +274,13 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 				headerMenuItems={props.data?.primaryMenuItems?.nodes || []}
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={featuredImage?.sourceUrl}
+				pageImageWidth={1200}
+				pageImageHeight={630}
 				pageTitle={title}
 				pageDescription={excerpt || ''}
 				pageModifiedDate={modified || null}
+				pagePublishedDate={date || null}
+				seoType="article"
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

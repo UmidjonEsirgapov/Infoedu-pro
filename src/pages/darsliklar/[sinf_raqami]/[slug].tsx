@@ -271,24 +271,10 @@ export default function DarslikDetailPage(props: PageProps) {
   // Agar URL rasm formatida (.jpg, .png) bo'lsa, lekin MIME type PDF bo'lsa,
   // URL'ni PDF formatiga o'zgartirish (WordPress ba'zida thumbnail URL'ini qaytaradi)
   if (fileUrl && mimeType && mimeType.toLowerCase().includes('pdf')) {
-    // Agar URL rasm formatida bo'lsa, uni PDF formatiga o'zgartirish
     if (fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
       fileUrl = fileUrl.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '.pdf');
-      console.log('URL rasm formatidan PDF formatiga o\'zgartirildi:', fileUrl);
     }
   }
-
-  // Debug: URL'ni console'da ko'rsatamiz
-  React.useEffect(() => {
-    if (fileUrl) {
-      console.log('=== File URL Debug ===');
-      console.log('File URL:', fileUrl);
-      console.log('MIME Type:', mimeType);
-      console.log('Is PDF (by extension):', fileUrl.toLowerCase().endsWith('.pdf'));
-      console.log('Is PDF (by MIME):', mimeType?.toLowerCase().includes('pdf'));
-      console.log('File Node:', fileNode);
-    }
-  }, [fileUrl, mimeType, fileNode]);
 
   const handleDownload = async () => {
     if (!fileUrl) {
@@ -312,54 +298,30 @@ export default function DarslikDetailPage(props: PageProps) {
         : `${wordPressUrl}/${fileUrl}`;
     }
 
-    // URL'ni to'g'rilaymiz:
     // 1. Domain'ni infoedu.uz dan infoedu.trafik.uz ga o'zgartirish
     if (finalUrl.includes('infoedu.uz') && !finalUrl.includes('infoedu.trafik.uz')) {
       finalUrl = finalUrl.replace(/infoedu\.uz/g, 'infoedu.trafik.uz');
-      console.log('Domain o\'zgartirildi:', finalUrl);
     }
-    
+
     // 2. Fayl nomidagi -pdf qismini olib tashlash (masalan, umumiy_kimyo_11_uzb-pdf.pdf -> umumiy_kimyo_11_uzb.pdf)
-    // Lekin faqat agar fayl nomida -pdf bo'lsa va keyin extension bo'lsa
     if (finalUrl.match(/-pdf\.(pdf|jpg|jpeg|png|gif|webp|doc|docx)$/i)) {
       finalUrl = finalUrl.replace(/-pdf\.(pdf|jpg|jpeg|png|gif|webp|doc|docx)$/i, '.$1');
-      console.log('Fayl nomi to\'g\'rilandi (removed -pdf):', finalUrl);
     }
 
-    // Debug: final URL'ni console'da ko'rsatamiz
-    console.log('=== PDF Download Debug ===');
-    console.log('Original fileUrl:', fileUrl);
-    console.log('Final URL:', finalUrl);
-    console.log('Textbook File Object:', textbookFile);
-
-    // Fayl nomini tayyorlaymiz
     const urlExtension = finalUrl.match(/\.([a-z0-9]+)(?:\?|$)/i)?.[1] || 'pdf';
     const fileName = `${darslik.title || 'darslik'}.${urlExtension}`.replace(/[^a-z0-9.-]/gi, '_');
-    console.log('File name:', fileName);
 
-    // Usul 1: Next.js API route orqali yuklab olish (CORS muammosini hal qiladi)
     try {
-      console.log('Fetching file via API proxy...');
-      
-      // API route orqali faylni yuklab olamiz
       const apiUrl = `/api/download-file?url=${encodeURIComponent(finalUrl)}`;
       const response = await fetch(apiUrl);
-      
-      console.log('Response status:', response.status);
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
-      // Blob yaratamiz
-      console.log('Creating blob...');
       const blob = await response.blob();
-      console.log('Blob created, size:', blob.size, 'type:', blob.type);
-      
-      // Blob URL yaratamiz
       const blobUrl = window.URL.createObjectURL(blob);
-      console.log('Blob URL created:', blobUrl);
       
       // Download link yaratamiz
       const link = document.createElement('a');
@@ -369,7 +331,6 @@ export default function DarslikDetailPage(props: PageProps) {
       
       // Link'ni DOM'ga qo'shamiz va bosamiz
       document.body.appendChild(link);
-      console.log('Triggering download...');
       link.click();
       
       // Tozalash
@@ -378,12 +339,10 @@ export default function DarslikDetailPage(props: PageProps) {
           document.body.removeChild(link);
         }
         window.URL.revokeObjectURL(blobUrl);
-        console.log('Download completed');
       }, 100);
     } catch (error) {
       console.error('Download xatosi (API proxy):', error);
-      console.log('Trying alternative method: direct download link...');
-      
+
       // Usul 2: Agar API ishlamasa, to'g'ridan-to'g'ri link yaratamiz
       try {
         const link = document.createElement('a');
@@ -401,12 +360,8 @@ export default function DarslikDetailPage(props: PageProps) {
             document.body.removeChild(link);
           }
         }, 100);
-        
-        console.log('Direct download link triggered');
       } catch (linkError) {
         console.error('Direct link xatosi:', linkError);
-        // Usul 3: Oxirgi variant - yangi tab'da ochish
-        console.log('Opening in new tab as fallback...');
         window.open(finalUrl, '_blank', 'noopener,noreferrer');
       }
     }
@@ -554,7 +509,7 @@ export default function DarslikDetailPage(props: PageProps) {
         <meta name="twitter:image" content={ogImageUrl} />
         
         {/* Additional SEO */}
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="author" content="InfoEdu" />
         <meta name="language" content="Uzbek" />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
