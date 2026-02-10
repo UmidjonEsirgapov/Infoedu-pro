@@ -8,6 +8,11 @@ module.exports = withFaust({
 	trailingSlash: false, // SEO uchun trailing slash ni o'chirish
 	reactStrictMode: true,
 	typedRoutes: false,
+	// Hostinger MySQL limitini saqlash uchun
+	experimental: {
+		cpus: 1,
+		workerThreads: false,
+	},
 	images: {
 		// 👇 ESKI UZUN RO'YXAT O'RNIGA SHU IKKI QATOR YETARLI
 		remotePatterns: [

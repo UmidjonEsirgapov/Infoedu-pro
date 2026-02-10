@@ -57,8 +57,9 @@ Hostinger’da sayt sozlamalari ichida **Environment variables** (yoki **Env**) 
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics ID | `G-XXXXXXXXXX` |
 | `NEXT_PUBLIC_IMAGE_REMOTE_HOSTNAME_1` | Rasm hostname | `infoedu.uz` |
 | `NEXT_PUBLIC_IMAGE_REMOTE_HOSTNAME_2` | Rasm hostname | `i0.wp.com` |
+| `BUILD_SECRET` | Build vaqtida GraphQL so‘rovlariga qo‘shiladigan maxfiy qiymat (Cloudflare whitelist uchun) | (o‘zingiz belgilang) |
 
-**Eslatma:** `FAUST_SECRET_KEY` va `NEXT_PUBLIC_WORDPRESS_URL` WordPress’dagi Headless/Faust sozlamalari bilan bir xil bo‘lishi kerak.
+**Eslatma:** `FAUST_SECRET_KEY` va `NEXT_PUBLIC_WORDPRESS_URL` WordPress’dagi Headless/Faust sozlamalari bilan bir xil bo‘lishi kerak. `BUILD_SECRET` ni Hostinger env’da o‘rnating va Cloudflare’da build server IP/header bo‘yicha whitelist qiling — barcha chiquvchi GraphQL so‘rovlariga `x-build-secret` header qo‘shiladi.
 
 ---
 
