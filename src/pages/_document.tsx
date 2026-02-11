@@ -127,7 +127,7 @@ export default class Document extends NextDocument {
 					<meta name="robots" content="index, follow, max-image-preview:large" />
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://static.cloudflareinsights.com; frame-src 'self' https://www.youtube.com" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com; frame-src 'self' https://www.youtube.com" 
         />
 
 
