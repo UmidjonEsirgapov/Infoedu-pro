@@ -37,8 +37,9 @@ interface PageProps extends GetReadingListPageQuery {
 }
 
 const Page: FaustPage<PageProps> = (props) => {
-	const exams = props.exams ?? []
-	const yangiliklar = props.yangiliklar ?? []
+	const p = props as unknown as PageProps
+	const exams = p.exams ?? []
+	const yangiliklar = p.yangiliklar ?? []
 
 	return (
 		<>
