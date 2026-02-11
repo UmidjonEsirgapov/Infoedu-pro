@@ -121,13 +121,20 @@ export function getPostDataFromPostFragment(
 	// 4) oxirgi imkoniyat — post meta _fifu_image_url (fifuImageUrl / fifuFeaturedImageUrl)
 	const ogImageUrl =
 		query.seo?.openGraph?.image?.secureUrl || query.seo?.openGraph?.image?.url
+	const editorBlocksFromQuery = (query as { editorBlocks?: Array<{ __typename?: string; attributes?: { imageUrl?: string | null } | null } | null> }).editorBlocks
+	const rawPost = post as {
+		fifuImageUrl?: string | null
+		fifuFeaturedImageUrl?: string | null
+		editorBlocks?: Array<{ __typename?: string; attributes?: { imageUrl?: string | null } | null } | null>
+	}
 	const fifuFromBlock = getFirstFifuImageUrlFromBlocks(
-		(query as { editorBlocks?: Array<{ __typename?: string; attributes?: { imageUrl?: string | null } | null } | null> })
-			.editorBlocks,
+		editorBlocksFromQuery ?? rawPost.editorBlocks,
 	)
 	const fifuFromMeta =
 		(query as { fifuImageUrl?: string | null }).fifuImageUrl ??
-		(query as { fifuFeaturedImageUrl?: string | null }).fifuFeaturedImageUrl
+		(query as { fifuFeaturedImageUrl?: string | null }).fifuFeaturedImageUrl ??
+		rawPost.fifuImageUrl ??
+		rawPost.fifuFeaturedImageUrl
 	const fallbackUrl = ogImageUrl || fifuFromBlock || fifuFromMeta
 	const featuredImageResolved: NcmazFcImageHasDetailFieldsFragment | null =
 		featuredImage?.sourceUrl

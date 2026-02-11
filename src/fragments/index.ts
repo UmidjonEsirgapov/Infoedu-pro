@@ -199,6 +199,11 @@ export const NC_POST_FULL_VS_EDITOR_BLOCK_NO_CONTENT_FRAGMENT = gql(
 				renderedHtml
 				clientId
 				parentClientId
+				... on FifuImage {
+					attributes {
+						imageUrl
+					}
+				}
 				...NcmazFaustBlockMagazineFragment
 				...NcmazFaustBlockTermsFragment
 				...NcmazFaustBlockCtaFragment
@@ -227,6 +232,15 @@ export const NC_POST_FULL_VS_EDITOR_BLOCK_NO_CONTENT_FRAGMENT = gql(
 					...NcmazFcImageHasDetailFields
 				}
 			}
+			seo {
+				openGraph {
+					image {
+						url
+						secureUrl
+					}
+				}
+			}
+			fifuImageUrl
 			postFormats {
 				nodes {
 					id

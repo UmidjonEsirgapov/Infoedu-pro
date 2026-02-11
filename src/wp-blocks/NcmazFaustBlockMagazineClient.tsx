@@ -79,6 +79,14 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 			notifyOnNetworkStatusChange: true,
 		})
 
+	// HTML'dan kelgan postlarda fifuImageUrl bo'lmasligi mumkin — clientda qayta so'rab rasmlarni olamiz
+	const [fetchEnrichedPosts, enrichResult] = useLazyQuery(QUERY_GET_POSTS_BY, {
+		notifyOnNetworkStatusChange: true,
+	})
+	const [enrichedInitialPosts, setEnrichedInitialPosts] = useState<
+		TPostCard[] | null
+	>(null)
+
 	// Error handling with useEffect
 	useEffect(() => {
 		if (getPostByVariablesFromSSRResult.error) {
@@ -157,6 +165,32 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 		}
 	}, [])
 
+	// HTML yoki serverdan kelgan postlarda fifuImageUrl bo'lmasligi mumkin — clientda bir marta to'liq so'raymiz
+	useEffect(() => {
+		if (
+			typeof window === 'undefined' ||
+			!dataInitPosts?.length ||
+			enrichedInitialPosts != null
+		) {
+			return
+		}
+		const ids = dataInitPosts.map((p) => String(p.databaseId)).filter(Boolean)
+		if (!ids.length) return
+		fetchEnrichedPosts({
+			variables: { in: ids, first: ids.length },
+		})
+	}, [dataInitPosts, enrichedInitialPosts, fetchEnrichedPosts])
+
+	useEffect(() => {
+		if (
+			enrichResult.data?.posts?.nodes?.length &&
+			dataInitPosts?.length &&
+			enrichedInitialPosts == null
+		) {
+			setEnrichedInitialPosts(enrichResult.data.posts.nodes as TPostCard[])
+		}
+	}, [enrichResult.data?.posts?.nodes, dataInitPosts?.length, enrichedInitialPosts])
+
 	//
 	useGetPostsNcmazMetaByIds({
 		posts: dataInitPosts || [],
@@ -194,8 +228,10 @@ const NcmazFaustBlockMagazineClient: WordPressBlock<
 		})
 	}
 
+	// Boshlang'ich ro'yxat: fifuImageUrl bilan boyitilgan postlar yoki HTML dan kelgan postlar
+	const initialPosts = enrichedInitialPosts ?? dataInitPosts ?? []
 	let dataLists = [
-		...(dataInitPosts || []),
+		...initialPosts,
 		...(getPostByVariablesFromSSRResult.data?.posts?.nodes || []),
 	] as TPostCard[]
 
