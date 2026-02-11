@@ -78,7 +78,7 @@ export default function MilliySertifikatTimelineItem({
 						{item.fanlar.map((fan, i) => (
 							<Badge
 								key={i}
-								name={fan}
+								name={fan.fan_nomi}
 								color={badgeColor}
 								className="text-xs"
 							/>
