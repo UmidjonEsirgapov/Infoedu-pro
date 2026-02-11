@@ -81,6 +81,11 @@ module.exports = withFaust({
 				destination: '/oliygoh/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali',
 				permanent: true,
 			},
+			{
+				source: '/milliy-sertifikat-sanalari2',
+				destination: '/milliy-sertifikat-sanalari',
+				permanent: true,
+			},
 		]
 	},
 })
