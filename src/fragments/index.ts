@@ -119,6 +119,23 @@ export const NC_POST_FULL_FRAGMENT = gql(/* GraphQL */ `
 		ncPostMetaData {
 			...NcmazFcPostMetaFullFields
 		}
+		seo {
+			openGraph {
+				image {
+					url
+					secureUrl
+				}
+			}
+		}
+		fifuImageUrl
+		editorBlocks(flat: true) {
+			__typename
+			... on FifuImage {
+				attributes {
+					imageUrl
+				}
+			}
+		}
 		ncmazGalleryImgs {
 			image1 {
 				node {
@@ -361,6 +378,15 @@ export const NC_POST_CARD_NOT_NCMAZGALLERY_FRAGMENT = gql(/* GraphQL */ `
 		ncPostMetaData {
 			...NcmazFcPostMetaFields
 		}
+		seo {
+			openGraph {
+				image {
+					url
+					secureUrl
+				}
+			}
+		}
+		fifuImageUrl
 	}
 `)
 
@@ -400,6 +426,15 @@ export const NC_POST_CARD_NOT_NCMAZ_MEDIA_FRAGMENT = gql(/* GraphQL */ `
 		ncPostMetaData {
 			...NcmazFcPostMetaFields
 		}
+		seo {
+			openGraph {
+				image {
+					url
+					secureUrl
+				}
+			}
+		}
+		fifuImageUrl
 	}
 `)
 

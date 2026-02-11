@@ -13,6 +13,22 @@ import { getUserDataFromUserCardFragment } from './getUserDataFromUserCardFragme
 import { NcmazFcImageHasDetailFieldsFragment } from '@/__generated__/graphql'
 import { FragmentTypePostFullFields } from '@/container/type'
 
+/** First FifuImage block’s imageUrl from editorBlocks (when full post includes blocks). */
+function getFirstFifuImageUrlFromBlocks(
+	blocks:
+		| Array<{ __typename?: string; attributes?: { imageUrl?: string | null } | null } | null>
+		| undefined
+		| null,
+): string | null {
+	if (!blocks?.length) return null
+	for (const block of blocks) {
+		if (block?.__typename === 'FifuImage' && block.attributes?.imageUrl) {
+			return block.attributes.imageUrl
+		}
+	}
+	return null
+}
+
 export type PostFormatNameType =
 	| ''
 	| 'audio'
@@ -101,6 +117,32 @@ export function getPostDataFromPostFragment(
 		ncmazGalleryImg8,
 	].filter((img) => img) as NcmazFcImageHasDetailFieldsFragment[]
 
+	// Featured image fallback: 1) WordPress Media  2) RankMath og:image  3) FifuImage block
+	// 4) oxirgi imkoniyat — post meta _fifu_image_url (fifuImageUrl / fifuFeaturedImageUrl)
+	const ogImageUrl =
+		query.seo?.openGraph?.image?.secureUrl || query.seo?.openGraph?.image?.url
+	const fifuFromBlock = getFirstFifuImageUrlFromBlocks(
+		(query as { editorBlocks?: Array<{ __typename?: string; attributes?: { imageUrl?: string | null } | null } | null> })
+			.editorBlocks,
+	)
+	const fifuFromMeta =
+		(query as { fifuImageUrl?: string | null }).fifuImageUrl ??
+		(query as { fifuFeaturedImageUrl?: string | null }).fifuFeaturedImageUrl
+	const fallbackUrl = ogImageUrl || fifuFromBlock || fifuFromMeta
+	const featuredImageResolved: NcmazFcImageHasDetailFieldsFragment | null =
+		featuredImage?.sourceUrl
+			? featuredImage
+			: fallbackUrl
+				? ({
+						__typename: 'MediaItem',
+						sourceUrl: fallbackUrl,
+						altText: query.title || '',
+						databaseId: 0,
+						caption: null,
+						mediaDetails: null,
+					} as NcmazFcImageHasDetailFieldsFragment)
+				: null
+
 	return {
 		...query,
 		uri: query.uri || '',
@@ -112,7 +154,7 @@ export function getPostDataFromPostFragment(
 		postFormats,
 		postFormatSlug,
 		postFormatsArr,
-		featuredImage,
+		featuredImage: featuredImageResolved,
 		ncPostMetaData,
 		ncmazGalleryImgs,
 		categories: {
