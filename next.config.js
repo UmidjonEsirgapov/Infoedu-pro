@@ -1,4 +1,4 @@
-const { withFaust, getWpHostname } = require('@faustwp/core')
+const { withFaust } = require('@faustwp/core')
 const { createSecureHeaders } = require('next-secure-headers')
 
 // Hostinger runtime da env tekshirish (Cindy tavsiyasi) — stdout/stderr.log da ko'rinadi

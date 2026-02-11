@@ -616,7 +616,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
           footerMenuItems: { nodes: [] },
         },
       },
-      revalidate: 60,
+      revalidate: 3600, // 1 soat — ISR Writes limitini tejash
     };
   }
 };

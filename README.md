@@ -170,16 +170,27 @@ Loyiha Faust.js autentifikatsiya tizimidan foydalanadi:
 
 ## 🌐 Deployment
 
-### Vercel
+### Vercel (tayyor)
 
-1. GitHub repository ni Vercel'ga ulang
-2. Environment variables ni sozlang
-3. Deploy qiling
+Loyiha Vercel uchun sozlangan: `vercel.json` va `npm run build` (faust build) ishlatiladi.
 
-Vercel avtomatik ravishda:
-- Build qiladi
-- Sitemap generate qiladi
-- Environment variables ni sozlaydi
+1. **GitHub repository ni Vercel'ga ulang** (Import Project).
+2. **Environment variables** ni Vercel Dashboard → Project → Settings → Environment Variables da quyidagilarni kiriting:
+
+| O'zgaruvchi | Majburiy | Tavsif |
+|-------------|----------|--------|
+| `NEXT_PUBLIC_WORDPRESS_URL` | ✅ | WordPress backend URL (oxirida `/` bo'lmasin) |
+| `FAUST_SECRET_KEY` | ✅ | WordPress → Settings → Headless → Secret Key |
+| `NEXT_PUBLIC_URL` | ✅ | Frontend domen (masalan `https://infoedu.uz`) |
+| `BUILD_SECRET` | ⚪ | Build vaqtida GraphQL so'rovlari uchun (Cloudflare whitelist) |
+| `NEXT_PUBLIC_SITE_DIRECTION` | ⚪ | `ltr` yoki `rtl` |
+| `NEXT_PUBLIC_SITE_GEAR_ICON` | ⚪ | `true` / `false` |
+| `NEXT_PUBLIC_SITE_API_METHOD` | ⚪ | `GET` yoki `POST` |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | ⚪ | Google Analytics ID (G-XXXXXXXXXX) |
+
+3. **Deploy** – Vercel `npm run build` (faust build) ni avtomatik ishlatadi.
+
+**Xatolik chiqmasligi uchun:** Barcha majburiy env o'zgaruvchilar Production (va Preview kerak bo'lsa) uchun to'ldirilgan bo'lishi kerak.
 
 ## 🤝 Contributing
 

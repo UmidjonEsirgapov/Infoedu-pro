@@ -55,6 +55,7 @@ export const GET_USERS_FIRST_COMMON = 10
 export const GET_CATEGORIES_FIRST_COMMON = 15
 
 //
-export const REVALIDATE_TIME = 900
+// ISR: kamida 3600 (1 soat) — Vercel Hobby ISR Writes limitini tejash
+export const REVALIDATE_TIME = 3600
 
 export { avatarColors }

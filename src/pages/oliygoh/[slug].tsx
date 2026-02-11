@@ -72,7 +72,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         data: data,
         quotas: matchedScores // Topilgan ma'lumotni shablonga yuboramiz
       },
-      revalidate: 30,
+      revalidate: 3600, // 1 soat — ISR Writes limitini tejash
     };
   } catch (error) {
     console.error('💥 Xatolik:', error);

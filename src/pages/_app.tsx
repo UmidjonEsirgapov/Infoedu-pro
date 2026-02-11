@@ -13,7 +13,6 @@ import { Toaster } from 'react-hot-toast'
 import NextNProgress from 'nextjs-progressbar'
 import themeJson from '@/../theme.json'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import Script from 'next/script'
 
@@ -141,7 +140,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			
 			<GoogleAnalytics trackPageViews />
 			<Analytics />
-			<SpeedInsights />
 			<OneSignalInit />
 
 			<FaustProvider pageProps={pageProps}>

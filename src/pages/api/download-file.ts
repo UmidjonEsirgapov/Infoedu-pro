@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+/**
+ * @deprecated Fayl yuklash endi to'g'ridan-to'g'ri WordPress URL orqali amalga oshiriladi (Vercel limitini tejash).
+ * Ushbu route ishlatilmaydi; kerak bo'lmasa o'chirib tashlash mumkin.
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
