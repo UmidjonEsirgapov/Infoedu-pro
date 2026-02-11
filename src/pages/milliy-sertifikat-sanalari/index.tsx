@@ -4,7 +4,7 @@ import {
 	NcgeneralSettingsFieldsFragmentFragment,
 } from '@/__generated__/graphql'
 import { FaustPage, getNextStaticProps } from '@faustwp/core'
-import { GetStaticPropsContext } from 'next'
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import Head from 'next/head'
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import PageLayout from '@/container/PageLayout'
@@ -115,11 +115,12 @@ Page.query = gql(`
   }
 `)
 
-export async function getStaticProps(ctx: GetStaticPropsContext) {
+export async function getStaticProps(ctx: GetStaticPropsContext): Promise<GetStaticPropsResult<PageProps>> {
 	const result = await getNextStaticProps(ctx, {
 		Page,
 		revalidate: REVALIDATE_TIME,
 	})
+
 	let exams: MilliySertifikatImtihon[] = []
 	let yangiliklar: MilliySertifikatPost[] = []
 	try {
@@ -132,9 +133,15 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
 	} catch (err) {
 		console.error('Milliy sertifikat yangiliklar fetch xato:', err)
 	}
+
+	// Redirect yoki notFound bo'lsa, o'sha natijani qaytarish (result.props mavjud emas)
+	if ('redirect' in result && result.redirect) return result
+	if ('notFound' in result && result.notFound) return result
+
+	// Normal props: Faust props ga exams va yangiliklar qo'shamiz
+	const baseProps = 'props' in result ? result.props : {}
 	return {
-		...result,
-		props: { ...result.props, exams, yangiliklar },
+		props: { ...baseProps, exams, yangiliklar },
 		revalidate: REVALIDATE_TIME,
 	}
 }
