@@ -1,6 +1,9 @@
 const { withFaust, getWpHostname } = require('@faustwp/core')
 const { createSecureHeaders } = require('next-secure-headers')
 
+// Hostinger runtime da env tekshirish (Cindy tavsiyasi) — stdout/stderr.log da ko'rinadi
+console.error('[next.config] NEXT_PUBLIC_WORDPRESS_URL at startup:', process.env.NEXT_PUBLIC_WORDPRESS_URL || '(empty)')
+
 /**
  * @type {import('next').NextConfig}
  **/
