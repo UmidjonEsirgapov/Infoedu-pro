@@ -9,7 +9,13 @@ import {
 	TransitionChild,
 } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { ArrowUpRightIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+	ArrowUpRightIcon,
+	BookOpenIcon,
+	BuildingOffice2Icon,
+	AcademicCapIcon,
+	XMarkIcon,
+} from '@heroicons/react/24/outline'
 import { FC, ReactNode, useEffect, useState } from 'react'
 import {
 	CategoriesIcon,
@@ -67,6 +73,24 @@ const quickActions: PersonType[] = [
 		icon: CategoriesIcon,
 		uri: '/search/categories/',
 	},
+	{
+		type: 'quick-action',
+		name: 'Darsliklar',
+		icon: BookOpenIcon as unknown as typeof PostSearchIcon,
+		uri: '/darsliklar',
+	},
+	{
+		type: 'quick-action',
+		name: 'Oliygohlar',
+		icon: BuildingOffice2Icon as unknown as typeof PostSearchIcon,
+		uri: '/oliygoh',
+	},
+	{
+		type: 'quick-action',
+		name: 'Milliy sertifikat',
+		icon: AcademicCapIcon as unknown as typeof PostSearchIcon,
+		uri: '/milliy-sertifikat-sanalari',
+	},
 ]
 const explores: PersonType[] =
 	NC_SITE_SETTINGS.search_page?.recommended_searches?.items
@@ -85,6 +109,37 @@ interface Props {
 	triggerClassName?: string
 }
 
+/** Darslik (GraphQL Textbook) qidiruv natijasi */
+interface SearchTextbookNode {
+	databaseId: number
+	title?: string | null
+	slug?: string | null
+	uri?: string | null
+	darslikMalumotlari?: { sinf?: number | null } | null
+	fanlar?: { nodes?: Array<{ name?: string | null } | null> | null } | null
+}
+
+/** Oliygoh (GraphQL Oliygoh) qidiruv natijasi */
+interface SearchOliygohNode {
+	databaseId: number
+	title?: string | null
+	slug?: string | null
+	uri?: string | null
+	oliygohMalumotlari?: { viloyat?: (string | null)[] | null } | null
+}
+
+/** Tanlangan element: bitta uri orqali navigatsiya */
+export interface SearchResultItem {
+	type: 'post' | 'darslik' | 'oliygoh' | 'milliy-yangilik' | 'milliy-imtihon'
+	uri: string
+	title?: string
+}
+
+const DEBOUNCE_MS = 300
+const LIMIT_POSTS = 6
+const LIMIT_TEXTBOOKS = 5
+const LIMIT_OLIYGOH = 5
+
 const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 	const client = getApolloClient()
 	const router = useRouter()
@@ -92,40 +147,111 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 	const [open, setOpen] = useState(false)
 	const [query, setQuery] = useState('')
 	const [posts, setPosts] = useState<TPostCard[]>([])
+	const [textbooks, setTextbooks] = useState<SearchTextbookNode[]>([])
+	const [oliygohlar, setOliygohlar] = useState<SearchOliygohNode[]>([])
+	const [milliyYangiliklar, setMilliyYangiliklar] = useState<
+		Array<{ id: number; title: string; link: string }>
+	>([])
+	const [milliyImtihonlar, setMilliyImtihonlar] = useState<
+		Array<{ id: number; title: string; fanlar: { fan_nomi: string }[] }>
+	>([])
 
 	const GQL = gql(`
 		#graphql
-		query SearchFormQueryGetPostsBySearch(
-			$first: Int
+		query SearchFormUnified(
 			$search: String
+			$firstPosts: Int
+			$firstTextbooks: Int
+			$firstOliygoh: Int
 		) {
-			posts(first: $first, where: { search: $search }) {
+			posts(first: $firstPosts, where: { search: $search }) {
 				nodes {
 					...NcmazFcPostCardFields
 				}
-				pageInfo {
-					endCursor
-					hasNextPage
+				pageInfo { endCursor hasNextPage }
+			}
+			textbooks(first: $firstTextbooks, where: { search: $search }) {
+				nodes {
+					databaseId
+					title
+					slug
+					uri
+					darslikMalumotlari { sinf }
+					fanlar { nodes { name } }
+				}
+			}
+			oliygohlar(first: $firstOliygoh, where: { search: $search }) {
+				nodes {
+					databaseId
+					title
+					slug
+					uri
+					oliygohMalumotlari { viloyat }
 				}
 			}
 		}
 	`)
 
-	function fetchData(query: string) {
+	function fetchData(searchQuery: string) {
+		if (!searchQuery.trim()) {
+			setPosts([])
+			setTextbooks([])
+			setOliygohlar([])
+			setMilliyYangiliklar([])
+			setMilliyImtihonlar([])
+			return
+		}
 		setIsLoading(true)
-		client
-			.query({
+		setPosts([])
+		setTextbooks([])
+		setOliygohlar([])
+		setMilliyYangiliklar([])
+		setMilliyImtihonlar([])
+
+		const variables = {
+			search: searchQuery,
+			firstPosts: LIMIT_POSTS,
+			firstTextbooks: LIMIT_TEXTBOOKS,
+			firstOliygoh: LIMIT_OLIYGOH,
+		}
+
+		Promise.all([
+			client.query({
 				query: GQL,
-				variables: {
-					search: query,
-					first: 8,
-				},
-			})
-			.then((res) => {
-				setPosts((res?.data?.posts?.nodes as TPostCard[]) || [])
+				variables,
+			}),
+			fetch(
+				`/api/search-milliy-sertifikat?q=${encodeURIComponent(searchQuery)}`
+			).then((r) => r.json()),
+		])
+			.then(([gqlRes, milliy]) => {
+				const data = gqlRes?.data as {
+					posts?: { nodes?: TPostCard[] }
+					textbooks?: { nodes?: SearchTextbookNode[] }
+					oliygohlar?: { nodes?: SearchOliygohNode[] }
+				}
+				setPosts((data?.posts?.nodes as TPostCard[]) || [])
+				setTextbooks(data?.textbooks?.nodes || [])
+				setOliygohlar(data?.oliygohlar?.nodes || [])
+				setMilliyYangiliklar(
+					(milliy?.yangiliklar || []).map((p: { id: number; title: string; link: string }) => ({
+						id: p.id,
+						title: p.title,
+						link: p.link,
+					}))
+				)
+				setMilliyImtihonlar(
+					(milliy?.imtihonlar || []).map(
+						(im: { id: number; title: string; fanlar: { fan_nomi: string }[] }) => ({
+							id: im.id,
+							title: im.title,
+							fanlar: im.fanlar || [],
+						})
+					)
+				)
 			})
 			.catch((err) => {
-				console.log(err)
+				console.error('Search fetch error:', err)
 			})
 			.finally(() => {
 				setIsLoading(false)
@@ -133,10 +259,16 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 	}
 
 	useEffect(() => {
-		if (query !== '') {
-			fetchData(query)
+		if (query.trim() === '') {
 			setPosts([])
+			setTextbooks([])
+			setOliygohlar([])
+			setMilliyYangiliklar([])
+			setMilliyImtihonlar([])
+			return
 		}
+		const t = setTimeout(() => fetchData(query), DEBOUNCE_MS)
+		return () => clearTimeout(t)
 	}, [query])
 
 	const handleSetSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,17 +312,22 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 							<DialogPanel className="mx-auto w-full max-w-2xl transform divide-y divide-gray-100 self-end overflow-hidden bg-white shadow-2xl ring-1 ring-black/5 transition-all sm:self-start sm:rounded-xl dark:divide-gray-700 dark:bg-neutral-800 dark:ring-white/10">
 								<Combobox
 									// @ts-ignore
-									onChange={(item?: PersonType) => {
-										if (!item?.uri) {
-											return
-										}
-										if (item.type === 'quick-action') {
-											router.push(item.uri + query)
+									onChange={(item?: PersonType | SearchResultItem) => {
+										if (!item) return
+										const withUri = item as { uri?: string; type?: string }
+										if (withUri.type === 'quick-action') {
+											const base = withUri.uri || ''
+											// Faqat qidiruv sahifalariga so‘rovni qo‘shamiz
+											const searchUris = ['/search/posts/', '/search/authors/', '/search/categories/', '/posts?search=']
+											const appendQuery = searchUris.some((u) => base.startsWith(u))
+											router.push(appendQuery ? base + encodeURIComponent(query) : base)
 											setOpen(false)
 											return
 										}
-										router.push(item.uri || '')
-										setOpen(false)
+										if (withUri.uri) {
+											router.push(withUri.uri)
+											setOpen(false)
+										}
 									}}
 									form="search-form-combobox"
 								>
@@ -204,7 +341,7 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 												autoFocus
 												className="h-12 w-full border-0 bg-transparent pe-4 ps-11 text-sm text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:text-gray-100 dark:placeholder:text-gray-300"
 												placeholder={T['Type to search...']}
-												onChange={_.debounce(handleSetSearchValue, 200)}
+												onChange={_.debounce(handleSetSearchValue, DEBOUNCE_MS)}
 												onBlur={() => setQuery('')}
 											/>
 										</div>
@@ -232,34 +369,211 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 										className="max-h-[70vh] scroll-py-2 divide-y divide-gray-100 overflow-y-auto dark:divide-gray-700"
 									>
 										{query !== '' && !isLoading && (
-											<li className="p-2">
-												<ul className="divide-y divide-gray-100 text-sm text-gray-700 dark:divide-gray-700 dark:text-gray-300">
-													{posts.length ? (
-														posts.map((post) => (
-															<ComboboxOption
-																as={'li'}
-																key={post.databaseId}
-																value={post}
-																className={({ focus }) =>
-																	clsx(
-																		'relative flex cursor-default select-none items-center',
-																		focus &&
-																			'bg-neutral-100 dark:bg-neutral-700',
-																	)
-																}
-															>
-																{({ focus }) => (
-																	<CardPost post={post} focus={focus} />
-																)}
-															</ComboboxOption>
-														))
-													) : (
-														<div className="py-5 text-center">
-															<Empty />
-														</div>
+											<>
+												{/* Maqolalar */}
+												{posts.length > 0 && (
+													<li className="p-2">
+														<h3 className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+															{T['Articles'] || 'Maqolalar'}
+														</h3>
+														<ul className="divide-y divide-gray-100 text-sm text-gray-700 dark:divide-gray-700 dark:text-gray-300">
+															{posts.map((post) => (
+																<ComboboxOption
+																	as="li"
+																	key={`post-${post.databaseId}`}
+																	value={{
+																		type: 'post' as const,
+																		uri: post.uri || '',
+																		title: post.title || undefined,
+																	}}
+																	className={({ focus }) =>
+																		clsx(
+																			'relative flex cursor-default select-none items-center',
+																			focus && 'bg-neutral-100 dark:bg-neutral-700',
+																		)
+																	}
+																>
+																	{({ focus }) => (
+																		<CardPost post={post} focus={focus} />
+																	)}
+																</ComboboxOption>
+															))}
+														</ul>
+													</li>
+												)}
+												{/* Darsliklar */}
+												{textbooks.length > 0 && (
+													<li className="p-2">
+														<h3 className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+															Darsliklar
+														</h3>
+														<ul className="divide-y divide-gray-100 text-sm dark:divide-gray-700 dark:text-gray-300">
+															{textbooks.map((tb) => (
+																<ComboboxOption
+																	as="li"
+																	key={`tb-${tb.databaseId}`}
+																	value={{
+																		type: 'darslik' as const,
+																		uri: tb.uri || `/darsliklar/${tb.darslikMalumotlari?.sinf ?? ''}/${tb.slug ?? ''}`.replace(/\/+/g, '/'),
+																		title: tb.title || undefined,
+																	}}
+																	className={({ focus }) =>
+																		clsx(
+																			'relative flex cursor-default select-none items-center rounded-lg px-3 py-2',
+																			focus && 'bg-neutral-100 dark:bg-neutral-700',
+																		)
+																	}
+																>
+																	{() => (
+																		<div className="flex items-center gap-3">
+																			<BookOpenIcon className="h-5 w-5 flex-shrink-0 text-neutral-400" />
+																			<div className="min-w-0">
+																				<p className="truncate font-medium text-neutral-900 dark:text-neutral-100">
+																					{tb.title}
+																				</p>
+																				{(tb.darslikMalumotlari?.sinf || tb.fanlar?.nodes?.[0]?.name) && (
+																					<p className="text-xs text-neutral-500 dark:text-neutral-400">
+																						{tb.darslikMalumotlari?.sinf && `${tb.darslikMalumotlari.sinf}-sinf`}
+																						{tb.darslikMalumotlari?.sinf && tb.fanlar?.nodes?.[0]?.name && ' · '}
+																						{tb.fanlar?.nodes?.[0]?.name}
+																					</p>
+																				)}
+																			</div>
+																			<ArrowUpRightIcon className="h-4 w-4 flex-shrink-0 text-neutral-400" />
+																		</div>
+																	)}
+																</ComboboxOption>
+															))}
+														</ul>
+													</li>
+												)}
+												{/* Oliygohlar */}
+												{oliygohlar.length > 0 && (
+													<li className="p-2">
+														<h3 className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+															Oliygohlar
+														</h3>
+														<ul className="divide-y divide-gray-100 text-sm dark:divide-gray-700 dark:text-gray-300">
+															{oliygohlar.map((ol) => (
+																<ComboboxOption
+																	as="li"
+																	key={`ol-${ol.databaseId}`}
+																	value={{
+																		type: 'oliygoh' as const,
+																		uri: ol.uri || `/oliygoh`,
+																		title: ol.title || undefined,
+																	}}
+																	className={({ focus }) =>
+																		clsx(
+																			'relative flex cursor-default select-none items-center rounded-lg px-3 py-2',
+																			focus && 'bg-neutral-100 dark:bg-neutral-700',
+																		)
+																	}
+																>
+																	{() => (
+																		<div className="flex items-center gap-3">
+																			<BuildingOffice2Icon className="h-5 w-5 flex-shrink-0 text-neutral-400" />
+																			<div className="min-w-0">
+																				<p className="truncate font-medium text-neutral-900 dark:text-neutral-100">
+																					{ol.title}
+																				</p>
+																				{ol.oliygohMalumotlari?.viloyat?.[0] && (
+																					<p className="text-xs text-neutral-500 dark:text-neutral-400">
+																						{ol.oliygohMalumotlari.viloyat[0]}
+																					</p>
+																				)}
+																			</div>
+																			<ArrowUpRightIcon className="h-4 w-4 flex-shrink-0 text-neutral-400" />
+																		</div>
+																	)}
+																</ComboboxOption>
+															))}
+														</ul>
+													</li>
+												)}
+												{/* Milliy sertifikat */}
+												{(milliyYangiliklar.length > 0 || milliyImtihonlar.length > 0) && (
+													<li className="p-2">
+														<h3 className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+															Milliy sertifikat
+														</h3>
+														<ul className="divide-y divide-gray-100 text-sm dark:divide-gray-700 dark:text-gray-300">
+															{milliyYangiliklar.map((y) => (
+																<ComboboxOption
+																	as="li"
+																	key={`ms-y-${y.id}`}
+																	value={{
+																		type: 'milliy-yangilik' as const,
+																		uri: y.link,
+																		title: y.title,
+																	}}
+																	className={({ focus }) =>
+																		clsx(
+																			'relative flex cursor-default select-none items-center rounded-lg px-3 py-2',
+																			focus && 'bg-neutral-100 dark:bg-neutral-700',
+																		)
+																	}
+																>
+																	{() => (
+																		<div className="flex items-center gap-3">
+																			<AcademicCapIcon className="h-5 w-5 flex-shrink-0 text-neutral-400" />
+																			<p className="truncate font-medium text-neutral-900 dark:text-neutral-100">
+																				{y.title}
+																			</p>
+																			<ArrowUpRightIcon className="h-4 w-4 flex-shrink-0 text-neutral-400" />
+																		</div>
+																	)}
+																</ComboboxOption>
+															))}
+															{milliyImtihonlar.map((im) => (
+																<ComboboxOption
+																	as="li"
+																	key={`ms-im-${im.id}`}
+																	value={{
+																		type: 'milliy-imtihon' as const,
+																		uri: '/milliy-sertifikat-sanalari',
+																		title: im.title,
+																	}}
+																	className={({ focus }) =>
+																		clsx(
+																			'relative flex cursor-default select-none items-center rounded-lg px-3 py-2',
+																			focus && 'bg-neutral-100 dark:bg-neutral-700',
+																		)
+																	}
+																>
+																	{() => (
+																		<div className="flex items-center gap-3">
+																			<AcademicCapIcon className="h-5 w-5 flex-shrink-0 text-neutral-400" />
+																			<div className="min-w-0">
+																				<p className="truncate font-medium text-neutral-900 dark:text-neutral-100">
+																					{im.title}
+																				</p>
+																				{im.fanlar?.length > 0 && (
+																					<p className="text-xs text-neutral-500 dark:text-neutral-400">
+																						{im.fanlar.map((f) => f.fan_nomi).join(', ')}
+																					</p>
+																				)}
+																			</div>
+																			<ArrowUpRightIcon className="h-4 w-4 flex-shrink-0 text-neutral-400" />
+																		</div>
+																	)}
+																</ComboboxOption>
+															))}
+														</ul>
+													</li>
+												)}
+												{posts.length === 0 &&
+													textbooks.length === 0 &&
+													oliygohlar.length === 0 &&
+													milliyYangiliklar.length === 0 &&
+													milliyImtihonlar.length === 0 && (
+														<li className="p-2">
+															<div className="py-5 text-center">
+																<Empty />
+															</div>
+														</li>
 													)}
-												</ul>
-											</li>
+											</>
 										)}
 
 										{query === '' && (
