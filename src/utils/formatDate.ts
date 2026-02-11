@@ -172,3 +172,15 @@ export default function ncFormatDate(date_string: string): string {
 		},
 	)
 }
+
+/** Server va clientda bir xil natija — hydration mismatch oldini olish uchun (uz-UZ qisqa sana) */
+const MONTH_SHORT_UZ = ['yan', 'fev', 'mar', 'apr', 'may', 'iyn', 'iyl', 'avg', 'sen', 'okt', 'noy', 'dek']
+
+export function formatShortDateUz(dateInput: string | Date): string {
+	if (!dateInput) return ''
+	const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput
+	if (isNaN(d.getTime())) return ''
+	const day = d.getDate()
+	const month = MONTH_SHORT_UZ[d.getMonth()]
+	return `${day}-${month}`
+}

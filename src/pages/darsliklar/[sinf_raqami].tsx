@@ -255,20 +255,28 @@ export default function SinfDarsliklarPage(props: PageProps) {
 
                         {/* Card Content */}
                         <div className="p-3 sm:p-4 md:p-5">
-                          {/* Subject Badge */}
+                          {/* Subject Badge — Link ichida Link bo'lmasin (invalid HTML / hydration); span + router */}
                           <div className="mb-1.5 sm:mb-2">
                             {subjectLink ? (
-                              <Link
-                                href={subjectLink}
+                              <span
+                                role="button"
+                                tabIndex={0}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  window.location.href = subjectLink;
+                                  router.push(subjectLink);
                                 }}
-                                className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    router.push(subjectLink);
+                                  }
+                                }}
+                                className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-pointer"
                               >
                                 {subject}
-                              </Link>
+                              </span>
                             ) : (
                               <span className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
                                 {subject}

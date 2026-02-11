@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import Link from 'next/link'
 import { TPostCard } from '@/components/Card2/Card2'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
+import { formatShortDateUz } from '@/utils/formatDate'
 import MyImage from '@/components/MyImage'
 import { FireIcon } from '@heroicons/react/24/outline'
 
@@ -69,12 +70,7 @@ const WidgetPopularPosts: FC<WidgetPopularPostsProps> = ({
 									{/* Meta */}
 									<div className="mt-1 flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
 										{date && (
-											<span>
-												{new Date(date).toLocaleDateString('uz-UZ', {
-													day: 'numeric',
-													month: 'short',
-												})}
-											</span>
+											<span>{formatShortDateUz(date)}</span>
 										)}
 										{ncPostMetaData?.viewsCount && (
 											<>
