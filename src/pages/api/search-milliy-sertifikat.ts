@@ -53,6 +53,7 @@ export default async function handler(
 							excerpt: (p.excerpt?.rendered ?? '').replace(/<[^>]*>/g, '').trim().slice(0, 160),
 							link: p.link ?? '',
 							date: p.date ?? '',
+							featuredImageUrl: null,
 						}))
 					}
 				}
