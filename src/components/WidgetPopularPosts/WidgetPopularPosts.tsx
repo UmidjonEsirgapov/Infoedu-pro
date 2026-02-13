@@ -28,18 +28,22 @@ const WidgetPopularPosts: FC<WidgetPopularPostsProps> = ({
 				</h3>
 				<div className="space-y-4">
 					{posts.slice(0, 5).map((post, index) => {
+						const data = getPostDataFromPostFragment(post)
 						const {
 							title,
 							uri,
 							featuredImage,
 							ncPostMetaData,
 							date,
-						} = getPostDataFromPostFragment(post)
+						} = data
+						// 301 redirect qilingan postlarda havola canonical (yangi) URL bo‘lishi kerak
+						const rawHref = (data as { seo?: { canonicalUrl?: string | null } }).seo?.canonicalUrl || uri || '/'
+						const linkHref = rawHref.startsWith('http') ? new URL(rawHref).pathname : rawHref
 
 						return (
 							<Link
 								key={post.databaseId || index}
-								href={uri || '/'}
+								href={linkHref}
 								className="group flex gap-3 hover:opacity-80 transition-opacity"
 							>
 								{/* Number Badge */}

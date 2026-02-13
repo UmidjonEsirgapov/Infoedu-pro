@@ -8,6 +8,7 @@ import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import GenerativeBookCover from '@/components/GenerativeBookCover';
 import SEOContentExpander from '@/components/SEOContentExpander';
+import SchemaOrgDarslik from '@/components/SchemaOrg/SchemaOrgDarslik';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
 import { trackButtonClick, trackTelegramChannelView, GA_CATEGORIES } from '@/utils/analytics';
@@ -252,7 +253,7 @@ const GET_ALL_DARSLIK_SLUGS = gql`
 `;
 
 export default function DarslikDetailPage(props: PageProps) {
-  const { data, sinfRaqami } = props;
+  const { data, sinfRaqami, slug } = props;
   const darslik = data?.darslik;
 
   if (!darslik) {
@@ -401,50 +402,18 @@ export default function DarslikDetailPage(props: PageProps) {
     return `${darslik.title}, ${darslik.title} ${sinf}-sinf, ${darslik.title} pdf yuklab olish, darsliklar ${currentYear}, ${darslik.title} yangi nashr`;
   }, [darslik.title, sinf, currentYear]);
 
-  // Generate OG Image URL (using generative cover logic or fallback)
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_URL || props.data?.generalSettings?.url?.replace(/\/$/, '') || 'https://infoedu.uz';
+  const canonicalUrl = `${baseUrl}/darsliklar/${sinfRaqami}/${slug || darslik?.slug || ''}`;
+  // OG Image — SSR va client'da to'liq URL
   const ogImageUrl = useMemo(() => {
-    // Use site logo or a default OG image
-    // In production, you can create an API route to generate dynamic OG images
-    const siteUrl = typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || '';
-    // Fallback to site logo or a default image
-    return `${siteUrl}/logo.png`; // Update this to your actual OG image path or API endpoint
-  }, []);
+    const siteUrl = typeof window !== 'undefined' ? window.location.origin : baseUrl;
+    return `${siteUrl}/logo.png`;
+  }, [baseUrl]);
 
   // Generate SEO description for content
   const seoDescription = useMemo(() => {
     return `Ushbu sahifada umumta'lim maktablarining ${sinf}-sinf o'quvchilari uchun mo'ljallangan ${darslik.title} darsligini yuklab olishingiz mumkin. Kitob O'zbekiston Xalq ta'limi vazirligi standartlari asosida tayyorlangan. Fayl formati PDF bo'lib, hajmi ${displayFileSize}. Darslikni pastdagi tugma orqali bepul yuklab oling.`;
   }, [sinf, darslik.title, displayFileSize]);
-
-  // Schema.org Book structured data
-  const bookSchema = useMemo(() => {
-    const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'Book',
-      name: darslik.title,
-      description: seoMetaDescription,
-      educationalLevel: `${sinf}-sinf`,
-      inLanguage: 'uz',
-      bookFormat: 'https://schema.org/EBook',
-      datePublished: `${currentYear}`,
-      ...(fileUrl && {
-        offers: {
-          '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'UZS',
-          availability: 'https://schema.org/InStock',
-          url: fileUrl,
-        },
-      }),
-      publisher: {
-        '@type': 'Organization',
-        name: 'O\'zbekiston Xalq ta\'limi vazirligi',
-      },
-      ...(fileSize && {
-        fileSize: fileSize,
-      }),
-    };
-  }, [darslik.title, seoMetaDescription, sinf, fileUrl, fileSize, currentYear]);
 
   // Filter similar textbooks (same class, exclude current)
   const similarTextbooks = useMemo(() => {
@@ -484,9 +453,11 @@ export default function DarslikDetailPage(props: PageProps) {
         <meta property="og:title" content={fullSeoTitle} />
         <meta property="og:description" content={seoMetaDescription} />
         <meta property="og:image" content={ogImageUrl} />
-        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : ''} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="InfoEdu" />
         <meta property="og:locale" content="uz_UZ" />
+        <meta property="book:release_date" content={String(currentYear)} />
+        <meta property="book:author" content="O'zbekiston Respublikasi Maktabgacha va maktab ta'limi vazirligi" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -498,12 +469,19 @@ export default function DarslikDetailPage(props: PageProps) {
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="author" content="InfoEdu" />
         <meta name="language" content="Uzbek" />
-        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
+        <link rel="canonical" href={canonicalUrl} />
         
-        {/* Schema.org Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(bookSchema) }}
+        {/* JSON-LD: Book, BreadcrumbList, FAQPage */}
+        <SchemaOrgDarslik
+          bookName={darslik.title}
+          sinf={sinf}
+          sinfRaqami={sinfRaqami}
+          currentYear={currentYear}
+          baseUrl={baseUrl}
+          canonicalUrl={canonicalUrl}
+          fileSize={fileSize ?? undefined}
+          fileUrl={fileUrl ?? undefined}
+          description={seoMetaDescription}
         />
       </Head>
       <PageLayout 

@@ -208,10 +208,9 @@ const Universitet: FaustTemplate<any> = (props) => {
       schema.sameAs = sameAs;
     }
 
-    // Additional properties
+    // Viloyat — faqat PostalAddress yoki Place.address ichida (CollegeOrUniversity da addressRegion yo'q)
     if (info.viloyat) {
       const viloyat = Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat;
-      schema.addressRegion = viloyat;
       schema.location = {
         "@type": "Place",
         "address": {
@@ -220,6 +219,10 @@ const Universitet: FaustTemplate<any> = (props) => {
           "addressCountry": "UZ"
         }
       };
+      // Asosiy address bor bo'lsa, unga ham addressRegion qo'shish (PostalAddress da qonuniy)
+      if (schema.address && typeof schema.address === "object") {
+        schema.address.addressRegion = viloyat;
+      }
     }
 
     if (info.universitetTuri) {
@@ -356,19 +359,15 @@ const Universitet: FaustTemplate<any> = (props) => {
           }
         })()}
         
-        {/* Organization/CollegeOrUniversity Schema */}
+        {/* Alohida script — validatorda WebPage, CollegeOrUniversity, BreadcrumbList alohida ko‘rinadi */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        
-        {/* BreadcrumbList Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
-        
-        {/* WebPage Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}

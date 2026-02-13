@@ -6,6 +6,7 @@ import CoreColumns from './CoreColumns'
 import CoreColumn from './CoreColumn'
 import CoreHtml from './CoreHtml'
 import CoreFreeform from './CoreFreeform'
+import RankMathFaqBlock from './RankMathFaqBlock'
 export default {
 	NcmazFaustBlockMagazine,
 	NcmazFaustBlockTerms,
@@ -15,4 +16,5 @@ export default {
 	CoreColumn,
 	CoreHtml,
 	CoreFreeform,
+	RankMathFaqBlock,
 }

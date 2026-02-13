@@ -41,6 +41,7 @@ export const NC_CATEGORY_CARD_FIELD_NOT_IMAGE_FRAGMENT = gql(/* GraphQL */ `
 	fragment NcmazFcCategoryCardFieldsNotImage on Category {
 		__typename
 		name
+		slug
 		uri
 		count
 		databaseId
@@ -74,7 +75,9 @@ export const NC_POST_FULL_FRAGMENT = gql(/* GraphQL */ `
 		__typename
 		uri
 		modified
+		modifiedGmt
 		date
+		dateGmt
 		commentStatus
 		status
 		commentCount
@@ -187,7 +190,9 @@ export const NC_POST_FULL_VS_EDITOR_BLOCK_NO_CONTENT_FRAGMENT = gql(
 			__typename
 			uri
 			modified
+			modifiedGmt
 			date
+			dateGmt
 			commentStatus
 			status
 			commentCount
@@ -202,6 +207,11 @@ export const NC_POST_FULL_VS_EDITOR_BLOCK_NO_CONTENT_FRAGMENT = gql(
 				... on FifuImage {
 					attributes {
 						imageUrl
+					}
+				}
+				... on RankMathFaqBlock {
+					attributes {
+						questions
 					}
 				}
 				...NcmazFaustBlockMagazineFragment
@@ -232,14 +242,18 @@ export const NC_POST_FULL_VS_EDITOR_BLOCK_NO_CONTENT_FRAGMENT = gql(
 					...NcmazFcImageHasDetailFields
 				}
 			}
-			seo {
-				openGraph {
-					image {
-						url
-						secureUrl
-					}
+		seo {
+			canonicalUrl
+			openGraph {
+				image {
+					url
+					secureUrl
 				}
 			}
+			jsonLd {
+				raw
+			}
+		}
 			fifuImageUrl
 			postFormats {
 				nodes {
@@ -393,6 +407,7 @@ export const NC_POST_CARD_NOT_NCMAZGALLERY_FRAGMENT = gql(/* GraphQL */ `
 			...NcmazFcPostMetaFields
 		}
 		seo {
+			canonicalUrl
 			openGraph {
 				image {
 					url
@@ -441,6 +456,7 @@ export const NC_POST_CARD_NOT_NCMAZ_MEDIA_FRAGMENT = gql(/* GraphQL */ `
 			...NcmazFcPostMetaFields
 		}
 		seo {
+			canonicalUrl
 			openGraph {
 				image {
 					url

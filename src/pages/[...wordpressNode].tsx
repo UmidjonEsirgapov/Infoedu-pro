@@ -93,20 +93,70 @@ function isNetworkError(error: unknown): boolean {
 		!!e?.networkError
 }
 
+function normalizePath(p: string): string {
+	const path = p.startsWith('http') ? new URL(p).pathname : p
+	const trimmed = path.replace(/^\/+|\/+$/g, '')
+	return trimmed ? `/${trimmed}` : '/'
+}
+
+/** next.config.js dagi 301 lar bilan bir xil — sahifa ochilmasdan 301 qaytaramiz */
+const REDIRECT_301: Record<string, string> = {
+	'/9-sinf-algebra-pdf': '/darsliklar/9/9-sinf-algebra',
+	'/9-sinf-onatili-pdf': '/darsliklar/9/9-sinf-ona-tili',
+	'/9-sinf-adabiyot-pdf': '/darsliklar/9/9-sinf-adabiyot',
+	'/jizzax-davlat-pedagogika-universiteti': '/oliygoh/jizzax-davlat-pedagogika-universiteti',
+	'/ozbekiston-davlat-jahon-tillari-universiteti': '/oliygoh/ozbekiston-davlat-jahon-tillari-universiteti',
+	'/yunus-rajabiy-nomidagi-ozbek-milliy-musiqa-sanati-instituti': '/oliygoh/ozbek-milliy-musiqa-san%CA%BCati-instituti',
+	'/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali': '/oliygoh/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali',
+	'/milliy-sertifikat-sanalari2': '/milliy-sertifikat-sanalari',
+}
+
 export const getStaticProps: GetStaticProps = async (ctx) => {
+	const wordpressNode = (ctx.params?.wordpressNode as string[]) || []
+	const currentPath = '/' + wordpressNode.join('/')
+	const currentNorm = normalizePath(currentPath)
+
+	const redirectTo = REDIRECT_301[currentNorm]
+	if (redirectTo) {
+		return { redirect: { destination: redirectTo, permanent: true } }
+	}
+
 	for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
 		try {
-			return await getWordPressProps({ ctx, revalidate: REVALIDATE_TIME })
+			const result = await getWordPressProps({ ctx, revalidate: REVALIDATE_TIME })
+			if ('notFound' in result && result.notFound) return result
+			if ('redirect' in result && result.redirect) return result
+
+			const props = (result as { props?: Record<string, unknown> }).props
+			const post = props?.data && typeof props.data === 'object' && (props.data as Record<string, unknown>).post
+			const postObj = post && typeof post === 'object' ? (post as Record<string, unknown>) : null
+			const canonicalUrl = postObj?.seo && typeof postObj.seo === 'object'
+				? (postObj.seo as Record<string, unknown>).canonicalUrl as string | undefined
+				: undefined
+
+			if (canonicalUrl && typeof canonicalUrl === 'string' && canonicalUrl.trim()) {
+				const canonicalPath = normalizePath(canonicalUrl.trim())
+				if (canonicalPath !== currentNorm) {
+					return {
+						redirect: {
+							destination: canonicalPath,
+							permanent: true,
+						},
+					}
+				}
+			}
+
+			return result
 		} catch (error) {
 			if (isNetworkError(error) && attempt < MAX_RETRIES) {
 				console.warn(
-					`[wordpressNode] Attempt ${attempt}/${MAX_RETRIES} failed for ${(ctx.params?.wordpressNode as string[])?.join('/')}, retrying in ${RETRY_DELAY_MS}ms...`
+					`[wordpressNode] Attempt ${attempt}/${MAX_RETRIES} failed for ${wordpressNode.join('/')}, retrying in ${RETRY_DELAY_MS}ms...`
 				)
 				await new Promise((r) => setTimeout(r, RETRY_DELAY_MS * attempt))
 				continue
 			}
 			console.error(
-				`[wordpressNode] getStaticProps failed for ${(ctx.params?.wordpressNode as string[])?.join('/')} after ${attempt} attempt(s):`,
+				`[wordpressNode] getStaticProps failed for ${wordpressNode.join('/')} after ${attempt} attempt(s):`,
 				(error as Error)?.message ?? error
 			)
 			return { notFound: true }

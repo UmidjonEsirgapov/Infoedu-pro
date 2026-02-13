@@ -100,7 +100,9 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		databaseId,
 		excerpt,
 		modified,
+		modifiedGmt,
 		date,
+		dateGmt,
 		uri,
 		author,
 		categories,
@@ -196,20 +198,146 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		)
 	}
 
-	// NewsArticle JSON-LD Schema
+	// Schemas (NewsArticle, FAQ, BreadcrumbList)
 	const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz'
 	const canonicalUrl = useCanonicalUrl(uri || undefined)
+
+	// FAQ Schema: avvalo Rank Math seo.jsonLd.raw dan, keyin FAQ blokdan
+	const faqSchema = useMemo(() => {
+		const post = props.data?.post as {
+			seo?: { jsonLd?: { raw?: string | null } | null } | null
+			editorBlocks?: Array<{ __typename?: string; attributes?: { questions?: unknown } | null } | null>
+		} | undefined
+
+		// 1) Rank Math JSON-LD dan FAQPage qidirish
+		// raw <script type="application/ld+json">...</script> ichida yoki to'g'ri JSON bo'ladi; @graph ichida FAQ bor
+		const raw = post?.seo?.jsonLd?.raw
+		if (raw && typeof raw === 'string') {
+			let jsonStr = raw.trim()
+			const scriptMatch = jsonStr.match(/<script[^>]*>([\s\S]*?)<\/script>/i)
+			if (scriptMatch) jsonStr = scriptMatch[1].trim()
+			try {
+				const parsed = JSON.parse(jsonStr) as { '@graph'?: Array<{ '@type'?: string | string[]; mainEntity?: unknown }> } | Array<{ '@type'?: string; mainEntity?: unknown }> | { '@type'?: string | string[]; mainEntity?: unknown }
+				const graph = Array.isArray(parsed) ? parsed : (parsed && (parsed as { '@graph'?: unknown })['@graph']) ? (parsed as { '@graph': unknown[] })['@graph'] : [parsed]
+				const items = Array.isArray(graph) ? graph : [parsed]
+				const faq = items.find((s) => {
+					const type = s?.['@type']
+					const isFaq = Array.isArray(type) ? type.includes('FAQPage') : type === 'FAQPage'
+					return isFaq && Array.isArray(s?.mainEntity) && s.mainEntity.length > 0
+				})
+				if (faq && faq.mainEntity) {
+					return {
+						'@context': 'https://schema.org',
+						'@type': 'FAQPage',
+						mainEntity: faq.mainEntity,
+					}
+				}
+			} catch {
+				// regex fallback
+				const faqMatch = raw.match(/"mainEntity"\s*:\s*(\[[\s\S]*?\])\s*}\s*,\s*{"@type"\s*:\s*"Person"/)
+				if (faqMatch) {
+					try {
+						const mainEntity = JSON.parse(faqMatch[1])
+						if (Array.isArray(mainEntity) && mainEntity.length > 0) {
+							return { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity }
+						}
+					} catch {
+						// ignore
+					}
+				}
+			}
+		}
+
+		// 2) Editor bloklaridan: Rank Math FAQ block (questions = massiv ichida har biri JSON string)
+		const blocks = post?.editorBlocks
+		if (!blocks?.length) return null
+		const faqBlocks = blocks.filter((b): b is { __typename: 'RankMathFaqBlock'; attributes: { questions: unknown } } => b?.__typename === 'RankMathFaqBlock' && !!b.attributes?.questions)
+		const allQuestions: Array<{ '@type': string; name: string; acceptedAnswer: { '@type': string; text: string } }> = []
+
+		function getText(v: unknown): string {
+			if (v == null) return ''
+			if (typeof v === 'string') return v.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+			if (typeof v === 'object' && v !== null && 'content' in v) return getText((v as { content?: unknown }).content)
+			return String(v)
+		}
+
+		for (const block of faqBlocks) {
+			const questions = block.attributes.questions
+			const list = Array.isArray(questions) ? questions : typeof questions === 'string' ? (() => { try { return JSON.parse(questions) } catch { return [] } })() : []
+			for (const q of list) {
+				let obj: Record<string, unknown> | null = null
+				if (typeof q === 'string') {
+					try { obj = JSON.parse(q) as Record<string, unknown> } catch { continue }
+				} else if (q && typeof q === 'object') {
+					obj = q as Record<string, unknown>
+				}
+				if (!obj) continue
+				const name = getText(obj.question ?? obj.title ?? obj.name)
+				const text = getText(obj.answer ?? obj.content ?? obj.text)
+				if (name && text) {
+					allQuestions.push({
+						'@type': 'Question',
+						name,
+						acceptedAnswer: { '@type': 'Answer', text },
+					})
+				}
+			}
+		}
+		if (allQuestions.length === 0) return null
+		return {
+			'@context': 'https://schema.org',
+			'@type': 'FAQPage',
+			mainEntity: allQuestions,
+		}
+	}, [props.data?.post])
+
+	// BreadcrumbList Schema (Asosiy → Kategoriya → Maqola)
+	const breadcrumbListSchema = useMemo(() => {
+		const items: Array<{ '@type': string; position: number; name: string; item?: string }> = [
+			{ '@type': 'ListItem', position: 1, name: 'Asosiy', item: BASE_URL },
+		]
+		if (categories?.nodes?.[0]) {
+			items.push({
+				'@type': 'ListItem',
+				position: items.length + 1,
+				name: categories.nodes[0].name || 'Kategoriya',
+				item: `${BASE_URL}${categories.nodes[0].uri || ''}`,
+			})
+		}
+		items.push({
+			'@type': 'ListItem',
+			position: items.length + 1,
+			name: title || 'Maqola',
+			item: canonicalUrl,
+		})
+		return {
+			'@context': 'https://schema.org',
+			'@type': 'BreadcrumbList',
+			itemListElement: items,
+		}
+	}, [BASE_URL, canonicalUrl, title, categories?.nodes])
 	
 	const newsArticleSchema = useMemo(() => {
 		if (!title || !date) return null
 
+		// Yangiliklar kategoriyasiga tegishli bo'lsa NewsArticle, aks holda Article
+		const isYangiliklar = categories?.nodes?.some(
+			(c: { slug?: string; name?: string }) =>
+				(c.slug || c.name || '').toLowerCase() === 'yangiliklar'
+		)
+		const schemaType = isYangiliklar ? 'NewsArticle' : 'Article'
+
+		// ISO 8601 with timezone (Google Rich Results "missing timezone" fix)
+		const schemaDatePublished = dateGmt ? `${String(dateGmt).replace(/Z$/, '')}Z` : (/Z$|[+-]\d{2}:\d{2}$/.test(date) ? date : `${String(date).replace(/Z$/, '')}Z`)
+		const schemaDateModified = modified && (modifiedGmt ? `${String(modifiedGmt).replace(/Z$/, '')}Z` : (/Z$|[+-]\d{2}:\d{2}$/.test(modified) ? modified : `${String(modified).replace(/Z$/, '')}Z`))
+
 		const schema: any = {
 			'@context': 'https://schema.org',
-			'@type': 'NewsArticle',
+			'@type': schemaType,
 			headline: title,
 			description: excerpt || '',
-			datePublished: date,
-			...(modified && { dateModified: modified }),
+			datePublished: schemaDatePublished,
+			...(schemaDateModified && { dateModified: schemaDateModified }),
 			author: {
 				'@type': 'Person',
 				name: author?.name || author?.username || 'InfoEdu.uz',
@@ -247,7 +375,9 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 	}, [
 		title,
 		date,
+		dateGmt,
 		modified,
+		modifiedGmt,
 		excerpt,
 		author,
 		featuredImage,
@@ -259,17 +389,35 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 
 	return (
 		<>
-			{/* NewsArticle JSON-LD Schema */}
-			{newsArticleSchema && (
-				<Head>
+			<Head>
+				{/* Article / NewsArticle JSON-LD (NewsArticle faqat "yangiliklar" kategoriyasida) */}
+				{newsArticleSchema && (
 					<script
 						type="application/ld+json"
 						dangerouslySetInnerHTML={{
 							__html: JSON.stringify(newsArticleSchema),
 						}}
 					/>
-				</Head>
-			)}
+				)}
+				{/* FAQ Schema (Rank Math FAQ block) */}
+				{faqSchema && (
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify(faqSchema),
+						}}
+					/>
+				)}
+				{/* BreadcrumbList Schema */}
+				{breadcrumbListSchema && (
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify(breadcrumbListSchema),
+						}}
+					/>
+				)}
+			</Head>
 			<PageLayout
 				headerMenuItems={props.data?.primaryMenuItems?.nodes || []}
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
