@@ -217,15 +217,20 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 			const scriptMatch = jsonStr.match(/<script[^>]*>([\s\S]*?)<\/script>/i)
 			if (scriptMatch) jsonStr = scriptMatch[1].trim()
 			try {
-				const parsed = JSON.parse(jsonStr) as { '@graph'?: Array<{ '@type'?: string | string[]; mainEntity?: unknown }> } | Array<{ '@type'?: string; mainEntity?: unknown }> | { '@type'?: string | string[]; mainEntity?: unknown }
-				const graph = Array.isArray(parsed) ? parsed : (parsed && (parsed as { '@graph'?: unknown })['@graph']) ? (parsed as { '@graph': unknown[] })['@graph'] : [parsed]
-				const items = Array.isArray(graph) ? graph : [parsed]
-				const faq = items.find((s) => {
-					const type = s?.['@type']
+				const parsed = JSON.parse(jsonStr) as { '@graph'?: unknown[] } | unknown[] | Record<string, unknown>
+				const graph: unknown[] = Array.isArray(parsed)
+					? parsed
+					: (parsed && typeof parsed === 'object' && '@graph' in parsed && Array.isArray((parsed as { '@graph': unknown[] })['@graph'])
+						? (parsed as { '@graph': unknown[] })['@graph']
+						: [parsed])
+				const faq = graph.find((s: unknown) => {
+					const item = s as Record<string, unknown>
+					const type = item?.['@type']
 					const isFaq = Array.isArray(type) ? type.includes('FAQPage') : type === 'FAQPage'
-					return isFaq && Array.isArray(s?.mainEntity) && s.mainEntity.length > 0
-				})
-				if (faq && faq.mainEntity) {
+					const main = item?.mainEntity
+					return isFaq && Array.isArray(main) && main.length > 0
+				}) as Record<string, unknown> | undefined
+				if (faq?.mainEntity && Array.isArray(faq.mainEntity)) {
 					return {
 						'@context': 'https://schema.org',
 						'@type': 'FAQPage',
