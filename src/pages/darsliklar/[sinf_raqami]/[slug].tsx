@@ -10,6 +10,7 @@ import GenerativeBookCover from '@/components/GenerativeBookCover';
 import SEOContentExpander from '@/components/SEOContentExpander';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
+import { trackButtonClick, trackTelegramChannelView, GA_CATEGORIES } from '@/utils/analytics';
 
 interface Darslik {
   databaseId: number;
@@ -82,7 +83,35 @@ const GET_DARSLIK_BY_SLUG = gql`
         }
       }
     }
-    # Fallback: try textbooks query by slug (if nodeByUri fails)
+    # Fallback 1: aniq slug bo'yicha (WordPress "name" = slug)
+    textbookBySlug: textbooks(where: { name: $slug }, first: 1) {
+      nodes {
+        databaseId
+        title
+        slug
+        uri
+        content
+        darslikMalumotlari {
+          sinf
+          textbookFile {
+            node {
+              sourceUrl
+              mediaItemUrl
+              mimeType
+              fileSize
+            }
+          }
+        }
+        fanlar {
+          nodes {
+            name
+            slug
+            uri
+          }
+        }
+      }
+    }
+    # Fallback 2: qidiruv (search) — faqat textbookBySlug ishlamasa
     textbooks(where: { search: $slug }, first: 10) {
       nodes {
         databaseId
@@ -235,6 +264,7 @@ export default function DarslikDetailPage(props: PageProps) {
           </h1>
           <Link
             href={`/darsliklar/${sinfRaqami}`}
+            onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_not_found_back_${sinfRaqami}`)}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Sinf sahifasiga qaytish
@@ -283,6 +313,8 @@ export default function DarslikDetailPage(props: PageProps) {
       alert('Fayl mavjud emas');
       return;
     }
+
+    trackButtonClick(GA_CATEGORIES.Textbooks, `pdf_download_click_${sinf}_${darslik.slug}`);
 
     // ACF file field'ning sourceUrl yoki mediaItemUrl to'liq URL qaytaradi
     // URL'ni to'g'rilaymiz: domain va fayl nomini
@@ -490,6 +522,7 @@ export default function DarslikDetailPage(props: PageProps) {
                 <li>
                   <Link
                     href="/"
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Navigation, 'breadcrumb_home')}
                     className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                   >
                     Bosh sahifa
@@ -499,6 +532,7 @@ export default function DarslikDetailPage(props: PageProps) {
                 <li>
                   <Link
                     href="/darsliklar"
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Navigation, 'breadcrumb_darsliklar')}
                     className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                   >
                     Darsliklar
@@ -508,6 +542,7 @@ export default function DarslikDetailPage(props: PageProps) {
                 <li>
                   <Link
                     href={`/darsliklar/${sinfRaqami}`}
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Navigation, `breadcrumb_sinf_${sinfRaqami}`)}
                     className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
                   >
                     {sinf}-sinf
@@ -589,6 +624,7 @@ export default function DarslikDetailPage(props: PageProps) {
                         href={TELEGRAM_LINKS.channel}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackTelegramChannelView('textbook_page', `${sinf}_${darslik.slug}`)}
                         className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-base sm:text-lg rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
                       >
                         <svg
@@ -642,6 +678,7 @@ export default function DarslikDetailPage(props: PageProps) {
                       <Link
                         key={textbook.databaseId}
                         href={`/darsliklar/${similarSinf}/${textbook.slug}`}
+                        onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `related_textbook_open_${similarSinf}_${textbook.slug}`)}
                         className="group bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 p-4 sm:p-6 transition-all duration-300 hover:shadow-lg sm:hover:shadow-xl"
                       >
                         <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
@@ -670,6 +707,7 @@ export default function DarslikDetailPage(props: PageProps) {
                       <Link
                         key={textbook.databaseId}
                         href={`/darsliklar/${similarSinf}/${textbook.slug}`}
+                        onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `related_textbook_open_${similarSinf}_${textbook.slug}`)}
                         className="group bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 p-4 sm:p-6 transition-all duration-300 hover:shadow-lg sm:hover:shadow-xl"
                       >
                         <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
@@ -701,6 +739,7 @@ export default function DarslikDetailPage(props: PageProps) {
                   <Link
                     key={classNum}
                     href={`/darsliklar/${classNum}`}
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_other_class_${classNum}`)}
                     className="inline-flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 text-slate-700 dark:text-slate-300 font-semibold rounded-lg sm:rounded-xl shadow hover:shadow-lg transition-all duration-200 text-sm sm:text-base"
                   >
                     {classNum}-sinf
@@ -708,6 +747,7 @@ export default function DarslikDetailPage(props: PageProps) {
                 ))}
                 <Link
                   href="/darsliklar"
+                  onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, 'textbook_all_classes_link')}
                   className="inline-flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg sm:rounded-xl shadow hover:shadow-lg transition-all duration-200 text-sm sm:text-base"
                 >
                   {BUTTON_TEXTS.allClasses} →
@@ -719,6 +759,7 @@ export default function DarslikDetailPage(props: PageProps) {
             <div className="mt-12">
               <Link
                 href={`/darsliklar/${sinfRaqami}`}
+                onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_back_to_class_${sinfRaqami}`)}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 text-slate-700 dark:text-slate-300 font-semibold rounded-xl shadow hover:shadow-lg transition-all duration-200"
               >
                 <svg
@@ -839,27 +880,47 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       });
 
       const node = data?.nodeByUri as any;
+      const textbookBySlug = (data as any)?.textbookBySlug?.nodes?.[0];
       const textbooksFromQuery = data?.textbooks?.nodes || [];
-      
-      // Try to find textbook by slug in the results
-      const textbookFromQuery = textbooksFromQuery.find((t: any) => t.slug === slug);
-      
+      const textbookFromSearch = textbooksFromQuery.find((t: any) => t.slug === slug);
+
       if (node && node.__typename === 'Textbook') {
         darslik = node;
         usedUri = uri;
-        queryData = data; // Store the data
+        queryData = data;
         if (process.env.NODE_ENV === 'development') {
           console.log(`[SERVER] Found darslik with URI: ${uri}`);
         }
         break;
-      } else if (textbookFromQuery) {
-        darslik = textbookFromQuery;
-        usedUri = uri;
-        queryData = data; // Store the data
+      }
+      if (textbookBySlug && textbookBySlug.slug === slug) {
+        darslik = textbookBySlug;
+        usedUri = 'bySlug';
+        queryData = data;
         if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Found darslik with textbooks query for slug: ${slug}`);
+          console.log(`[SERVER] Found darslik by exact slug: ${slug}`);
         }
         break;
+      }
+      if (textbookFromSearch) {
+        darslik = textbookFromSearch;
+        usedUri = uri;
+        queryData = data;
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[SERVER] Found darslik with textbooks search for slug: ${slug}`);
+        }
+        break;
+      }
+    }
+
+    // URI loop da topilmasa, oxirgi so'rovdagi textbookBySlug dan olish
+    if (!darslik && queryData) {
+      const bySlug = (queryData as any)?.textbookBySlug?.nodes?.[0];
+      if (bySlug && bySlug.slug === slug) {
+        darslik = bySlug;
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[SERVER] Found darslik by textbookBySlug after loop: ${slug}`);
+        }
       }
     }
 

@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
+import { trackTelegramChannelView } from '@/utils/analytics';
 
 // Lazy load komponentlar
 const UniversitetFilters = dynamic(() => import('@/components/oliygoh/UniversitetFilters'), {
@@ -374,6 +375,7 @@ export default function OliygohlarPage(props: PageProps) {
                     href={TELEGRAM_LINKS.subscribeChannel}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackTelegramChannelView('oliygoh_banner')}
                     className="group block w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] border border-blue-400/20 dark:border-blue-500/30"
                   >
                     <div className="flex items-center justify-between gap-4">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Globe, Send } from 'lucide-react';
+import { trackTelegramChannelView } from '@/utils/analytics';
 
 interface ContactInfo {
   telefon?: string | null;
@@ -29,7 +30,13 @@ const ContactCard: React.FC<ContactCardProps> = ({ info }) => {
                </a>
            )}
            {info.telegramKanal && (
-               <a href={info.telegramKanal} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-sky-200 dark:border-sky-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2">
+               <a
+                 href={info.telegramKanal}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 onClick={() => trackTelegramChannelView('university_contact')}
+                 className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-sky-200 dark:border-sky-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2"
+               >
                  <Send className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
                  <span className="truncate text-center whitespace-nowrap">Telegram</span>
                </a>

@@ -21,6 +21,7 @@ import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 import { ContentBlock } from '@faustwp/blocks/dist/mjs/components/WordPressBlocksViewer'
 import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts'
+import { trackTelegramChannelView } from '@/utils/analytics'
 
 export interface SingleContentProps {
 	post: GetPostSiglePageQuery['post']
@@ -204,6 +205,7 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
 						href={TELEGRAM_LINKS.subscribeChannel}
 						target="_blank"
 						rel="noopener noreferrer"
+						onClick={() => trackTelegramChannelView('post_banner')}
 						className="group block w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
 					>
 						<div className="flex items-center justify-center gap-3 sm:gap-4">

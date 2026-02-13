@@ -12,9 +12,22 @@ import SiteWrapperProvider from '@/container/SiteWrapperProvider'
 import { Toaster } from 'react-hot-toast'
 import NextNProgress from 'nextjs-progressbar'
 import themeJson from '@/../theme.json'
-import { GoogleAnalytics } from 'nextjs-google-analytics'
+import { GoogleAnalytics, event as gaEvent } from 'nextjs-google-analytics'
 import { Analytics } from "@vercel/analytics/next"
 import Script from 'next/script'
+
+/** Core Web Vitals va boshqa metrikalarni GA4 ga yuborish — sahifa yuklanish tezligi analitikasi uchun */
+export function reportWebVitals(metric: { id: string; name: string; label: string; value: number }) {
+	if (typeof window === 'undefined') return
+	// GA4: value butun son bo'lishi kerak; CLS 0–1 oralig'ida, 1000 ga ko'paytiramiz
+	const value = metric.name === 'CLS' ? Math.round(metric.value * 1000) : Math.round(metric.value)
+	gaEvent(metric.name, {
+		event_category: metric.label === 'web-vital' ? 'Web Vitals' : 'Next.js',
+		event_label: metric.id,
+		value,
+		nonInteraction: true,
+	})
+}
 
 const poppins = Poppins({
 	subsets: ['latin'],

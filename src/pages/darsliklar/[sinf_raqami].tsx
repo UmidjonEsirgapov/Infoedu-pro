@@ -10,6 +10,7 @@ import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import ClassSeoContent from '@/components/ClassSeoContent';
 import { getGradientBySubject } from '@/components/GenerativeBookCover';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
+import { trackButtonClick, GA_CATEGORIES } from '@/utils/analytics';
 
 interface Darslik {
   databaseId: number;
@@ -182,6 +183,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                 <li>
                   <Link
                     href="/darsliklar"
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Navigation, 'breadcrumb_darsliklar')}
                     className="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     Darsliklar
@@ -212,8 +214,9 @@ export default function SinfDarsliklarPage(props: PageProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-0">
                 {filteredDarsliklar.map((darslik) => {
                   const subject = darslik.fanlar?.nodes?.[0]?.name || 'Fan';
-                  const subjectSlug = darslik.fanlar?.nodes?.[0]?.slug;
-                  const subjectLink = subjectSlug ? `/darsliklar/${sinfRaqami}/${subjectSlug}/` : null;
+                  // Darslik havolasi faqat darslik slug'i bilan (masalan 7-sinf-tasviriy-sanat),
+                  // fan slug'i emas (tasviriy-sanat), shunda 404 kelib chiqmasin
+                  const subjectLink = darslik.slug ? `/darsliklar/${sinfRaqami}/${darslik.slug}` : null;
                   const gradientClass = getGradientBySubject(darslik.title);
                   
                   // Xavfsiz file ma'lumotlarini olish (WordPress JSON strukturasi bo'yicha)
@@ -229,6 +232,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                     <Link
                       key={darslik.databaseId}
                       href={`/darsliklar/${sinfRaqami}/${darslik.slug}`}
+                      onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_card_open_${sinfRaqami}_${darslik.slug}`)}
                       className="group block"
                     >
                       <div className="bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
@@ -264,6 +268,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
+                                  trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_subject_badge_${sinfRaqami}_${darslik.slug}`);
                                   router.push(subjectLink);
                                 }}
                                 onKeyDown={(e) => {
@@ -329,6 +334,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                     <Link
                       key={classNum}
                       href={`/darsliklar/${classNum}`}
+                      onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `textbook_other_class_${classNum}`)}
                       className="inline-flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 text-slate-700 dark:text-slate-300 font-semibold rounded-lg sm:rounded-xl shadow hover:shadow-lg transition-all duration-200 text-sm sm:text-base"
                     >
                       {classNum}-sinf
@@ -336,6 +342,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   ))}
                 <Link
                   href="/darsliklar"
+                  onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, 'textbook_all_classes_link')}
                   className="inline-flex items-center px-4 py-2 sm:px-5 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg sm:rounded-xl shadow hover:shadow-lg transition-all duration-200 text-sm sm:text-base"
                 >
                   Barcha sinflar →
@@ -377,6 +384,7 @@ export default function SinfDarsliklarPage(props: PageProps) {
                   </p>
                   <Link
                     href="/darsliklar"
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, 'textbook_back_to_all_classes')}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                   >
                     <svg
@@ -454,25 +462,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
 
       // Safety check: if no nodes returned, break the loop
       if (nodes.length === 0) {
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] No more nodes found, breaking loop at page ${pageCount + 1}`);
-        }
         break;
       }
 
       // Filter by sinf immediately to reduce memory usage
-      // Xavfsiz data access uchun optional chaining ishlatamiz
       const filteredNodes = nodes.filter((darslik: any) => {
         const classNum = darslik?.darslikMalumotlari?.sinf;
         const classNumAsNumber = typeof classNum === 'string' ? parseInt(classNum, 10) : classNum;
-        const matches = classNumAsNumber === sinfRaqami;
-        
-        // Debug for all sinflar
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Darslik "${darslik?.title}": sinf=${classNum} (type: ${typeof classNum}), parsed=${classNumAsNumber}, target=${sinfRaqami}, matches=${matches}`);
-        }
-        
-        return matches;
+        return classNumAsNumber === sinfRaqami;
       });
 
       allDarsliklar = [...allDarsliklar, ...filteredNodes];
@@ -482,9 +479,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       
       // Safety check: if cursor hasn't changed, break to prevent infinite loop
       if (newAfter === previousAfter && newAfter !== null) {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn(`[SERVER] Cursor hasn't changed (${newAfter}), breaking loop to prevent infinite loop`);
-        }
         break;
       }
 
@@ -492,29 +486,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
       after = newAfter;
       previousAfter = newAfter;
       pageCount++;
-
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[SERVER] Page ${pageCount}: fetched ${nodes.length} textbooks, filtered ${filteredNodes.length} for sinf ${sinfRaqami}, total so far: ${allDarsliklar.length}, hasNextPage: ${hasNextPage}`);
-        
-        // Debug: show sinf distribution for all sinflar
-        if (nodes.length > 0) {
-          const sinfDistribution = nodes.reduce((acc: any, d: any) => {
-            const sinf = d.darslikMalumotlari?.sinf;
-            const key = sinf !== null && sinf !== undefined ? String(sinf) : 'null/undefined';
-            acc[key] = (acc[key] || 0) + 1;
-            return acc;
-          }, {});
-          console.log(`[SERVER] Sinf distribution in this batch:`, sinfDistribution);
-          
-          // Show first few darsliklar details for debugging
-          if (pageCount === 1 && nodes.length > 0) {
-            console.log(`[SERVER] First 3 darsliklar details:`);
-            nodes.slice(0, 3).forEach((d: any, idx: number) => {
-              console.log(`  [${idx + 1}] "${d.title}": sinf=${d.darslikMalumotlari?.sinf} (type: ${typeof d.darslikMalumotlari?.sinf})`);
-            });
-          }
-        }
-      }
     }
 
     if (pageCount >= MAX_PAGES && hasNextPage) {

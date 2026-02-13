@@ -366,7 +366,7 @@ Component.query = gql(`
       ...PostCardFieldsNOTNcmazMEDIA
       }
     }
-    popularPosts: posts(first: 5, where: {orderby: {field: DATE, order: DESC}, status: PUBLISH}) {
+    popularPosts: posts(first: 5, where: {orderby: {field: VIEWS_COUNT, order: DESC}, status: PUBLISH}) {
       nodes {
         ...PostCardFieldsNOTNcmazMEDIA
         ncPostMetaData {

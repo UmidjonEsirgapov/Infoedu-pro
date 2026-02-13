@@ -8,6 +8,7 @@ import Link from 'next/link';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import { NcgeneralSettingsFieldsFragmentFragment } from '@/__generated__/graphql';
+import { trackButtonClick, GA_CATEGORIES } from '@/utils/analytics';
 
 interface PageProps {
   data: {
@@ -171,6 +172,7 @@ export default function DarsliklarPage(props: PageProps) {
                   <Link
                     key={classNumber}
                     href={`/darsliklar/${classNumber}`}
+                    onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `class_tile_click_${classNumber}`)}
                     className="group block"
                   >
                     <div className="relative bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 overflow-hidden transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
@@ -228,6 +230,7 @@ export default function DarsliklarPage(props: PageProps) {
                     <Link
                       key={classNum}
                       href={`/darsliklar/${classNum}`}
+                      onClick={() => trackButtonClick(GA_CATEGORIES.Textbooks, `popular_class_click_${classNum}`)}
                       className="group block"
                     >
                       <div className="relative bg-white dark:bg-slate-800 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
