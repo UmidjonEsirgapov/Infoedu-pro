@@ -5,5 +5,6 @@ export const NC_GENERAL_SETTINGS_FIELDS_FRAGMENT = gql(`
       __typename
       description
       title
+      url
 	}
 `)
