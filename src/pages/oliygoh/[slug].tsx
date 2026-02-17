@@ -17,22 +17,29 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const requestUri = `/oliygoh/${slug}/`;
 
   try {
-    // 1. WordPressdan universitet nomini olamiz
+    // 1. WordPressdan universitet: avvalo URI bo'yicha, bo'lmasa slug orqali (WP CPT "universitetlar" bo'lsa URI boshqacha bo'ladi)
     const { data } = await client.query({
       query: Universitet.query!,
-      variables: { uri: requestUri },
+      variables: { uri: requestUri, slug: slug || null },
       fetchPolicy: 'network-only'
     });
 
-    const hasData = data?.nodeByUri || data?.oliygoh;
+    const nodeByUri = data?.nodeByUri;
+    const oliygohBy = data?.oliygohBy;
+    const hasData = nodeByUri || oliygohBy;
 
     if (!hasData) {
       return { notFound: true };
     }
 
+    // Slug orqali topilgan bo'lsa, shablon nodeByUri kutyapti — bitta node qilib beramiz
+    const dataForTemplate = nodeByUri
+      ? data
+      : { ...data, nodeByUri: oliygohBy };
+
     // WP dagi nomi: "Andijon davlat universiteti"
     const wpTitle = hasData.title;
-    
+
     if (!wpTitle) {
       return { notFound: true };
     }
@@ -69,10 +76,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
     return {
       props: {
-        data: data,
-        quotas: matchedScores // Topilgan ma'lumotni shablonga yuboramiz
+        data: dataForTemplate,
+        quotas: matchedScores
       },
-      revalidate: 3600, // 1 soat — ISR Writes limitini tejash
+      revalidate: 3600,
     };
   } catch (error) {
     console.error('💥 Xatolik:', error);

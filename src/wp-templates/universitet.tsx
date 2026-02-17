@@ -138,8 +138,14 @@ const Universitet: FaustTemplate<any> = (props) => {
     return bgImage ? (bgImage.startsWith('http') ? bgImage : `${BASE_URL}${bgImage}`) : '';
   }, [bgImage, BASE_URL]);
   
+  // Canonical URL: no trailing slash (match next.config.js trailingSlash: false, fix "multiple canonical URLs" SEO issue)
   const seoUrl = useMemo(() => {
-    return uri ? `${BASE_URL}${uri}` : (slug ? `${BASE_URL}/oliygoh/${slug}/` : BASE_URL);
+    const base = BASE_URL.replace(/\/$/, '');
+    if (uri) {
+      const path = uri === '/' ? uri : uri.replace(/\/+$/, '');
+      return `${base}${path}`;
+    }
+    return slug ? `${base}/oliygoh/${slug}` : base;
   }, [uri, slug, BASE_URL]);
 
   // --- SCHEMA MARKUP (JSON-LD) ---
@@ -434,8 +440,8 @@ const Universitet: FaustTemplate<any> = (props) => {
 // --- GRAPHQL QUERY YANGILANDI ---
 // Menyular (Header/Footer) chiqishi uchun ularni ham chaqiramiz
 Universitet.query = gql`
-  query GetUniversitet($uri: String!) {
-    # 1. Asosiy Content
+  query GetUniversitet($uri: String!, $slug: String) {
+    # 1. Asosiy Content (avvalo URI bo'yicha)
     nodeByUri(uri: $uri) {
       ... on Oliygoh {
         databaseId
@@ -462,6 +468,32 @@ Universitet.query = gql`
         date
         modified
       }
+    }
+    # 1b. Fallback: WP da CPT slug boshqacha bo'lsa (masalan /universitetlar/slug/) — slug orqali topamiz
+    oliygohBy(slug: $slug) {
+      databaseId
+      title
+      content
+      slug
+      uri
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      oliygohMalumotlari {
+        manzil
+        viloyat
+        telefon
+        elektronPochta
+        rasmiySayt
+        telegramKanal
+        universitetTuri
+        yotoqxonaBormi
+      }
+      date
+      modified
     }
     # 2. Layout (Header/Footer) uchun kerakli ma'lumotlar
     generalSettings {
@@ -496,6 +528,7 @@ Universitet.query = gql`
 Universitet.variables = ({ uri, slug }, ctx) => {
   return {
     uri: uri || (slug ? `/oliygoh/${slug}/` : ''),
+    slug: slug || null,
   };
 };
 

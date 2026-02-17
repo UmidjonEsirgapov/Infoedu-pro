@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import type { MilliySertifikatImtihon } from '@/data/milliy-sertifikat-types'
+import { pushMilliySertifikatFanFilter } from '@/lib/dataLayer'
 import MilliySertifikatEdTechCard from './MilliySertifikatEdTechCard'
 
 function getUniqueFanNomi(items: MilliySertifikatImtihon[]): string[] {
@@ -58,7 +59,10 @@ export default function MilliySertifikatEdTechGrid({
 							<button
 								key={fan}
 								type="button"
-								onClick={() => setSelectedFan(fan)}
+								onClick={() => {
+									setSelectedFan(fan)
+									pushMilliySertifikatFanFilter(fan)
+								}}
 								className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
 									selectedFan === fan
 										? 'bg-indigo-600 text-white dark:bg-indigo-500'

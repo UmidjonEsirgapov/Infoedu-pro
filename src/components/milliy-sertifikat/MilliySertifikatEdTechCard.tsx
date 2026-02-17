@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import type { MilliySertifikatImtihon } from '@/data/milliy-sertifikat-types'
 import { formatImtihonSana } from '@/lib/format-imtihon-sana'
+import { pushMilliySertifikatCardClick } from '@/lib/dataLayer'
 
 const SHARE_TITLE = "Milliy sertifikat test sinovlari jadvali 2026"
 const SHARE_TEXT = "Milliy sertifikat imtihonlari jadvali, ro'yxatdan o'tish va to'lov muddatlari — to'liq ma'lumot."
@@ -56,9 +57,26 @@ export default function MilliySertifikatEdTechCard({
 		}
 	}
 
+	const handleCardClick = () => {
+		pushMilliySertifikatCardClick({
+			fanlar: item.fanlar.map((f) => f.fan_nomi),
+			imtihon_sanalari: item.imtihonSanalari,
+			imtihon_sarlavha: item.title,
+		})
+	}
+
 	return (
 		<article
-			className="group relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-indigo-400/60 hover:shadow-[0_0_24px_rgba(99,102,241,0.08)] dark:border-slate-700/80 dark:bg-slate-800/60 dark:hover:border-indigo-400/60 dark:hover:shadow-[0_0_24px_rgba(99,102,241,0.12)] sm:p-6"
+			role="button"
+			tabIndex={0}
+			onClick={handleCardClick}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault()
+					handleCardClick()
+				}
+			}}
+			className="group relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-indigo-400/60 hover:shadow-[0_0_24px_rgba(99,102,241,0.08)] dark:border-slate-700/80 dark:bg-slate-800/60 dark:hover:border-indigo-400/60 dark:hover:shadow-[0_0_24px_rgba(99,102,241,0.12)] sm:p-6 cursor-pointer"
 			style={{ animation: 'none' }}
 		>
 			<div className="mb-4 flex items-center justify-between">
@@ -123,7 +141,10 @@ export default function MilliySertifikatEdTechCard({
 			<div className="mt-6 flex-1">
 				<button
 					type="button"
-					onClick={handleShare}
+					onClick={(e) => {
+						e.stopPropagation()
+						handleShare()
+					}}
 					className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-500/50 bg-indigo-50 px-4 py-3 text-sm font-medium text-indigo-700 transition-colors hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20 dark:hover:text-indigo-200"
 				>
 					<Share2 className="h-4 w-4" />

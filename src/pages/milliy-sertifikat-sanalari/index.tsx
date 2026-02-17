@@ -27,9 +27,10 @@ import MilliySertifikatEdTechFAQ from '@/components/milliy-sertifikat/MilliySert
 import MilliySertifikatEdTechDisclaimer from '@/components/milliy-sertifikat/MilliySertifikatEdTechDisclaimer'
 import MilliySertifikatSonggiYangiliklar from '@/components/milliy-sertifikat/MilliySertifikatSonggiYangiliklar'
 
-const PAGE_TITLE = "Milliy sertifikat test sinovlari jadvali 2026 — To'liq ma'lumot va muddatlar"
+const PAGE_TITLE =
+	"Milliy Sertifikat Sanalari 2026: Imtihon Jadvali va Muddatlar ✅"
 const PAGE_DESCRIPTION =
-	"2026-yil milliy sertifikat imtihonlari jadvali: ro'yxatdan o'tish, to'lov va imtihon sanalari. my.gov.uz orqali ro'yxatdan o'ting."
+	"2026-yilgi milliy sertifikat imtihonlari sanalari rasman e'lon qilindi. Matematika, fizika, ona tili, tarix va boshqa barcha fanlar bo'yicha ro'yxatdan o'tish hamda 75% lik imtiyozlar haqida batafsil ma'lumot."
 
 interface PageProps extends GetReadingListPageQuery {
 	exams?: MilliySertifikatImtihon[]

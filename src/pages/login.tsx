@@ -3,6 +3,7 @@ import ButtonPrimary from '@/components/Button/ButtonPrimary'
 import Error from '@/components/Error'
 import Input from '@/components/Input/Input'
 import Label from '@/components/Label/Label'
+import SEO from '@/components/SEO/SEO'
 import LoginLayout from '@/container/login/LoginLayout'
 import { IS_CHISNGHIAX_DEMO_SITE } from '@/contains/site-settings'
 import { RootState } from '@/stores/store'
@@ -239,6 +240,7 @@ export default function Login() {
 			}}
 		>
 			<>
+				<SEO noindex />
 				<div className="grid gap-6">
 					<form
 						onSubmit={(e) => {

@@ -14,7 +14,9 @@ export function getCanonicalUrl(customPath?: string): string {
 	// If custom path is provided, use it
 	if (customPath) {
 		// Remove leading slash if present and add it back properly
-		const path = customPath.startsWith('/') ? customPath : `/${customPath}`
+		let path = customPath.startsWith('/') ? customPath : `/${customPath}`
+		// Normalize: no trailing slash (match next.config.js trailingSlash: false)
+		if (path !== '/' && path.endsWith('/')) path = path.slice(0, -1)
 		return `${baseUrl}${path}`
 	}
 	
@@ -37,10 +39,10 @@ export function useCanonicalUrl(customPath?: string): string {
 	const path = customPath || router.asPath || '/'
 	
 	// Remove query parameters and hash from path for canonical URL
-	const cleanPath = path.split('?')[0].split('#')[0]
-	
+	let cleanPath = path.split('?')[0].split('#')[0]
 	// Ensure path starts with /
-	const normalizedPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`
-	
+	cleanPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`
+	// Normalize: no trailing slash (match next.config.js trailingSlash: false)
+	const normalizedPath = cleanPath !== '/' && cleanPath.endsWith('/') ? cleanPath.slice(0, -1) : cleanPath
 	return `${baseUrl}${normalizedPath}`
 }

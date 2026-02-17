@@ -41,11 +41,19 @@ const PageLayout: FC<Props> = ({
   pagePublishedDate,
   seoType = 'website',
 }) => {
+  // Takroriy meta description xatosini bartaraf etish: bo'sh description da sahifa sarlavhasidan unique fallback
+  const siteDesc = generalSettings?.description || "";
+  const uniqueDescription =
+    pageDescription?.trim() ||
+    (pageTitle?.trim()
+      ? `${pageTitle.trim()}. ${siteDesc}`.trim()
+      : siteDesc);
+
   return (
     <>
       <SEO
         title={(pageTitle || "") + " - " + (generalSettings?.title || "")}
-        description={pageDescription || generalSettings?.description || ""}
+        description={uniqueDescription}
         imageUrl={pageFeaturedImageUrl}
         imageWidth={pageImageWidth}
         imageHeight={pageImageHeight}

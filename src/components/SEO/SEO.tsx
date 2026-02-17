@@ -15,6 +15,8 @@ interface Props {
   publishedDate?: string | null;
   /** og:type - maqolalar uchun "article", boshqa sahifalar uchun "website" */
   type?: 'website' | 'article';
+  /** Qidiruv tizimlariga sahifani indekslamaslik (login, submission va h.k.) */
+  noindex?: boolean;
 }
 
 /**
@@ -57,6 +59,7 @@ export default function SEO({
   modifiedDate,
   publishedDate,
   type = 'website',
+  noindex = false,
 }: Props) {
   // Auto-generate canonical URL if not provided
   const autoCanonicalUrl = useCanonicalUrl(canonicalUrl || undefined);
@@ -69,17 +72,26 @@ export default function SEO({
   const formattedModifiedDate = formatDateForMeta(modifiedDate);
   const formattedPublishedDate = formatDateForMeta(publishedDate);
 
-  if (!title && !description && !imageUrl && !finalUrl) {
+  if (!title && !description && !imageUrl && !finalUrl && !noindex) {
     return null;
   }
 
   const descriptionNoHtmlTags = description?.replace(/<[^>]*>?/gm, "") || "";
 
+  // X (Twitter) card to'liq bo'lishi uchun twitter:site (Ahrefs "Missing or incomplete" tuzatish)
+  const twitterSite = process.env.NEXT_PUBLIC_TWITTER_SITE || "@infoeduuz";
+
   return (
     <>
       <Head>
+        {noindex && (
+          <meta name="robots" content="noindex, nofollow" />
+        )}
         <meta property="og:type" content={type} />
         <meta property="twitter:card" content="summary_large_image" />
+        {twitterSite && (
+          <meta name="twitter:site" content={twitterSite} />
+        )}
 
         {title && (
           <>
