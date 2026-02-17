@@ -1,0 +1,145 @@
+# ============================================================
+# GraphQL IDE da FAQ + schema tekshirish uchun so'rov
+# ============================================================
+# 1) GraphQL IDE oching (WordPress: https://SAYTINGIZ.uz/graphql yoki /wp/graphql)
+# 2) Quyidagi query lardan birini tanlang (ID bilan yoki SLUG bilan)
+# 3) Variables oynasida qiymatni yozing (qayerga yozish pastda)
+# 4) Run qiling
+# ============================================================
+#
+# --- ID NI QAYERDAN OLAMAN? ---
+# 1-usul: WordPress admin da postni oching. Brauzer manzili qatorida:
+#    .../post.php?post=12345&action=edit
+#    ID shu 12345 (post= dan keyingi son).
+#
+# 2-usul: ID bilmasangiz, pastdagi "Slug bilan" query dan foydalaning.
+#    Saytda maqola manzili: infoedu.uz/mustaqil-ish-qanday-yoziladi-toliq-qollanma
+#    Slug: mustaqil-ish-qanday-yoziladi-toliq-qollanma (yoki to'liq uri)
+#    Variables da: "uri": "/mustaqil-ish-qanday-yoziladi-toliq-qollanma/"
+#
+# --- QAYERGA YOZAMAN? ---
+# GraphQL IDE da odatda pastda "Variables" (Variables) oynasi bor.
+# Unga JSON formatda yozasiz. Masalan:
+#   { "databaseId": "12345" }
+#   yoki slug bilan: { "uri": "/mustaqil-ish-qanday-yoziladi-toliq-qollanma/" }
+# ============================================================
+
+# ---------- 1) ID bilan (ID ni WordPress admin dan olasiz) ----------
+query TestPostForSchema($databaseId: ID!) {
+  post(id: $databaseId, idType: DATABASE_ID) {
+    __typename
+    databaseId
+    title
+    uri
+    date
+    dateGmt
+    modified
+    modifiedGmt
+    excerpt
+    categories {
+      nodes {
+        __typename
+        name
+        slug
+        uri
+      }
+    }
+    author {
+      node {
+        name
+        username
+        uri
+      }
+    }
+    featuredImage {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+    # FAQ: Rank Math dan (agar plugin FAQ ni shu yerga yozsa)
+    seo {
+      jsonLd {
+        raw
+      }
+    }
+    # FAQ: blokdan (Rank Math FAQ block attributes)
+    editorBlocks(flat: true) {
+      __typename
+      ... on RankMathFaqBlock {
+        attributes {
+          questions
+        }
+      }
+    }
+  }
+}
+
+# ---------- 2) SLUG / URI bilan (ID bilmasangiz shundan foydalaning) ----------
+# Maqola manzili: infoedu.uz/mustaqil-ish-qanday-yoziladi-toliq-qollanma
+# bo'lsa, uri odatda: /mustaqil-ish-qanday-yoziladi-toliq-qollanma/ (boshida /, oxirida /)
+#
+query TestPostByUri($uri: ID!) {
+  post(id: $uri, idType: URI) {
+    __typename
+    databaseId
+    title
+    uri
+    date
+    dateGmt
+    modified
+    modifiedGmt
+    excerpt
+    categories {
+      nodes {
+        __typename
+        name
+        slug
+        uri
+      }
+    }
+    author {
+      node {
+        name
+        username
+        uri
+      }
+    }
+    featuredImage {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+    seo {
+      jsonLd {
+        raw
+      }
+    }
+    editorBlocks(flat: true) {
+      __typename
+      ... on RankMathFaqBlock {
+        attributes {
+          questions
+        }
+      }
+    }
+  }
+}
+
+# ============================================================
+# VARIABLES — QAYERGA YOZAMAN?
+# GraphQL IDE da pastdagi "Variables" oynasiga shunday yozing:
+# ============================================================
+#
+# ID bilan ishlatayotgan bo'lsangiz (birinchi query):
+#   { "databaseId": "12345" }
+#
+# Slug/URI bilan ishlatayotgan bo'lsangiz (ikkinchi query):
+#   { "uri": "/mustaqil-ish-qanday-yoziladi-toliq-qollanma/" }
+#
+# Eslatma: faqat bitta query ni ishlatishingiz kerak; ikkinchisini comment qiling
+# yoki o'chirib qo'ying. Variables da ham shu query ga mos nom yozing:
+#   databaseId uchun: "databaseId"
+#   uri uchun: "uri"
+# ============================================================

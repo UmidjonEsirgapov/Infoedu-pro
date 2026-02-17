@@ -66,11 +66,26 @@ const Page: FaustPage<{}> = (props) => {
 		)
 	}
 
+	const seoTitle = 'Maqola yuborish - Infoedu'
+	const seoDescription =
+		"Infoedu.uz da yangi maqola yozing va nashr qiling. Ta'lim mavzularida maqolalar yuborish uchun sahifa."
+
 	return (
 		<>
-			<SEO noindex />
+			<SEO
+				noindex
+				title={seoTitle}
+				description={seoDescription}
+			/>
+			<h1 className="sr-only">Maqola yuborish</h1>
 			<div className="relative flex h-[100vh] w-full flex-col">
 				{renderHeader()}
+				{/* Body text — SEO "Missing body text" uchun: sahifa mazmuni qidiruv tizimlari uchun tushunarli */}
+				<div className="flex-shrink-0 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-700">
+					<p className="text-sm text-neutral-600 dark:text-neutral-400 text-center max-w-2xl mx-auto">
+						Infoedu.uz ga yangi maqola yozishingiz va nashr qilishingiz mumkin. Ta'lim, attestatsiya, grantlar va oliygohlar mavzularida maqolalar yuboring.
+					</p>
+				</div>
 				<CreateNewPostEditor isSubmittingPage />
 			</div>
 		</>

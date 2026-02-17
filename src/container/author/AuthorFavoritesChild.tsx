@@ -100,7 +100,8 @@ const AuthorFavoritesChild: FaustPage<
 					getImageDataFromImageFragment(ncUserMeta?.featuredImage?.node)
 						?.sourceUrl || null
 				}
-				pageTitle={name}
+				pageTitle={name ? `${name} — Sevimlilar` : undefined}
+				pageDescription={name ? `${name} — sevimli maqolalar ro'yxati. Ta'lim yangiliklari.` : undefined}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

@@ -62,7 +62,7 @@ const Page: FaustTemplate<GetPageTemplateQuery> = (props) => {
 
 						{title && !isGutenbergPage && (
 							<>
-								<EntryHeader title={title} />
+								<EntryHeader title={title} headingLevel="h1" />
 								<hr />
 							</>
 						)}

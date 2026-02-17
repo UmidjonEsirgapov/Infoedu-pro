@@ -63,6 +63,7 @@ const AuthorPostsChild: FaustPage<GetAuthorWithPostsQuery> = (props) => {
 						?.sourceUrl || null
 				}
 				pageTitle={name}
+				pageDescription={name ? `${name} — muallif sahifasi. Barcha maqolalar va ta'lim yangiliklari.` : undefined}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

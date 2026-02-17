@@ -18,7 +18,13 @@ export function middleware(request: NextRequest) {
 		return NextResponse.redirect(url, 301)
 	}
 
-	// 2. Trailing slash ni olib tashlash (asosiy domen bundan mustasno)
+	// 2. Bosh sahifa duplicate title: /?page_id=2 → / (SEO)
+	if (pathname === '/' && search && (search === '?page_id=2' || search.startsWith('?page_id=2&'))) {
+		url.search = ''
+		return NextResponse.redirect(url, 301)
+	}
+
+	// 3. Trailing slash ni olib tashlash (asosiy domen bundan mustasno)
 	// Root path (/) uchun trailing slash qoldiriladi
 	if (pathname !== '/' && pathname.endsWith('/')) {
 		url.pathname = pathname.slice(0, -1)

@@ -98,7 +98,8 @@ const AuthorSaveChild: FaustPage<PageAuthorBookmarksGetDataQuery> = props => {
 					getImageDataFromImageFragment(ncUserMeta?.featuredImage?.node)
 						?.sourceUrl || null
 				}
-				pageTitle={name}
+				pageTitle={name ? `${name} — Xatcho'plar` : undefined}
+				pageDescription={name ? `${name} — saqlangan maqolalar (xatcho'plar). Ta'lim yangiliklari.` : undefined}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}
