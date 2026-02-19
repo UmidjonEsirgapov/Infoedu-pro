@@ -26,11 +26,12 @@ export async function myGetPaths() {
 	let posts: any[] = []
 	let categories: any[] = []
 	try {
+		// 404 kamayishi uchun ko'proq path olamiz (build vaqtida va fallback da)
 		const response = await fetchWithRetry(
-			base + '/wp-json/wp/v2/posts?per_page=50&_fields=slug',
+			base + '/wp-json/wp/v2/posts?per_page=100&_fields=slug',
 		)
 		const getAllCategories = await fetchWithRetry(
-			base + '/wp-json/wp/v2/categories?per_page=20&_fields=slug',
+			base + '/wp-json/wp/v2/categories?per_page=100&_fields=slug',
 		)
 		posts = (await response.json()) as any[]
 		categories = (await getAllCategories.json()) as any[]
@@ -109,6 +110,10 @@ const REDIRECT_301: Record<string, string> = {
 	'/yunus-rajabiy-nomidagi-ozbek-milliy-musiqa-sanati-instituti': '/oliygoh/ozbek-milliy-musiqa-san%CA%BCati-instituti',
 	'/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali': '/oliygoh/samarqand-davlat-veterinariya-meditsinasi-chorvachilik-va-biotexnologiyalar-universiteti-toshkent-filiali',
 	'/milliy-sertifikat-sanalari2': '/milliy-sertifikat-sanalari',
+	// Mavjud kontent: eski URL → yangi kanonik URL (oliygoh, darsliklar, category)
+	'/category/darsliklar': '/darsliklar',
+	'/9-sinf-ozbekiston-tarixi': '/darsliklar/9/9-sinf-ozbekiston-tarixi',
+	'/jizzax-politexnika-instituti-jizpi': '/oliygoh/jizzax-politexnika-instituti-jizpi',
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {

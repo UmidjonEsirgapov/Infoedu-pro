@@ -86,6 +86,25 @@ module.exports = withFaust({
 				destination: '/milliy-sertifikat-sanalari',
 				permanent: true,
 			},
+			// Mavjud kontent: eski URL → yangi kanonik URL (bir xil sahifa, boshqa yo'l)
+			// Category darsliklar → darsliklar bo'limi
+			{
+				source: '/category/darsliklar',
+				destination: '/darsliklar',
+				permanent: true,
+			},
+			// Darsliklar: root dagi eski URL → /darsliklar/[sinf]/[slug]
+			{
+				source: '/9-sinf-ozbekiston-tarixi',
+				destination: '/darsliklar/9/9-sinf-ozbekiston-tarixi',
+				permanent: true,
+			},
+			// Oliygoh: root dagi eski URL → /oliygoh/[slug]
+			{
+				source: '/jizzax-politexnika-instituti-jizpi',
+				destination: '/oliygoh/jizzax-politexnika-instituti-jizpi',
+				permanent: true,
+			},
 		]
 	},
 })
