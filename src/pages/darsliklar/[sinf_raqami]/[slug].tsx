@@ -830,96 +830,150 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
     };
   }
 
-  try {
-    // Try multiple URI formats
-    const uriFormats = [
-      `/darsliklar/${sinfRaqami}/${slug}/`,
-      `/textbooks/${slug}/`,
-      `/${slug}/`,
-    ];
+  const uriFormats = [
+    `/darsliklar/${sinfRaqami}/${slug}/`,
+    `/darsliklar/${sinfRaqami}/${slug}`,
+    `/textbooks/${slug}/`,
+    `/textbooks/${slug}`,
+    `/${slug}/`,
+    `/${slug}`,
+  ];
 
-    let darslik: any = null;
-    let usedUri = '';
-    let queryData: any = null;
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY_MS = 2000;
 
-    for (const uri of uriFormats) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[SERVER] Trying URI: ${uri}`);
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      let darslik: any = null;
+      let queryData: any = null;
+
+      for (const uri of uriFormats) {
+        const { data } = await client.query({
+          query: GET_DARSLIK_BY_SLUG,
+          variables: {
+            uri,
+            slug,
+            headerLocation: PRIMARY_LOCATION,
+            footerLocation: FOOTER_LOCATION,
+          },
+        });
+
+        const node = data?.nodeByUri as any;
+        const textbookBySlug = (data as any)?.textbookBySlug?.nodes?.[0];
+        const textbooksFromQuery = data?.textbooks?.nodes || [];
+        const textbookFromSearch = textbooksFromQuery.find((t: any) => t.slug === slug);
+
+        if (node && node.__typename === 'Textbook') {
+          darslik = node;
+          queryData = data;
+          break;
+        }
+        if (textbookBySlug && textbookBySlug.slug === slug) {
+          darslik = textbookBySlug;
+          queryData = data;
+          break;
+        }
+        if (textbookFromSearch) {
+          darslik = textbookFromSearch;
+          queryData = data;
+          break;
+        }
       }
 
-      const { data } = await client.query({
-        query: GET_DARSLIK_BY_SLUG,
-        variables: {
-          uri,
+      if (!darslik && queryData) {
+        const bySlug = (queryData as any)?.textbookBySlug?.nodes?.[0];
+        if (bySlug && bySlug.slug === slug) {
+          darslik = bySlug;
+          queryData = queryData;
+        }
+      }
+
+      if (!darslik) {
+        if (attempt < MAX_RETRIES) {
+          await new Promise((r) => setTimeout(r, RETRY_DELAY_MS * attempt));
+          continue;
+        }
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[SERVER] Darslik not found for slug: ${slug}, sinf: ${sinfRaqami}`);
+        }
+        return { notFound: true };
+      }
+
+      const classNum = darslik.darslikMalumotlari?.sinf;
+      const classNumAsNumber =
+        classNum == null ? null : typeof classNum === 'string' ? parseInt(classNum, 10) : classNum;
+
+      if (classNumAsNumber != null && !isNaN(classNumAsNumber) && classNumAsNumber !== sinfRaqami) {
+        return {
+          redirect: {
+            destination: `/darsliklar/${classNumAsNumber}/${darslik.slug}`,
+            permanent: true,
+          },
+        };
+      }
+
+      let similarTextbooks: Darslik[] = [];
+      try {
+        const { data: similarData } = await client.query({
+          query: GET_SIMILAR_TEXTBOOKS,
+          variables: {
+            first: 20,
+            headerLocation: PRIMARY_LOCATION,
+            footerLocation: FOOTER_LOCATION,
+          },
+        });
+
+        const similarNodes = (similarData?.contentNodes?.nodes || []).filter(
+          (node: any) => node.__typename === 'Textbook' && node.databaseId !== darslik.databaseId
+        ) as Darslik[];
+
+        similarTextbooks = similarNodes
+          .filter((t) => {
+            const tSinf = t.darslikMalumotlari?.sinf;
+            const tSinfAsNumber =
+              tSinf == null ? sinfRaqami : typeof tSinf === 'string' ? parseInt(tSinf, 10) : tSinf;
+            return tSinfAsNumber === sinfRaqami;
+          })
+          .slice(0, 6);
+      } catch {
+        // Continue without similar textbooks
+      }
+
+      return {
+        props: {
+          data: {
+            darslik,
+            similarTextbooks,
+            generalSettings: queryData?.generalSettings || null,
+            primaryMenuItems: queryData?.primaryMenuItems || null,
+            footerMenuItems: queryData?.footerMenuItems || null,
+          },
+          sinfRaqami,
           slug,
-          headerLocation: PRIMARY_LOCATION,
-          footerLocation: FOOTER_LOCATION,
         },
-      });
-
-      const node = data?.nodeByUri as any;
-      const textbookBySlug = (data as any)?.textbookBySlug?.nodes?.[0];
-      const textbooksFromQuery = data?.textbooks?.nodes || [];
-      const textbookFromSearch = textbooksFromQuery.find((t: any) => t.slug === slug);
-
-      if (node && node.__typename === 'Textbook') {
-        darslik = node;
-        usedUri = uri;
-        queryData = data;
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Found darslik with URI: ${uri}`);
-        }
-        break;
-      }
-      if (textbookBySlug && textbookBySlug.slug === slug) {
-        darslik = textbookBySlug;
-        usedUri = 'bySlug';
-        queryData = data;
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Found darslik by exact slug: ${slug}`);
-        }
-        break;
-      }
-      if (textbookFromSearch) {
-        darslik = textbookFromSearch;
-        usedUri = uri;
-        queryData = data;
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Found darslik with textbooks search for slug: ${slug}`);
-        }
-        break;
-      }
-    }
-
-    // URI loop da topilmasa, oxirgi so'rovdagi textbookBySlug dan olish
-    if (!darslik && queryData) {
-      const bySlug = (queryData as any)?.textbookBySlug?.nodes?.[0];
-      if (bySlug && bySlug.slug === slug) {
-        darslik = bySlug;
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[SERVER] Found darslik by textbookBySlug after loop: ${slug}`);
-        }
-      }
-    }
-
-    if (!darslik) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[SERVER] Darslik not found for slug: ${slug}, sinf: ${sinfRaqami}`);
-      }
-      return {
-        notFound: true,
+        revalidate: 3600,
       };
+    } catch (error) {
+      if (attempt < MAX_RETRIES) {
+        console.warn(
+          `[darsliklar] getStaticProps attempt ${attempt}/${MAX_RETRIES} failed for ${sinfRaqami}/${slug}, retrying in ${RETRY_DELAY_MS}ms...`,
+          (error as Error)?.message
+        );
+        await new Promise((r) => setTimeout(r, RETRY_DELAY_MS * attempt));
+      } else {
+        console.error(
+          `[darsliklar] getStaticProps failed for ${sinfRaqami}/${slug} after ${MAX_RETRIES} attempts:`,
+          (error as Error)?.message
+        );
+        return { notFound: true };
+      }
     }
+  }
 
-    // Check class number
-    const classNum = darslik.darslikMalumotlari?.sinf;
-    const classNumAsNumber = typeof classNum === 'string' ? parseInt(classNum, 10) : classNum;
-
-    if (classNumAsNumber !== sinfRaqami) {
-      return {
-        notFound: true,
-      };
-    }
+  return {
+    notFound: true,
+  };
+}
 
     // Fetch similar textbooks (same class, exclude current)
     let similarTextbooks: Darslik[] = [];
