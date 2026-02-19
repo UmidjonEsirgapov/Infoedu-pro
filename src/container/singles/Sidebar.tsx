@@ -2,6 +2,7 @@ import { TCategoryCardFull } from '@/components/CardCategory1/CardCategory1'
 import WidgetCategories from '@/components/WidgetCategories/WidgetCategories'
 import WidgetSocialsFollow from '@/components/WidgetSocialsFollow/WidgetSocialsFollow'
 import WidgetPopularPosts from '@/components/WidgetPopularPosts/WidgetPopularPosts'
+import WidgetOliygohDarsliklar from '@/components/WidgetOliygohDarsliklar/WidgetOliygohDarsliklar'
 import { TPostCard } from '@/components/Card2/Card2'
 import React, { FC } from 'react'
 
@@ -24,6 +25,8 @@ export const Sidebar: FC<SidebarProps> = ({
 			)}
 
 			<WidgetSocialsFollow />
+
+			<WidgetOliygohDarsliklar />
 
 			<WidgetCategories categories={categories || []} />
 		</div>
