@@ -18,9 +18,11 @@ export function middleware(request: NextRequest) {
 		return NextResponse.redirect(url, 301)
 	}
 
-	// 2. Bosh sahifa duplicate title: /?page_id=2 → / (SEO)
-	if (pathname === '/' && search && (search === '?page_id=2' || search.startsWith('?page_id=2&'))) {
-		url.search = ''
+	// 2. Duplicate URL encoding: ro%CA%BByxati va ro'yxati — bitta kanonik ga (301)
+	const rawUrl = request.url || ''
+	if (rawUrl.includes('ro%CA%BByxati') || rawUrl.includes('ro%27yxati')) {
+		url.pathname = pathname
+		url.search = search
 		return NextResponse.redirect(url, 301)
 	}
 
