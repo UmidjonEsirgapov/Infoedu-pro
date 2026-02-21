@@ -14,77 +14,89 @@ export default function Page(props: any) {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = getApolloClient();
   const { slug } = ctx.params || {};
-  const requestUri = `/oliygoh/${slug}/`;
-
-  try {
-    // 1. WordPressdan universitet: avvalo URI bo'yicha, bo'lmasa slug orqali (WP CPT "universitetlar" bo'lsa URI boshqacha bo'ladi)
-    const { data } = await client.query({
-      query: Universitet.query!,
-      variables: { uri: requestUri, slug: slug || null },
-      fetchPolicy: 'network-only'
-    });
-
-    const nodeByUri = data?.nodeByUri;
-    const oliygohBy = data?.oliygohBy;
-    const hasData = nodeByUri || oliygohBy;
-
-    if (!hasData) {
-      return { notFound: true };
-    }
-
-    // Slug orqali topilgan bo'lsa, shablon nodeByUri kutyapti — bitta node qilib beramiz
-    const dataForTemplate = nodeByUri
-      ? data
-      : { ...data, nodeByUri: oliygohBy };
-
-    // WP dagi nomi: "Andijon davlat universiteti"
-    const wpTitle = hasData.title;
-
-    if (!wpTitle) {
-      return { notFound: true };
-    }
-
-    // 2. Sizning 'scores.json' faylingizdan shu universitetni qidiramiz
-    let matchedScores = [];
-    try {
-      const filePath = path.join(process.cwd(), 'src/data/scores.json');
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      const allScores = JSON.parse(fileContents);
-      
-      // Normalize funksiyasi: barcha belgilarni tozalash va kichik harfga o'tkazish
-      const normalize = (str: string) => {
-        return str
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, ' ') // Ko'p bo'shliqlarni bittaga
-          .replace(/[''`]/g, "'") // Barcha apostroflarni bittaga
-          .replace(/ʻ/g, "'") // O'zbek apostrofi
-          .replace(/ʼ/g, "'"); // Boshqa apostrof variantlari
-      };
-      
-      const normalizedWpTitle = normalize(wpTitle);
-      
-      // JSON ichidagi "OTM" kaliti bo'yicha solishtiramiz
-      matchedScores = allScores.filter((item: any) => {
-        if (!item.OTM) return false;
-        const normalizedOTM = normalize(item.OTM);
-        return normalizedOTM === normalizedWpTitle;
-      });
-    } catch (err) {
-      console.error('⚠️ scores.json o\'qishda xatolik:', err);
-    }
-
-    return {
-      props: {
-        data: dataForTemplate,
-        quotas: matchedScores
-      },
-      revalidate: 3600,
-    };
-  } catch (error) {
-    console.error('💥 Xatolik:', error);
+  if (!slug || typeof slug !== 'string') {
     return { notFound: true };
   }
+
+  // URI formatlari: WP ba'zan trailing slash bilan yoki siz holda saqlaydi
+  const uriVariants = [
+    `/oliygoh/${slug}/`,
+    `/oliygoh/${slug}`,
+  ];
+
+  const MAX_RETRIES = 2;
+  let data: any = null;
+  let nodeByUri: any = null;
+  let oliygohBy: any = null;
+
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      for (const requestUri of uriVariants) {
+        const result = await client.query({
+          query: Universitet.query!,
+          variables: { uri: requestUri, slug },
+          fetchPolicy: 'network-only',
+        });
+        data = result?.data;
+        nodeByUri = data?.nodeByUri;
+        oliygohBy = data?.oliygohBy;
+        if (nodeByUri?.title || oliygohBy?.title) break;
+      }
+      if (nodeByUri?.title || oliygohBy?.title) break;
+      if (attempt < MAX_RETRIES) {
+        await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+    } catch (err) {
+      if (attempt >= MAX_RETRIES) {
+        console.error('💥 Oliygoh getStaticProps xatolik:', err);
+        return { notFound: true };
+      }
+      await new Promise((r) => setTimeout(r, 1500 * attempt));
+    }
+  }
+
+  const hasDataNode = nodeByUri?.title ? nodeByUri : oliygohBy;
+  if (!hasDataNode?.title) {
+    return { notFound: true };
+  }
+  data = data || {};
+  // Slug orqali topilgan bo'lsa, shablon nodeByUri kutyapti — bitta node qilib beramiz
+  const dataForTemplate = nodeByUri?.title
+    ? data
+    : { ...data, nodeByUri: oliygohBy };
+
+  const wpTitle = hasDataNode.title;
+
+  // 2. scores.json dan shu universitet uchun balllarni qidirish
+  let matchedScores: any[] = [];
+  try {
+    const filePath = path.join(process.cwd(), 'src/data/scores.json');
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const allScores = JSON.parse(fileContents);
+    const normalize = (str: string) =>
+      str
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .replace(/[''`]/g, "'")
+        .replace(/ʻ/g, "'")
+        .replace(/ʼ/g, "'");
+    const normalizedWpTitle = normalize(wpTitle);
+    matchedScores = allScores.filter((item: any) => {
+      if (!item.OTM) return false;
+      return normalize(item.OTM) === normalizedWpTitle;
+    });
+  } catch (err) {
+    console.error('⚠️ scores.json o\'qishda xatolik:', err);
+  }
+
+  return {
+    props: {
+      data: dataForTemplate,
+      quotas: matchedScores,
+    },
+    revalidate: 300, // 5 min — xato 404 cache qolmasin; Vercel ISR ni ham oshirmaydi
+  };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

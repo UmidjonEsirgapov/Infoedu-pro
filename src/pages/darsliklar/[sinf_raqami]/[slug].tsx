@@ -951,7 +951,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
           sinfRaqami,
           slug,
         },
-        revalidate: 3600,
+        revalidate: 300, // 5 min — xato 404 cache qolmasin
       };
     } catch (error) {
       if (attempt < MAX_RETRIES) {

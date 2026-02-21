@@ -1,0 +1,105 @@
+# ============================================================
+# GraphiQL IDE da sinov: Andijon davlat tibbiyot instituti
+# Loyihadagi GetUniversitet so'roviga 100% mos (universitet.tsx)
+# ============================================================
+#
+# MAJBURIY: "$uri was not provided" xatosi = Variables bermadingiz.
+# GraphiQL da o'ng pastda "Query Variables" (yoki "Variables") maydonini oching
+# va quyidagi JSON ni TO'LIQ nusxalab yoping (faqat bittasini):
+#
+#    {"uri": "/oliygoh/andijon-davlat-tibbiyot-instituti/", "slug": "andijon-davlat-tibbiyot-instituti"}
+#
+# Keyin Run (Ctrl+Enter) bosing.
+# ============================================================
+
+# --------------- QUERY (loyihadagi bilan bir xil) ---------------
+query GetUniversitet($uri: String!, $slug: String) {
+  nodeByUri(uri: $uri) {
+    ... on Oliygoh {
+      databaseId
+      title
+      content
+      slug
+      uri
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      oliygohMalumotlari {
+        manzil
+        viloyat
+        telefon
+        elektronPochta
+        rasmiySayt
+        telegramKanal
+        universitetTuri
+        yotoqxonaBormi
+      }
+      date
+      modified
+    }
+  }
+  oliygohBy(slug: $slug) {
+    databaseId
+    title
+    content
+    slug
+    uri
+    featuredImage {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+    oliygohMalumotlari {
+      manzil
+      viloyat
+      telefon
+      elektronPochta
+      rasmiySayt
+      telegramKanal
+      universitetTuri
+      yotoqxonaBormi
+    }
+    date
+    modified
+  }
+  generalSettings {
+    title
+    description
+  }
+  primaryMenuItems: menuItems(where: { location: PRIMARY }, first: 50) {
+    nodes {
+      id
+      label
+      uri
+      parentId
+      childItems {
+        nodes {
+          id
+          label
+          uri
+        }
+      }
+    }
+  }
+  footerMenuItems: menuItems(where: { location: FOOTER }, first: 50) {
+    nodes {
+      id
+      label
+      uri
+    }
+  }
+}
+
+# --------------- QUERY VARIABLES (MAJBURIY) ---------------
+# GraphiQL o'ng pastda "Query Variables" yoki "Variables" maydoniga
+# faqat quyidagi qatorni (yoki ularning birini) nusxalang — qo'sh tirnoq, vergul, ortiqcha bo'shliq bo'lmasin.
+#
+# Sinov 1 — URI slash bilan:
+# {"uri": "/oliygoh/andijon-davlat-tibbiyot-instituti/", "slug": "andijon-davlat-tibbiyot-instituti"}
+#
+# Sinov 2 — URI slash siz:
+# {"uri": "/oliygoh/andijon-davlat-tibbiyot-instituti", "slug": "andijon-davlat-tibbiyot-instituti"}

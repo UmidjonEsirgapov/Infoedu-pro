@@ -529,7 +529,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
         },
         sinfRaqami,
       },
-      revalidate: 3600, // Revalidate every hour
+      revalidate: 300, // 5 min — xato 404 cache qolmasin
     };
   } catch (error) {
     console.error('Error fetching darsliklar:', error);
@@ -543,7 +543,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (ctx) => {
         },
         sinfRaqami,
       },
-      revalidate: 3600,
+      revalidate: 300,
     };
   }
 };

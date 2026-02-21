@@ -293,7 +293,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
           footerMenuItems: data?.footerMenuItems || null,
         },
       },
-      revalidate: 3600, // Revalidate every hour
+      revalidate: 300, // 5 min — xato 404 cache qolmasin
     };
   } catch (error) {
     console.error('Error fetching menus:', error);
@@ -305,7 +305,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
           footerMenuItems: null,
         },
       },
-      revalidate: 3600,
+      revalidate: 300,
     };
   }
 };
