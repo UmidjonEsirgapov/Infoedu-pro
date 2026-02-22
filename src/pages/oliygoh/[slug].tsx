@@ -67,25 +67,44 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const wpTitle = hasDataNode.title;
 
-  // 2. scores.json dan shu universitet uchun balllarni qidirish
+  // 2. scores.json dan shu universitet/fakultet uchun balllarni qidirish
   let matchedScores: any[] = [];
   try {
     const filePath = path.join(process.cwd(), 'src/data/scores.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const allScores = JSON.parse(fileContents);
-    const normalize = (str: string) =>
+    // Apostrof/tirnoq barcha turlari va -ning qisqartirish
+    const normalizeForMatch = (str: string) =>
       str
         .trim()
         .toLowerCase()
         .replace(/\s+/g, ' ')
-        .replace(/[''`]/g, "'")
-        .replace(/ʻ/g, "'")
-        .replace(/ʼ/g, "'");
-    const normalizedWpTitle = normalize(wpTitle);
+        .replace(/[''`ʻʼ\u02BC\u201C\u201D\u201E\u201F"]/g, '')
+        .replace(/institutining/g, 'instituti')
+        .replace(/universiteting/g, 'universiteti');
+    const normalizedWpTitle = normalizeForMatch(wpTitle);
     matchedScores = allScores.filter((item: any) => {
       if (!item.OTM) return false;
-      return normalize(item.OTM) === normalizedWpTitle;
+      return normalizeForMatch(item.OTM) === normalizedWpTitle;
     });
+    // Aniq mos kelmasa: sarlavha qaysi OTM ni o'z ichiga oladi — shu guruhni ol (eng uzun OTM, ortiqcha yo'nalish chiqmasin)
+    if (matchedScores.length === 0) {
+      const contained = allScores.filter((item: any) => {
+        if (!item.OTM) return false;
+        const n = normalizeForMatch(item.OTM);
+        return n.length >= 20 && normalizedWpTitle.includes(n);
+      });
+      if (contained.length > 0) {
+        const byOtm = new Map<string, any[]>();
+        contained.forEach((item: any) => {
+          const key = normalizeForMatch(item.OTM);
+          if (!byOtm.has(key)) byOtm.set(key, []);
+          byOtm.get(key)!.push(item);
+        });
+        const longestKey = [...byOtm.keys()].sort((a, b) => b.length - a.length)[0];
+        matchedScores = byOtm.get(longestKey) || [];
+      }
+    }
   } catch (err) {
     console.error('⚠️ scores.json o\'qishda xatolik:', err);
   }
