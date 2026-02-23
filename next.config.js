@@ -11,6 +11,8 @@ module.exports = withFaust({
 	trailingSlash: false, // SEO uchun trailing slash ni o'chirish
 	reactStrictMode: true,
 	typedRoutes: false,
+	// Build paytida ESLint ishlamasin (paket o'rnatilmagan, deploy xatosiz o'tishi uchun)
+	eslint: { ignoreDuringBuilds: true },
 	// Hostinger MySQL limitini saqlash uchun
 	experimental: {
 		cpus: 1,
