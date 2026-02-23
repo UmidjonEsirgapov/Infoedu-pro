@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Globe } from 'lucide-react';
+import { formatPhoneUz } from '@/utils/formatPhoneUz';
 
 interface ContactInfo {
   telefon?: string | null;
@@ -24,7 +25,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ info }) => {
            {info.telefon && (
                <a href={`tel:${info.telefon}`} className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-blue-200 dark:border-blue-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2">
                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
-                 <span className="truncate text-center">{info.telefon}</span>
+                 <span className="truncate text-center">{formatPhoneUz(info.telefon)}</span>
                </a>
            )}
            {info.rasmiySayt && (

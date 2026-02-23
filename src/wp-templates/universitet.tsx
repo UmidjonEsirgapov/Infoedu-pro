@@ -439,6 +439,7 @@ const Universitet: FaustTemplate<any> = (props) => {
         pageDescription={seoDesc}
         pageFeaturedImageUrl={seoImage}
         generalSettings={props.data?.generalSettings}
+        appendSiteName={false}
       >
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100">
             <Breadcrumb title={title} />

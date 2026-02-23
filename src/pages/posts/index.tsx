@@ -24,6 +24,10 @@ import ArchiveFilterListBox from '@/components/ArchiveFilterListBox/ArchiveFilte
 const T = getTrans()
 const GET_POSTS_FIRST_COMMON = 24
 
+// Unicode apostrof (') — HTML da &#039; bo'lib qolmasligi uchun
+const PAGE_TITLE = "Ta\u2019lim yangiliklari"
+const PAGE_DESCRIPTION = "O\u2019zbekiston ta\u2019lim yangiliklari, grantlar, oliygohlar va maktab xabarlari. So\u2019nggi yangiliklarni o\u2019qing."
+
 interface ConTextQuery {
 	search: string | null
 	tagIn: number[]
@@ -152,7 +156,8 @@ const Page: FaustPage<PostsFilterPageQueryGetPostsQuery> = (props) => {
 				headerMenuItems={props.data?.primaryMenuItems?.nodes || []}
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={null}
-				pageTitle={T.Posts}
+				pageTitle={PAGE_TITLE}
+				pageDescription={PAGE_DESCRIPTION}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}
@@ -166,7 +171,7 @@ const Page: FaustPage<PostsFilterPageQueryGetPostsQuery> = (props) => {
 									<span className="">{T['Explore']}</span>
 								</div>
 								<h1 className="block text-2xl font-semibold capitalize sm:text-3xl lg:text-4xl">
-									{T['Posts']}
+									{PAGE_TITLE}
 								</h1>
 							</header>
 
