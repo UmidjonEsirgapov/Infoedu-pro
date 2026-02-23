@@ -42,59 +42,49 @@ const UniversitetListItem: React.FC<UniversitetListItemProps> = ({
     return { viloyat, turi };
   }, [oliygohMalumotlari]);
 
+  const turiStr = typeof turi === 'string' ? turi : Array.isArray(turi) ? turi[0] || '' : ''
+
   return (
-    <Link href={`/oliygoh/${slug}`} className="touch-manipulation block" prefetch={false}>
-      <div className="group relative bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 transition-all duration-300 overflow-hidden active:scale-[0.98]">
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-indigo-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:via-indigo-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none"></div>
-        
+    <Link href={`/oliygoh/${slug}`} className="touch-manipulation block active:opacity-95" prefetch={false}>
+      <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-lg active:scale-[0.995] dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-600 dark:hover:shadow-xl">
         <div className="relative flex flex-col sm:flex-row">
-          {/* Image */}
-          <div className="relative w-full sm:w-44 md:w-52 lg:w-60 h-48 sm:h-auto sm:min-h-[160px] md:min-h-[180px] flex-shrink-0 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 overflow-hidden">
+          {/* Rasm — mobil: ustida, desktop: chapda */}
+          <div className="relative aspect-[16/10] w-full flex-shrink-0 sm:aspect-auto sm:h-auto sm:w-40 md:w-48 lg:w-56 sm:min-h-[140px] md:min-h-[160px] bg-slate-100 dark:bg-slate-700/50 overflow-hidden">
             <MyImage
               src={imageUrl}
               alt={title}
               fill
               loading="lazy"
-              className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 176px, (max-width: 1024px) 208px, 240px"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, 224px"
             />
-            {/* Image overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:from-transparent" />
           </div>
 
-          {/* Content */}
-          <div className="flex-1 p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col justify-between min-h-[160px] sm:min-h-0">
-            <div>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
-                {title}
-              </h3>
+          {/* Matn va CTA */}
+          <div className="flex flex-1 flex-col p-4 sm:p-5">
+            <h3 className="mb-3 line-clamp-2 text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-blue-600 dark:text-slate-100 dark:group-hover:text-blue-400 sm:text-xl">
+              {title}
+            </h3>
 
-              <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-5">
-                {viloyat && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg text-xs sm:text-sm font-medium border border-blue-200 dark:border-blue-800/30">
-                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span className="truncate max-w-[150px] sm:max-w-none">{getViloyatLabel(viloyat)}</span>
-                  </div>
-                )}
-
-                {turi && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 rounded-lg text-xs sm:text-sm font-medium border border-indigo-200 dark:border-indigo-800/30">
-                    <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span className="truncate max-w-[150px] sm:max-w-none">{typeof turi === 'string' ? turi : Array.isArray(turi) ? turi[0] || '' : ''}</span>
-                  </div>
-                )}
-              </div>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {viloyat && (
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-700/80 dark:text-slate-300">
+                  <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-slate-400" />
+                  <span className="truncate max-w-[140px] sm:max-w-none">{getViloyatLabel(viloyat)}</span>
+                </span>
+              )}
+              {turiStr && (
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-700/80 dark:text-slate-300">
+                  <Building2 className="h-3.5 w-3.5 flex-shrink-0 text-slate-400" />
+                  <span className="truncate max-w-[120px] sm:max-w-none">{turiStr}</span>
+                </span>
+              )}
             </div>
 
-            <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700">
-              <div className="flex items-center text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
-                <span>Batafsil ma'lumot</span>
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
-              </div>
-              <div className="text-xs text-slate-400 dark:text-slate-500 font-medium">
-                Ko'rish →
-              </div>
+            <div className="mt-auto flex min-h-[44px] items-center font-medium text-blue-600 dark:text-blue-400">
+              <span className="text-sm">Batafsil ma'lumot</span>
+              <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
         </div>

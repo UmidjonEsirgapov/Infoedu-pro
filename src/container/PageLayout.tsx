@@ -25,6 +25,8 @@ interface Props {
   pagePublishedDate?: string | null | undefined;
   /** og:type - maqolalar uchun "article" */
   seoType?: 'website' | 'article';
+  /** false bo'lsa meta title oxiriga sitename qo'shilmaydi */
+  appendSiteName?: boolean;
 }
 
 const PageLayout: FC<Props> = ({
@@ -40,6 +42,7 @@ const PageLayout: FC<Props> = ({
   pageModifiedDate,
   pagePublishedDate,
   seoType = 'website',
+  appendSiteName = true,
 }) => {
   // Takroriy meta description xatosini bartaraf etish: bo'sh description da sahifa sarlavhasidan unique fallback
   const siteDesc = generalSettings?.description || "";
@@ -49,10 +52,14 @@ const PageLayout: FC<Props> = ({
       ? `${pageTitle.trim()}. ${siteDesc}`.trim()
       : siteDesc);
 
+  const documentTitle = appendSiteName
+    ? (pageTitle || "") + " - " + (generalSettings?.title || "")
+    : (pageTitle || "");
+
   return (
     <>
       <SEO
-        title={(pageTitle || "") + " - " + (generalSettings?.title || "")}
+        title={documentTitle}
         description={uniqueDescription}
         imageUrl={pageFeaturedImageUrl}
         imageWidth={pageImageWidth}

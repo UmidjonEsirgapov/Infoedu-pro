@@ -1,10 +1,8 @@
 import React from 'react';
-import { MapPin, Phone, Globe, Send } from 'lucide-react';
-import { trackTelegramChannelView } from '@/utils/analytics';
+import { MapPin, Phone, Globe } from 'lucide-react';
 
 interface ContactInfo {
   telefon?: string | null;
-  telegramKanal?: string | null;
   manzil?: string | null;
   rasmiySayt?: string | null;
 }
@@ -29,16 +27,15 @@ const ContactCard: React.FC<ContactCardProps> = ({ info }) => {
                  <span className="truncate text-center">{info.telefon}</span>
                </a>
            )}
-           {info.telegramKanal && (
+           {info.rasmiySayt && (
                <a
-                 href={info.telegramKanal}
+                 href={info.rasmiySayt}
                  target="_blank"
                  rel="noopener noreferrer"
-                 onClick={() => trackTelegramChannelView('university_contact')}
-                 className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-sky-200 dark:border-sky-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2"
+                 className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold py-3 sm:py-3.5 rounded-lg sm:rounded-xl transition-all border border-emerald-200 dark:border-emerald-800 text-xs sm:text-sm touch-manipulation min-w-0 px-2"
                >
-                 <Send className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
-                 <span className="truncate text-center whitespace-nowrap">Telegram</span>
+                 <Globe className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" /> 
+                 <span className="truncate text-center whitespace-nowrap">Rasmiy sayt</span>
                </a>
            )}
         </div>
@@ -53,17 +50,6 @@ const ContactCard: React.FC<ContactCardProps> = ({ info }) => {
               <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">{info.manzil || "Manzil kiritilmagan"}</p>
             </div>
           </div>
-          {info.rasmiySayt && (
-              <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center text-slate-500 dark:text-slate-400 flex-shrink-0 mt-0.5 sm:mt-1">
-                      <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1">Web-sayt</p>
-                      <a href={info.rasmiySayt} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline break-all">Rasmiy saytga o'tish</a>
-                  </div>
-              </div>
-          )}
         </div>
       </div>
     </div>

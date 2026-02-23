@@ -26,8 +26,8 @@ interface QuotaTableProps {
 }
 
 const QuotaTable: React.FC<QuotaTableProps> = ({ quotas, universityName }) => {
-  const [selectedMode, setSelectedMode] = useState('');
-  const [selectedLang, setSelectedLang] = useState(''); 
+  const [selectedMode, setSelectedMode] = useState('Kunduzgi');
+  const [selectedLang, setSelectedLang] = useState('O`zbek'); 
 
   const filteredData = useMemo(() => {
     if (!quotas || !Array.isArray(quotas) || quotas.length === 0) {
@@ -89,11 +89,11 @@ const QuotaTable: React.FC<QuotaTableProps> = ({ quotas, universityName }) => {
 
   return (
     <div className="mt-6 sm:mt-8 md:mt-10">
-      <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 sm:mb-5 md:mb-6">
+      <h2 id="kirish-ballari-title" className="text-lg font-bold text-slate-900 dark:text-slate-100 sm:text-xl mb-4 sm:mb-6">
         {universityName ? `${universityName} kirish ballari va qabul kvotalari` : 'Kirish ballari va qabul kvotalari'}
       </h2>
-      
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-7 md:mb-8">
+
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 w-full lg:w-auto">
            {/* Ta'lim shakli */}
            <div className="relative flex-1 sm:flex-none min-w-[140px]">
@@ -128,9 +128,9 @@ const QuotaTable: React.FC<QuotaTableProps> = ({ quotas, universityName }) => {
         </div>
       </div>
 
-      {/* Desktop Jadval */}
-      <div className="hidden md:block relative overflow-x-auto">
-        <table className="w-full text-left border-separate border-spacing-0">
+      {/* Desktop: jadval; mobil: kartochkalar */}
+      <div className="hidden overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 md:block">
+        <table className="w-full min-w-[520px] text-left border-separate border-spacing-0" role="grid" aria-labelledby="kirish-ballari-title">
           <thead className="bg-white dark:bg-slate-800 sticky top-0 z-20">
             <tr>
               <th className="py-4 px-6 font-semibold text-slate-500 dark:text-slate-400 text-sm border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 w-2/5 rounded-tl-lg">Mutaxassislik</th>
@@ -197,8 +197,8 @@ const QuotaTable: React.FC<QuotaTableProps> = ({ quotas, universityName }) => {
         </table>
       </div>
 
-      {/* Mobile Cards */}
-      <div className="md:hidden space-y-3">
+      {/* Mobil kartochkalar */}
+      <div className="mt-6 space-y-3 md:hidden">
         {filteredData.length > 0 ? (
           filteredData.map((item, index: number) => {
             const grantBall = formatBall(item.ballgr || item.grantScore);

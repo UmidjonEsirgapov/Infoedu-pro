@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import Hero from '@/components/oliygoh/Hero';
 import Breadcrumb from '@/components/oliygoh/Breadcrumb';
+import OliygohFAQ from '@/components/oliygoh/OliygohFAQ';
 
 // Lazy load komponentlar
 const ContactCard = dynamic(() => import('@/components/oliygoh/ContactCard'), {
@@ -14,6 +15,10 @@ const ContactCard = dynamic(() => import('@/components/oliygoh/ContactCard'), {
 
 const QuotaTable = dynamic(() => import('@/components/oliygoh/QuotaTable'), {
   loading: () => <div className="mt-10 animate-pulse"><div className="h-8 bg-slate-200 rounded w-64 mb-6"></div><div className="h-96 bg-slate-100 rounded"></div></div>
+});
+
+const RelatedOliygohCard = dynamic(() => import('@/components/oliygoh/RelatedOliygohCard'), {
+  loading: () => <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />
 });
 
 // --- 3. MAIN COMPONENT ---
@@ -27,110 +32,72 @@ const Universitet: FaustTemplate<any> = (props) => {
   const bgImage = featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000';
   const info = oliygohMalumotlari || {};
 
-  // O'quv yili (2025-2026)
-  const currentYear = 2025;
-  const nextYear = 2026;
+  // O'quv yili — avtomatik: sentyabrdan yangi yil (2025/2026 → 2026/2027)
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // 1–12
+  const currentYear = month >= 9 ? year : year - 1;
+  const nextYear = currentYear + 1;
 
-  // Header balandligini o'lchash va top value hisoblash
   const [stickyTop, setStickyTop] = useState(120);
-  
   useEffect(() => {
-    const calculateStickyTop = () => {
+    const calc = () => {
       if (typeof window === 'undefined') return;
-      
-      // Header elementini topish - SiteHeader komponenti ichidagi sticky div
-      const headerWrapper = document.querySelector('div[class*="sticky"][class*="top-0"]');
+      const header = document.querySelector('div[class*="sticky"][class*="top-0"]');
       const banner = document.querySelector('.Ncmaz_Banner');
-      
-      let headerHeight = 0;
-      let bannerHeight = 0;
-      
-      if (headerWrapper) {
-        headerHeight = headerWrapper.getBoundingClientRect().height;
-      }
-      
-      if (banner) {
-        bannerHeight = banner.getBoundingClientRect().height;
-      }
-      
-      // Header + Banner + 16px padding
-      const totalHeight = headerHeight + bannerHeight + 16;
-      setStickyTop(Math.max(totalHeight, 80)); // Minimum 80px
+      let h = 0, b = 0;
+      if (header) h = header.getBoundingClientRect().height;
+      if (banner) b = banner.getBoundingClientRect().height;
+      setStickyTop(Math.max(h + b + 16, 80));
     };
-    
-    calculateStickyTop();
-    
-    // Resize va scroll event'larda qayta hisoblash
-    window.addEventListener('resize', calculateStickyTop);
-    window.addEventListener('scroll', calculateStickyTop);
-    
-    // MutationObserver - DOM o'zgarishlarini kuzatish
-    const observer = new MutationObserver(calculateStickyTop);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-    
+    calc();
+    window.addEventListener('resize', calc);
+    window.addEventListener('scroll', calc);
+    const obs = new MutationObserver(calc);
+    obs.observe(document.body, { childList: true, subtree: true, attributes: true });
     return () => {
-      window.removeEventListener('resize', calculateStickyTop);
-      window.removeEventListener('scroll', calculateStickyTop);
-      observer.disconnect();
+      window.removeEventListener('resize', calc);
+      window.removeEventListener('scroll', calc);
+      obs.disconnect();
     };
   }, []);
 
   // SEO
   const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://infoedu.uz';
   
-  // Optimallashtirilgan SEO Title: "Universitet nomi Kirish ballari 2025-2026"
+  // Meta Title: "{name} kirish ballari 2025/2026"
   const seoTitle = useMemo(() => {
-    const universityName = title || 'Universitet';
-    return `${universityName} Kirish ballari ${currentYear}-${nextYear}`;
+    const name = title || 'Oliygoh';
+    return `${name} kirish ballari ${currentYear}/${nextYear}`;
+  }, [title, currentYear, nextYear]);
+
+  // Meta Description: "{name} bo'yicha 2025-2026 o'quv yili uchun eng so'nggi o'tish ballari, qabul kvotalari va barcha yo'nalishlar haqida ma'lumot oling."
+  const seoDesc = useMemo(() => {
+    const name = title || 'Oliygoh';
+    return `${name} bo'yicha ${currentYear}-${nextYear} o'quv yili uchun eng so'nggi o'tish ballari, qabul kvotalari va barcha yo'nalishlar haqida ma'lumot oling.`;
   }, [title, currentYear, nextYear]);
   
-  // Optimallashtirilgan SEO Description
-  const seoDesc = useMemo(() => {
-    const getDescriptionFromContent = (htmlContent: string | null | undefined): string => {
-      if (!htmlContent) return '';
-      
-      // HTML taglarini olib tashlash
-      const textContent = htmlContent
-        .replace(/<[^>]*>/g, '') // HTML taglarini olib tashlash
-        .replace(/&nbsp;/g, ' ') // &nbsp; ni bo'shliqqa o'zgartirish
-        .replace(/&amp;/g, '&') // &amp; ni & ga o'zgartirish
-        .replace(/&lt;/g, '<') // &lt; ni < ga o'zgartirish
-        .replace(/&gt;/g, '>') // &gt; ni > ga o'zgartirish
-        .replace(/&quot;/g, '"') // &quot; ni " ga o'zgartirish
-        .replace(/&#39;/g, "'") // &#39; ni ' ga o'zgartirish
-        .trim();
-      
-      // Birinchi paragrafni olish (155 belgigacha - SEO uchun optimal)
-      const firstParagraph = textContent.split('\n').find(p => p.trim().length > 0) || textContent;
-      return firstParagraph.substring(0, 155).trim();
-    };
-    
-    const universityName = title || 'Universitet';
-    const defaultDesc = `${universityName} ${currentYear}-${nextYear} o'quv yili uchun kirish ballari, qabul kvotalari va ta'lim yo'nalishlari. Barcha fakultetlar bo'yicha o'tish ballari, grant va kontrakt kvotalari haqida to'liq ma'lumot.`;
-    
-    const contentDesc = getDescriptionFromContent(content);
-    return contentDesc || defaultDesc;
-  }, [content, title, currentYear, nextYear]);
-  
-  // SEO Keywords
+  // SEO Keywords — asosiy, yo'nalish va LSI (savol ko'rinishida)
   const seoKeywords = useMemo(() => {
-    const universityName = title || 'Universitet';
+    const name = title || 'Oliygoh';
     const viloyat = Array.isArray(info.viloyat) ? info.viloyat[0] : info.viloyat;
     const keywords = [
-      `${universityName} kirish ballari`,
-      `${universityName} ${currentYear}-${nextYear}`,
-      `${universityName} qabul kvotalari`,
-      `${universityName} o'tish ballari`,
-      `${universityName} grant kvotasi`,
-      `${universityName} kontrakt kvotasi`,
-      `${universityName} fakultetlar`,
-      `${universityName} ta'lim yo'nalishlari`,
+      `${name} kirish ballari ${currentYear}-${nextYear}`,
+      `${name} qabul kvotalari`,
+      `${name} kontrakt narxi ${currentYear}`,
+      `${name} o'tish ballari`,
+      `${name} sirtqi bo'lim yo'nalishlari`,
+      `${name} magistratura qabul`,
+      `${name} kechki ta'lim ballari`,
+      `${name} fakultetlari va kafedralari`,
+      `${name}ga kirish uchun qaysi fanlardan imtihon topshiriladi`,
+      `${name} manzili qayerda`,
+      `${name} yotoqxonasi bormi`,
+      `${name} grant kvotasi`,
+      `${name} kontrakt kvotasi`,
+      `${name} ta'lim yo'nalishlari`,
     ];
-    
-    if (viloyat) {
-      keywords.push(`${universityName} ${viloyat}`);
-    }
-    
+    if (viloyat) keywords.push(`${name} ${viloyat}`);
     return keywords.join(', ');
   }, [title, info.viloyat, currentYear, nextYear]);
   
@@ -162,9 +129,7 @@ const Universitet: FaustTemplate<any> = (props) => {
       "logo": {
         "@type": "ImageObject",
         "url": seoImage
-      },
-      "foundingDate": undefined, // Kelajakda qo'shish mumkin
-      "numberOfStudents": undefined // Kelajakda qo'shish mumkin
+      }
     };
 
     // Address
@@ -231,11 +196,11 @@ const Universitet: FaustTemplate<any> = (props) => {
       }
     }
 
-    if (info.universitetTuri) {
-      schema.additionalType = Array.isArray(info.universitetTuri) 
-        ? info.universitetTuri[0] 
-        : info.universitetTuri;
-    }
+    // EducationalOrganization ham qo'shiladi — bitta schema, 2 ta "Organization" chiqmasin
+    const extraType = Array.isArray(info.universitetTuri) ? info.universitetTuri[0] : info.universitetTuri;
+    schema.additionalType = extraType
+      ? ["https://schema.org/EducationalOrganization", extraType]
+      : "https://schema.org/EducationalOrganization";
 
     // Educational credentials
     schema.hasCredential = {
@@ -313,6 +278,81 @@ const Universitet: FaustTemplate<any> = (props) => {
     };
   }, [seoTitle, seoDesc, seoUrl, seoImage, BASE_URL, props.data?.generalSettings?.title, data]);
 
+  // 4. FAQPage Schema (sahifadagi barcha savol-javoblar, LSI ham)
+  const faqSchema = useMemo(() => {
+    const name = title || '';
+    const manzil = info.manzil;
+    const yotoqxona = info.yotoqxonaBormi;
+    const yotoqxonaJavob = yotoqxona === true || (typeof yotoqxona === 'string' && yotoqxona.toLowerCase() !== "yo'q" && yotoqxona !== '')
+      ? "Ha, oliygohda talabalar uchun yotoqxona mavjud."
+      : "Yotoqxona haqida ma'lumotni oliygoh qabul komissiyasi yoki rasmiy sayt orqali tekshirishingiz mumkin.";
+    const mainEntity = [
+      {
+        "@type": "Question",
+        "name": `${name} kontrakt narxi qancha?`,
+        "acceptedAnswer": { "@type": "Answer", "text": "Gumanitar va pedagogika: 6 400 000 – 7 500 000 so'm. Texnika, qishloq xo'jaligi: 7 000 000 – 8 000 000 so'm. Iqtisod, huquq va tibbiyot: 9 000 000 – 14 000 000 so'm. Masofaviy va sirtqi ta'lim: Kunduzgi shaklga nisbatan 10-20% arzonroq." }
+      },
+      {
+        "@type": "Question",
+        "name": "Oliygohlarga hujjat topshirish qachon boshlanadi?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Odatda qabul jarayonlari har yili iyun oyining ikkinchi yarmidan boshlanib, iyul oyining o'rtalariga qadar davom etadi. Hujjatlar my.uzbmb.uz portali orqali onlayn qabul qilinadi." }
+      },
+      {
+        "@type": "Question",
+        "name": "Kontrakt pulini bo'lib to'lash imkoniyati bormi?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ha, O'zbekistonda talabalar shartnoma summasini yil davomida kamida 4 qismga bo'lib to'lashlari mumkin. Birinchi chorak to'lovi odatda 1-oktabrgacha amalga oshiriladi." }
+      },
+      {
+        "@type": "Question",
+        "name": `${name}ga kirish uchun qaysi fanlardan imtihon topshiriladi?`,
+        "acceptedAnswer": { "@type": "Answer", "text": "O'zbekiston oliy ta'lim muassasalariga kirish uchun odatda O'zbek tili (yoki ona tili), Matematika va yo'nalishga qarab uchinchi fan (Tarix, Biologiya, Kimyo, Fizika, Adabiyot va boshqalar) bo'yicha davlat test sinovlaridan o'tish talab qilinadi. Aniq fanlar har bir yo'nalish uchun Oliy ta'lim, fan va innovatsiyalar vazirligi qoidalariga muvofiq belgilanadi." }
+      },
+      {
+        "@type": "Question",
+        "name": `${name} manzili qayerda?`,
+        "acceptedAnswer": { "@type": "Answer", "text": manzil || "Oliygoh manzili sahifaning Qabul Komissiyasi blokida ko'rsatiladi." }
+      },
+      {
+        "@type": "Question",
+        "name": `${name} yotoqxonasi bormi?`,
+        "acceptedAnswer": { "@type": "Answer", "text": yotoqxonaJavob }
+      }
+    ];
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": mainEntity
+    };
+  }, [title, info.manzil, info.yotoqxonaBormi]);
+
+  // 5. Table / Dataset Schema — kirish ballari jadvali (Rich Snippet)
+  const tableSchema = useMemo(() => {
+    const quotas = props.quotas || [];
+    const tableName = `${title || 'Oliygoh'} kirish ballari va qabul kvotalari ${currentYear}-${nextYear}`;
+    const tableDesc = "Mutaxassislik bo'yicha grant va shartnoma o'tish ballari va kvotalar jadvali.";
+    const rows = quotas.map((item: any, index: number) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.dirnm || item.name || "—",
+      "description": `Kod: ${item.dirid || item.code || "—"}. Grant: ${item.ballgr ?? item.grantScore ?? "—"} ball, ${item.grantnm ?? item.grantQuota ?? "—"} kvota. Shartnoma: ${item.ballk ?? item.contractScore ?? "—"} ball, ${item.contractnm ?? item.contractQuota ?? "—"} kvota.`
+    }));
+    return {
+      "@context": "https://schema.org",
+      "@type": "Table",
+      "@id": `${seoUrl}#entrance-scores-table`,
+      "name": tableName,
+      "description": tableDesc,
+      "about": { "@id": `${seoUrl}#organization` },
+      ...(rows.length > 0 && {
+        "hasPart": {
+          "@type": "ItemList",
+          "numberOfItems": rows.length,
+          "itemListElement": rows
+        }
+      })
+    };
+  }, [title, seoUrl, currentYear, nextYear, props.quotas]);
+
   return (
     <>
       {/* --- OPTIMALLASHTIRILGAN SEO META TAGS --- */}
@@ -365,7 +405,7 @@ const Universitet: FaustTemplate<any> = (props) => {
           }
         })()}
         
-        {/* Alohida script — validatorda WebPage, CollegeOrUniversity, BreadcrumbList alohida ko‘rinadi */}
+        {/* Schema markup: mavjud (CollegeOrUniversity, BreadcrumbList, WebPage) — xato yo'q, tegilmaydi */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -377,6 +417,14 @@ const Universitet: FaustTemplate<any> = (props) => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(tableSchema) }}
         />
       </Head>
 
@@ -390,40 +438,50 @@ const Universitet: FaustTemplate<any> = (props) => {
         generalSettings={props.data?.generalSettings}
       >
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100">
-            {/* BREADCRUMB */}
             <Breadcrumb title={title} />
-            
-            {/* HERO */}
-            <Hero 
-              title={title} 
-              bgImage={bgImage} 
-              viloyat={info.viloyat} 
-            />
+            <Hero title={title} bgImage={bgImage} viloyat={info.viloyat} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                {/* Asosiy Kontent */}
                 <div className="lg:col-span-2">
                   <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 md:p-8">
-                    
                     <article className="prose prose-slate dark:prose-invert max-w-none mb-12">
-                      <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">{title} haqida ma'lumot</h2>
+                      <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">{title} haqida ma&apos;lumot</h2>
                       <div dangerouslySetInnerHTML={{ __html: content }} />
                     </article>
 
-                    {/* Mobile versiyada ContactCard - universitet haqida ma'lumot va kirish ballari orasida */}
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mb-10 leading-relaxed">
+                      Bu sahifada <strong className="text-slate-700 dark:text-slate-300">{title} kirish ballari {currentYear}-{nextYear}</strong>, qabul kvotalari, kontrakt narxi, o&apos;tish ballari, sirtqi va kechki ta&apos;lim yo&apos;nalishlari haqida ma&apos;lumot topasiz.
+                    </p>
+
                     <div className="lg:hidden mb-10">
                       <ContactCard info={info} />
                     </div>
 
                     <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
-                    {/* Kvotalar Jadvali - dinamik ma'lumotlar */}
                     <QuotaTable quotas={props.quotas || []} universityName={title} />
+
+                    <OliygohFAQ universityName={title} info={info} />
+
+                    {props.recommendedOliygohs?.length > 0 && (
+                      <div className="mt-10 sm:mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 sm:mb-6">Shu oliygohga o&apos;xshash oliygohlar</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+                          {props.recommendedOliygohs.map((ol: { title: string; slug: string; featuredImage?: any }) => (
+                            <RelatedOliygohCard
+                              key={ol.slug}
+                              title={ol.title}
+                              slug={ol.slug}
+                              featuredImage={ol.featuredImage}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Sidebar - Qabul Komissiyasi (faqat desktop) */}
                 <div className="hidden lg:block lg:col-span-1">
                   <div className="lg:sticky" style={{ top: `${stickyTop}px` }}>
                     <ContactCard info={info} />

@@ -1,8 +1,35 @@
+import { gql } from '@apollo/client';
 import { getApolloClient } from '@faustwp/core';
 import Universitet from '../../wp-templates/universitet';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import fs from 'fs';
 import path from 'path';
+
+const GET_OLIYGOH_LIST = gql`
+  query GetOliygohListForRelated($first: Int!) {
+    contentNodes(first: $first, where: { contentTypes: [OLIYGOH] }) {
+      nodes {
+        ... on Oliygoh {
+          databaseId
+          title
+          slug
+          uri
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+          oliygohMalumotlari {
+            viloyat
+            universitetTuri
+            yotoqxonaBormi
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function Page(props: any) {
   if (!props.data) {
@@ -109,12 +136,69 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     console.error('⚠️ scores.json o\'qishda xatolik:', err);
   }
 
+  // 3. Tavsiya: joylashuv (viloyat), yotoqxona, davlat univer, nom kalit so'zlari; hech narsa mos kelmasa ham 3 ta chiqadi
+  let recommendedOliygohs: { title: string; slug: string; uri: string; featuredImage?: any; oliygohMalumotlari?: any }[] = [];
+  try {
+    const listRes = await client.query({
+      query: GET_OLIYGOH_LIST,
+      variables: { first: 250 },
+      fetchPolicy: 'network-only',
+    });
+    const nodes = (listRes?.data?.contentNodes?.nodes || []).filter((n: any) => n?.__typename === 'Oliygoh' && n?.slug && n.slug !== slug);
+    const info = hasDataNode?.oliygohMalumotlari || {};
+    const currentViloyat = info.viloyat;
+    const currentTuri = info.universitetTuri;
+    const currentYotoqxona = info.yotoqxonaBormi;
+    const currentTitle = (hasDataNode?.title || '').toLowerCase();
+    const viloyatNorm = (v: any) => (Array.isArray(v) ? v[0] : v)?.trim?.()?.toLowerCase?.() || '';
+    const turiNorm = (t: any) => (Array.isArray(t) ? t[0] : t)?.trim?.()?.toLowerCase?.() || '';
+    const yotoqxonaNorm = (y: any) => {
+      if (y === true || (typeof y === 'string' && y.toLowerCase().trim() === 'ha')) return true;
+      if (y === false || (typeof y === 'string' && (y.toLowerCase().trim() === 'yo\'q' || y.trim() === ''))) return false;
+      return null;
+    };
+    const curV = viloyatNorm(currentViloyat);
+    const curT = turiNorm(currentTuri);
+    const curY = yotoqxonaNorm(currentYotoqxona);
+    const isDavlat = (s: string) => s.includes('davlat');
+    const curDavlat = isDavlat(currentTitle) || isDavlat(turiNorm(currentTuri));
+    const keywords = ['tibbiyot', 'pedagogika', 'institut', 'universitet', 'chet tillar', 'agrar', 'texnika', 'politexnika', 'iqtisod', 'qishloq', 'xalqaro', 'milliy', 'tarix', 'filologiya', 'sport', 'transport', 'moliya', 'energetika'];
+    const titleKeywords = (s: string) => keywords.filter((k) => s.includes(k));
+    const curKeywords = titleKeywords(currentTitle);
+    const scored = nodes.map((n: any) => {
+      const v = viloyatNorm(n.oliygohMalumotlari?.viloyat);
+      const t = turiNorm(n.oliygohMalumotlari?.universitetTuri);
+      const nY = yotoqxonaNorm(n.oliygohMalumotlari?.yotoqxonaBormi);
+      const nTitle = (n.title || '').toLowerCase();
+      const nDavlat = isDavlat(nTitle) || isDavlat(t);
+      const nKeywords = titleKeywords(nTitle);
+      let score = 0;
+      if (curV && v === curV) score += 25;
+      if (curT && t === curT) score += 12;
+      if (curY !== null && nY !== null && curY === nY) score += 10;
+      if (curDavlat && nDavlat) score += 8;
+      score += curKeywords.filter((k) => nKeywords.includes(k)).length * 6;
+      return { node: n, score };
+    });
+    scored.sort((a, b) => b.score - a.score);
+    recommendedOliygohs = scored.slice(0, 3).map(({ node }: { node: any }) => ({
+      title: node.title || '',
+      slug: node.slug || '',
+      uri: node.uri || `/oliygoh/${node.slug}`,
+      featuredImage: node.featuredImage,
+      oliygohMalumotlari: node.oliygohMalumotlari,
+    }));
+  } catch (err) {
+    console.error('⚠️ Tavsiya oliygohlar ro\'yxati olinmadi:', err);
+  }
+
   return {
     props: {
       data: dataForTemplate,
       quotas: matchedScores,
+      recommendedOliygohs,
     },
-    revalidate: 300, // 5 min — xato 404 cache qolmasin; Vercel ISR ni ham oshirmaydi
+    revalidate: 300,
   };
 };
 

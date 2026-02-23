@@ -69,25 +69,25 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <nav className="flex items-center justify-center gap-2 mt-8 sm:mt-10" aria-label="Sahifalash">
+    <nav className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-6 sm:mt-10 px-1" aria-label="Sahifalash">
       {/* Oldingi sahifa */}
       <button
         onClick={(e) => handlePageClick(currentPage - 1, e)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
+        className="flex items-center justify-center min-w-[44px] min-h-[44px] w-10 h-10 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation active:scale-95"
         aria-label="Oldingi sahifa"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
 
       {/* Sahifa raqamlari */}
-      <div className="flex items-center gap-1 sm:gap-2">
+      <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
         {pageNumbers.map((page, index) => {
           if (page === '...') {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-2 sm:px-3 py-2 text-slate-500 dark:text-slate-400"
+                className="px-1.5 sm:px-3 py-2 text-slate-500 dark:text-slate-400 text-sm"
               >
                 ...
               </span>
@@ -101,10 +101,10 @@ const Pagination: React.FC<PaginationProps> = ({
             <button
               key={pageNum}
               onClick={(e) => handlePageClick(pageNum, e)}
-              className={`min-w-[2.5rem] h-10 px-3 sm:px-4 rounded-lg font-medium transition-all touch-manipulation ${
+              className={`min-w-[44px] min-h-[44px] flex items-center justify-center px-3 sm:px-4 rounded-lg font-medium text-sm sm:text-base transition-all touch-manipulation active:scale-95 ${
                 isActive
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg scale-105'
-                  : 'border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:scale-105'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                  : 'border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
               aria-label={`Sahifa ${pageNum}`}
               aria-current={isActive ? 'page' : undefined}
@@ -119,7 +119,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={(e) => handlePageClick(currentPage + 1, e)}
         disabled={currentPage === totalPages}
-        className="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
+        className="flex items-center justify-center min-w-[44px] min-h-[44px] w-10 h-10 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation active:scale-95"
         aria-label="Keyingi sahifa"
       >
         <ChevronRight className="w-5 h-5" />
