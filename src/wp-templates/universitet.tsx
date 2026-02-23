@@ -32,6 +32,9 @@ const Universitet: FaustTemplate<any> = (props) => {
   const bgImage = featuredImage?.node?.sourceUrl || 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000';
   const info = oliygohMalumotlari || {};
 
+  const quotasList: any[] = Array.isArray((props as any).quotas) ? (props as any).quotas : [];
+  const recommendedOliygohs: { title: string; slug: string; featuredImage?: any }[] = Array.isArray((props as any).recommendedOliygohs) ? (props as any).recommendedOliygohs : [];
+
   // O'quv yili — avtomatik: sentyabrdan yangi yil (2025/2026 → 2026/2027)
   const now = new Date();
   const year = now.getFullYear();
@@ -327,7 +330,7 @@ const Universitet: FaustTemplate<any> = (props) => {
 
   // 5. Table / Dataset Schema — kirish ballari jadvali (Rich Snippet)
   const tableSchema = useMemo(() => {
-    const quotas: any[] = Array.isArray(props.quotas) ? props.quotas : [];
+    const quotas = quotasList;
     const tableName = `${title || 'Oliygoh'} kirish ballari va qabul kvotalari ${currentYear}-${nextYear}`;
     const tableDesc = "Mutaxassislik bo'yicha grant va shartnoma o'tish ballari va kvotalar jadvali.";
     const rows = quotas.map((item: any, index: number) => ({
@@ -351,7 +354,7 @@ const Universitet: FaustTemplate<any> = (props) => {
         }
       })
     };
-  }, [title, seoUrl, currentYear, nextYear, props.quotas]);
+  }, [title, seoUrl, currentYear, nextYear, quotasList]);
 
   return (
     <>
@@ -460,15 +463,15 @@ const Universitet: FaustTemplate<any> = (props) => {
 
                     <hr className="border-slate-200 dark:border-slate-700 my-10" />
 
-                    <QuotaTable quotas={props.quotas || []} universityName={title} />
+                    <QuotaTable quotas={quotasList} universityName={title} />
 
                     <OliygohFAQ universityName={title} info={info} />
 
-                    {props.recommendedOliygohs?.length > 0 && (
+                    {recommendedOliygohs.length > 0 && (
                       <div className="mt-10 sm:mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
                         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 sm:mb-6">Shu oliygohga o&apos;xshash oliygohlar</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-                          {props.recommendedOliygohs.map((ol: { title: string; slug: string; featuredImage?: any }) => (
+                          {recommendedOliygohs.map((ol) => (
                             <RelatedOliygohCard
                               key={ol.slug}
                               title={ol.title}
