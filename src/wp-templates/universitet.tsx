@@ -327,7 +327,7 @@ const Universitet: FaustTemplate<any> = (props) => {
 
   // 5. Table / Dataset Schema — kirish ballari jadvali (Rich Snippet)
   const tableSchema = useMemo(() => {
-    const quotas = props.quotas || [];
+    const quotas: any[] = Array.isArray(props.quotas) ? props.quotas : [];
     const tableName = `${title || 'Oliygoh'} kirish ballari va qabul kvotalari ${currentYear}-${nextYear}`;
     const tableDesc = "Mutaxassislik bo'yicha grant va shartnoma o'tish ballari va kvotalar jadvali.";
     const rows = quotas.map((item: any, index: number) => ({
