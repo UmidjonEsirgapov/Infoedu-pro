@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
           if (!byOtm.has(key)) byOtm.set(key, []);
           byOtm.get(key)!.push(item);
         });
-        const longestKey = [...byOtm.keys()].sort((a, b) => b.length - a.length)[0];
+        const longestKey = Array.from(byOtm.keys()).sort((a, b) => b.length - a.length)[0];
         matchedScores = byOtm.get(longestKey) || [];
       }
     }
