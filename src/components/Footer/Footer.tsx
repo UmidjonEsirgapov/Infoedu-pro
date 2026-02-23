@@ -1,105 +1,130 @@
-import { FragmentType } from '@/__generated__'
-import { NC_FOOTER_MENU_QUERY_FRAGMENT } from '@/fragments/menu'
-// import WidgetAddSubscriberForm from '../WidgetAddSubscriberForm/WidgetAddSubscriberForm'
-import { NC_SITE_SETTINGS } from '@/contains/site-settings'
-import MyImage from '../MyImage'
-import { flatListToHierarchical } from '@faustwp/core'
-import { NcFooterMenuFieldsFragmentFragment } from '@/__generated__/graphql'
-import Link from 'next/link'
+import Link from 'next/link';
+import MyImage from '../MyImage';
+import { NC_SITE_SETTINGS } from '@/contains/site-settings';
+import { TELEGRAM_LINKS } from '@/contains/buttonTexts';
 
-interface Props {
-	menuItems: FragmentType<typeof NC_FOOTER_MENU_QUERY_FRAGMENT>[] | null
+interface FooterLink {
+  label: string;
+  href: string;
 }
 
-export type FooterNavItemType = NcFooterMenuFieldsFragmentFragment & {
-	children?: FooterNavItemType[]
+interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}
+
+const FOOTER_SECTIONS: FooterSection[] = [
+  {
+    title: 'Asosiy',
+    links: [
+      { label: 'Bosh sahifa', href: '/' },
+      { label: "Oliy ta'lim muassasalari", href: '/oliygoh' },
+      { label: 'Darsliklar', href: '/darsliklar' },
+      { label: 'Yangiliklar', href: '/posts' },
+    ],
+  },
+  {
+    title: 'Foydali',
+    links: [
+      { label: 'Milliy sertifikat sanalari', href: '/milliy-sertifikat-sanalari' },
+      { label: 'Pedagog kadrlar attestatsiyasi', href: '/pedagog-kadrlar-attestatsiyasi' },
+      { label: 'Reklama', href: '/reklama' },
+    ],
+  },
+];
+
+const DEFAULT_SOCIALS = [
+  { name: 'Telegram', url: TELEGRAM_LINKS.subscribeChannel, icon: '/images/socials/telegram.svg', description: 'Telegram' },
+  { name: 'YouTube', url: 'https://youtube.com/@infoeduuz', icon: '/images/socials/youtube.svg', description: 'YouTube' },
+];
+
+interface Props {
+  menuItems?: any[] | null;
 }
 
 export default function Footer({ menuItems }: Props) {
-	const menus = flatListToHierarchical(menuItems || [], {
-		idKey: 'id',
-		parentKey: 'parentId',
-		childrenKey: 'children',
-	}) as FooterNavItemType[]
+  const currentYear = new Date().getFullYear();
+  const copyrightText =
+    NC_SITE_SETTINGS?.site_footer?.all_rights_reserved_text ||
+    `© ${currentYear} InfoEdu.uz. Barcha huquqlar himoyalangan.`;
+  const socials = NC_SITE_SETTINGS?.site_socials?.length
+    ? NC_SITE_SETTINGS.site_socials
+    : DEFAULT_SOCIALS;
 
-	const renderMenuItem = (item: FooterNavItemType, index: number) => {
-		return (
-			<div key={index + item.id}>
-				<h3 className="text-sm font-semibold leading-6 text-neutral-900 dark:text-neutral-200">
-					<Link href={item.uri ?? '/'} target={item.target ?? '_self'}>
-						{item.label}
-					</Link>
-				</h3>
-				<ul role="list" className="mt-6 space-y-4">
-					{item.children?.map((j, id) => (
-						<li key={j.id + id}>
-							<Link
-								href={j.uri ?? ''}
-								className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-							>
-								{j.label}
-							</Link>
-						</li>
-					))}
-				</ul>
-			</div>
-		)
-	}
+  return (
+    <footer
+      className="border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
+      aria-labelledby="footer-heading"
+    >
+      <h2 id="footer-heading" className="sr-only">
+        Sayt xaritasi
+      </h2>
 
-	return (
-		<footer
-			className="border-t border-neutral-900/10 bg-white dark:border-transparent dark:bg-neutral-900"
-			aria-labelledby="footer-heading"
-		>
-			<h2 id="footer-heading" className="sr-only">
-				Footer
-			</h2>
-			<div className="mx-auto max-w-7xl px-6 pb-8 pt-20 sm:pt-24 lg:px-8 lg:pt-28">
-				<div className="xl:grid xl:grid-cols-3 xl:gap-8">
-					<div className="grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2">
-						{menus.map(renderMenuItem)}
-					</div>
-					<div className="mt-10 xl:mt-0">
-  <h3 className="text-sm font-semibold leading-6 text-neutral-900 dark:text-neutral-200">
-    Biz haqimizda
-  </h3>
-  <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-neutral-400">
-    InfoEdu — O‘zbekiston ta’lim yangiliklari, grantlar va universitetlar
-    haqidagi ishonchli manba.
-  </p>
-</div>
-				</div>
-				<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 md:flex md:items-center md:justify-between lg:mt-24 dark:border-neutral-700">
-					<div className="flex flex-wrap gap-x-6 gap-y-3 md:order-2">
-						{NC_SITE_SETTINGS.site_socials?.map((item) => (
-							<a
-								key={item?.name}
-								href={item?.url}
-								className="relative block"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<span className="absolute -inset-0.5 hidden rounded-lg bg-neutral-400 dark:block"></span>
-								<span className="sr-only">{item?.name}</span>
-								<MyImage
-									width={22}
-									height={22}
-									className="relative max-h-[22px] opacity-60 hover:opacity-100"
-									src={item?.icon || ''}
-									alt={item?.name || ''}
-								/>
-							</a>
-						))}
-					</div>
-					<p
-						className="rights_reserved_text mt-8 text-[13px] leading-5 text-neutral-500 md:order-1 md:mt-0"
-						dangerouslySetInnerHTML={{
-							__html:
-								NC_SITE_SETTINGS.site_footer?.all_rights_reserved_text || '',
-						}}
-					></p>
-				</div>
-			</div>
-		</footer>
-	)
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Logo va tavsif */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <span className="text-lg font-bold text-slate-900 dark:text-white">InfoEdu</span>
+            </Link>
+            <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400 max-w-xs">
+              O&apos;zbekiston ta&apos;lim yangiliklari, grantlar va universitetlar haqidagi ishonchli manba.
+            </p>
+            <div className="mt-3 flex items-center gap-3">
+              {socials?.map((item: any) => (
+                <a
+                  key={item?.name}
+                  href={item?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                  aria-label={item?.name}
+                >
+                  {item?.icon ? (
+                    <MyImage
+                      width={20}
+                      height={20}
+                      className="h-5 w-5 opacity-80 hover:opacity-100"
+                      src={item.icon}
+                      alt=""
+                    />
+                  ) : (
+                    <span className="text-xs font-medium">{item?.name}</span>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Sayt bo'yicha linklar */}
+          {FOOTER_SECTIONS.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
+                {section.title}
+              </h3>
+              <ul role="list" className="mt-2 space-y-1.5">
+                {section.links.map((link) => (
+                  <li key={link.href + link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-xs text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p
+            className="text-center text-xs text-slate-500 dark:text-slate-400"
+            dangerouslySetInnerHTML={{ __html: copyrightText }}
+          />
+        </div>
+      </div>
+    </footer>
+  );
 }

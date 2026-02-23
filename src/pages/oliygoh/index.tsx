@@ -2,12 +2,14 @@ import { gql } from '@apollo/client';
 import { getApolloClient } from '@faustwp/core';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import PageLayout from '@/container/PageLayout';
 import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu';
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts';
+import { VILOYAT_SLUGS, getViloyatLabelBySlug } from '@/components/oliygoh/utils';
 import { trackTelegramChannelView } from '@/utils/analytics';
 
 // Lazy load komponentlar
@@ -289,6 +291,22 @@ export default function OliygohlarPage(props: PageProps) {
                 allUniversities={allUniversities}
                 variant="inline"
               />
+            </div>
+
+            {/* Viloyatlar bo'yicha — linklar */}
+            <div className="mb-4 sm:mb-6">
+              <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-2">Viloyatlar bo'yicha</p>
+              <div className="flex flex-wrap gap-2">
+                {VILOYAT_SLUGS.map((slug) => (
+                  <Link
+                    key={slug}
+                    href={`/oliygoh/viloyat/${slug}`}
+                    className="inline-flex items-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    {getViloyatLabelBySlug(slug)}
+                  </Link>
+                ))}
+              </div>
             </div>
 
             {/* Telegram banner — compact, touch-friendly */}

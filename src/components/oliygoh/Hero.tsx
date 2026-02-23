@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+import Link from 'next/link';
 import { MapPin } from 'lucide-react';
-import { getViloyatLabel } from './utils';
+import { getViloyatLabel, getViloyatSlugForLink } from './utils';
 import MyImage from '@/components/MyImage';
 
 interface HeroProps {
@@ -11,9 +12,10 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ title, bgImage, viloyat }) => {
   const academicYear = useMemo(() => {
-    // O'quv yili (2025-2026)
     return '2025-2026';
   }, []);
+
+  const viloyatSlug = useMemo(() => getViloyatSlugForLink(viloyat), [viloyat]);
 
   return (
     <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
@@ -35,8 +37,17 @@ const Hero: React.FC<HeroProps> = ({ title, bgImage, viloyat }) => {
 
             <div className="flex flex-wrap items-center gap-6 text-slate-500 dark:text-slate-400 font-medium">
               <div className="flex items-center">
-                <MapPin className="w-5 h-5 mr-2 text-slate-400 dark:text-slate-500" />
-                {getViloyatLabel(viloyat)}
+                <MapPin className="w-5 h-5 mr-2 text-slate-400 dark:text-slate-500 shrink-0" />
+                {viloyatSlug ? (
+                  <Link
+                    href={`/oliygoh/viloyat/${viloyatSlug}`}
+                    className="hover:text-blue-600 dark:hover:text-blue-400 underline underline-offset-2 transition-colors"
+                  >
+                    {getViloyatLabel(viloyat)}
+                  </Link>
+                ) : (
+                  getViloyatLabel(viloyat)
+                )}
               </div>
             </div>
           </div>

@@ -16,6 +16,44 @@ export const VILOYAT_LABELS: Record<string, string> = {
   toshkent_shahar: "Toshkent shahri",
 };
 
+/** URL slug'lar — viloyat sahifalari uchun (oliygoh/viloyat/[slug]) */
+export const VILOYAT_SLUGS = [
+  "andijon",
+  "buxoro",
+  "fargona",
+  "jizzax",
+  "namangan",
+  "navoiy",
+  "qashqadaryo",
+  "samarqand",
+  "sirdaryo",
+  "surxondaryo",
+  "toshkent",
+  "xorazm",
+  "qoraqalpogiston",
+  "toshkent_shahar",
+] as const;
+
+export type ViloyatSlug = (typeof VILOYAT_SLUGS)[number];
+
+/** Slug bo'yicha viloyat nomi (sahifa sarlavhasi uchun) */
+export const getViloyatLabelBySlug = (slug: string): string => {
+  return VILOYAT_LABELS[slug] || slug;
+};
+
+/** Label yoki kod bo'yicha viloyat slug'i (oliygoh/viloyat/[slug] link uchun). Topilmasa null. */
+export const getViloyatSlugForLink = (viloyat: string | string[] | null | undefined): string | null => {
+  if (!viloyat) return null;
+  const raw = Array.isArray(viloyat) ? viloyat.find(Boolean) : viloyat;
+  const s = (raw && typeof raw === 'string' ? raw : '').trim();
+  if (!s) return null;
+  const norm = s.toLowerCase();
+  for (const slug of VILOYAT_SLUGS) {
+    if (slug === norm || VILOYAT_LABELS[slug] === s) return slug;
+  }
+  return null;
+};
+
 // Viloyat kodini label'ga o'girish funksiyasi
 export const getViloyatLabel = (viloyatCode: string | string[] | null | undefined): string => {
   if (!viloyatCode) return "Viloyat kiritilmagan";
