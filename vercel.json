@@ -3,5 +3,16 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "env": {},
-  "regions": ["fra1"]
+  "regions": ["fra1"],
+  "headers": [
+    {
+      "source": "/_next/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
 }

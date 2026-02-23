@@ -41,6 +41,13 @@ module.exports = withFaust({
 					],
 				}),
 			},
+			// 404 cache bartaraf: eski buildId bilan /_next/data so'rovlari cache'lanmasin
+			{
+				source: '/_next/data/:path*',
+				headers: [
+					{ key: 'Cache-Control', value: 'no-store, max-age=0, must-revalidate' },
+				],
+			},
 		]
 	},
 	async redirects() {
