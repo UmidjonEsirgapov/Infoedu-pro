@@ -2,6 +2,9 @@ import SEO from "@/components/SEO/SEO";
 import React, { FC } from "react";
 import SiteHeader from "./SiteHeader";
 import Footer from "@/components/Footer/Footer";
+import YandexBannerAd from "@/components/Ads/YandexBannerAd";
+import YandexFeedAd from "@/components/Ads/YandexFeedAd";
+import YandexInImage from "@/components/Ads/YandexInImage";
 import { FragmentType } from "@/__generated__";
 import {
   NC_FOOTER_MENU_QUERY_FRAGMENT,
@@ -75,7 +78,13 @@ const PageLayout: FC<Props> = ({
         menuItems={headerMenuItems || []}
       />
 
+      <YandexBannerAd />
+
       {children}
+
+      <YandexFeedAd />
+
+      <YandexInImage />
 
       <Footer menuItems={footerMenuItems || []} />
     </>

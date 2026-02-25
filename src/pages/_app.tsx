@@ -15,6 +15,8 @@ import themeJson from '@/../theme.json'
 import { GoogleAnalytics, event as gaEvent } from 'nextjs-google-analytics'
 import { Analytics } from "@vercel/analytics/next"
 import Script from 'next/script'
+import YandexTopAd from '@/components/Ads/YandexTopAd'
+import YandexFullscreen from '@/components/Ads/YandexFullscreen'
 
 /** Core Web Vitals va boshqa metrikalarni GA4 ga yuborish — sahifa yuklanish tezligi analitikasi uchun */
 export function reportWebVitals(metric: { id: string; name: string; label: string; value: number }) {
@@ -135,6 +137,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
+			{/* Yandex.RTB context.js — reklama bloklari uchun */}
+			<Script
+				src="https://yandex.ru/ads/system/context.js"
+				strategy="afterInteractive"
+			/>
 			{/* OneSignal SDK Script */}
 			<Script
 				src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
@@ -154,6 +161,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			<GoogleAnalytics trackPageViews />
 			<Analytics />
 			<OneSignalInit />
+			<YandexTopAd />
+			<YandexFullscreen />
 
 			<FaustProvider pageProps={pageProps}>
 				<WordPressBlocksProvider
