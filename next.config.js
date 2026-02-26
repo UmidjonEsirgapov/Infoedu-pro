@@ -13,11 +13,15 @@ module.exports = withFaust({
 	typedRoutes: false,
 	// Build paytida ESLint ishlamasin (paket o'rnatilmagan, deploy xatosiz o'tishi uchun)
 	eslint: { ignoreDuringBuilds: true },
-	// Hostinger MySQL limitini saqlash uchun
-	experimental: {
-		cpus: 1,
-		workerThreads: false,
-	},
+	// Hostinger da resurs limiti; Vercel da cheklovsiz (tezroq build)
+	...(process.env.VERCEL
+		? {}
+		: {
+				experimental: {
+					cpus: 1,
+					workerThreads: false,
+				},
+			}),
 	images: {
 		// 👇 ESKI UZUN RO'YXAT O'RNIGA SHU IKKI QATOR YETARLI
 		remotePatterns: [

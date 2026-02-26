@@ -44,14 +44,16 @@ export default function InlinePostAd({ contentRef }: InlinePostAdProps) {
       }
       insertedRef.current = adDiv
 
-      window.yaContextCb.push(() => {
-        if (window.Ya?.Context?.AdvManager) {
-          window.Ya.Context.AdvManager.render({
-            blockId: INLINE_BANNER_BLOCK_ID,
-            renderTo: renderToId,
-          })
-        }
-      })
+      if (window.yaContextCb) {
+        window.yaContextCb.push(() => {
+          if (window.Ya?.Context?.AdvManager) {
+            window.Ya.Context.AdvManager.render({
+              blockId: INLINE_BANNER_BLOCK_ID,
+              renderTo: renderToId,
+            })
+          }
+        })
+      }
     }
 
     const runWhenReady = () => {
