@@ -2,16 +2,21 @@
  * Sahifadagi (yoki berilgan konteynerdagi) barcha <img> teglariga
  * dinamik id biriktiradi. In-Image (R-A-18660186-5) bloki ularni
  * renderTo orqali tanishi uchun kerak.
+ * SSR/build da document yo'q bo'lganda bo'sh massiv qaytaradi.
  *
- * @param container - Qidirish joyi (default: document.body)
+ * @param container - Qidirish joyi (berilmasa: document.body, faqat client da)
  * @param prefix - id prefiksi (default: 'yandex_inimage')
  * @returns Id biriktirilgan img elementlari ro'yxati
  */
 export function assignDynamicIdsToImages(
-  container: HTMLElement | Document = document.body,
+  container?: HTMLElement | Document | null,
   prefix = 'yandex_inimage'
 ): HTMLImageElement[] {
-  const root = container instanceof Document ? container.body : container
+  if (typeof document === 'undefined') return []
+  const resolved =
+    container instanceof Document ? container.body : container ?? document.body
+  if (!resolved) return []
+  const root = resolved as HTMLElement
   const images = Array.from(root.querySelectorAll<HTMLImageElement>('img'))
   const usedIds = new Set<string>()
 
