@@ -5,15 +5,16 @@ import { YAN_BLOCK_IDS } from './YandexAd'
 
 const IN_IMAGE_BLOCK_ID = YAN_BLOCK_IDS.inImage
 
-/** Asosiy rasmlar (featured images) uchun selector. O'zgartirish mumkin. */
-const DEFAULT_IMAGE_SELECTOR = 'main img[src*="wp-content"], article .wp-block-post-featured-image img, .prose img'
+/** Faqat priority rasmlar (Next.js Image priority → loading="eager", yoki data-priority) */
+const PRIORITY_IMAGE_SELECTOR =
+  'main img[loading="eager"], article img[loading="eager"], img[data-priority="true"]'
 
 export interface YandexInImageProps {
-  /** Qaysi rasmlarga reklama chiqarish. Default: featured va asosiy kontent rasmlari */
+  /** Faqat shu selector bilan rasmlarga reklama. Default: priority rasmlar */
   selector?: string
 }
 
-export default function YandexInImage({ selector = DEFAULT_IMAGE_SELECTOR }: YandexInImageProps) {
+export default function YandexInImage({ selector = PRIORITY_IMAGE_SELECTOR }: YandexInImageProps) {
   useEffect(() => {
     if (typeof window === 'undefined' || !window.yaContextCb) return
 
@@ -30,19 +31,20 @@ export default function YandexInImage({ selector = DEFAULT_IMAGE_SELECTOR }: Yan
     }
 
     const images = Array.from(document.querySelectorAll<HTMLImageElement>(selector))
-    const process = (list: HTMLImageElement[]) => {
-      if (!list.length) return
-      const img = list.shift()!
+
+    images.forEach((img) => {
       const imageId = `yandex_rtb_${IN_IMAGE_BLOCK_ID.replace(/-/g, '_')}_${Math.random().toString(16).slice(2)}`
       img.id = imageId
-      if (img.tagName === 'IMG' && !img.complete) {
-        img.addEventListener('load', () => render(imageId), { once: true })
+
+      const onReady = () => render(imageId)
+
+      if (!img.complete) {
+        img.addEventListener('load', onReady, { once: true })
+        img.addEventListener('error', onReady, { once: true })
       } else {
-        render(imageId)
+        onReady()
       }
-      process(list)
-    }
-    process(images)
+    })
   }, [selector])
 
   return null

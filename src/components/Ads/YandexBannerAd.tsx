@@ -9,7 +9,7 @@ export default function YandexBannerAd() {
     <YandexAd
       blockId={YAN_BLOCK_IDS.banner}
       renderTo="yandex_rtb_R-A-18660186-3"
-      minHeight={90}
+      minHeight={250}
       className="my-4 w-full"
     />
   )

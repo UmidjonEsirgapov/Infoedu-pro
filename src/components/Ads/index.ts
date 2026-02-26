@@ -1,6 +1,7 @@
 export { default as YandexAd, YAN_BLOCK_IDS } from './YandexAd'
 export { default as YandexTopAd } from './YandexTopAd'
 export { default as YandexFullscreen } from './YandexFullscreen'
-export { default as YandexFeedAd } from './YandexFeedAd'
 export { default as YandexBannerAd } from './YandexBannerAd'
+export { default as YandexTopBillboard } from './YandexTopBillboard'
 export { default as YandexInImage } from './YandexInImage'
+export { default as InlinePostAd } from './InlinePostAd'

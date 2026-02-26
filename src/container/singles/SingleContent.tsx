@@ -19,6 +19,7 @@ import { useMusicPlayer } from '@/hooks/useMusicPlayer'
 import { flatListToHierarchical } from '@faustwp/core'
 import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 import { ContentBlock } from '@faustwp/blocks/dist/mjs/components/WordPressBlocksViewer'
+import InlinePostAd from '@/components/Ads/InlinePostAd'
 import { replaceYearPlaceholder } from '@/utils/replaceYearPlaceholder'
 import { BUTTON_TEXTS, TELEGRAM_LINKS } from '@/contains/buttonTexts'
 import { trackTelegramChannelView } from '@/utils/analytics'
@@ -197,6 +198,7 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
 					ref={contentRef}
 				>
 					<MyWordPressBlockViewer blocks={blocks} />
+					<InlinePostAd contentRef={contentRef} />
 				</div>
 
 				{/* Telegram Reklama Banner */}

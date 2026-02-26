@@ -2,8 +2,7 @@ import SEO from "@/components/SEO/SEO";
 import React, { FC } from "react";
 import SiteHeader from "./SiteHeader";
 import Footer from "@/components/Footer/Footer";
-import YandexBannerAd from "@/components/Ads/YandexBannerAd";
-import YandexFeedAd from "@/components/Ads/YandexFeedAd";
+import YandexTopBillboard from "@/components/Ads/YandexTopBillboard";
 import YandexInImage from "@/components/Ads/YandexInImage";
 import { FragmentType } from "@/__generated__";
 import {
@@ -72,17 +71,15 @@ const PageLayout: FC<Props> = ({
         type={seoType}
       />
 
+      <YandexTopBillboard />
+
       <SiteHeader
         siteTitle={generalSettings?.title}
         siteDescription={generalSettings?.description}
         menuItems={headerMenuItems || []}
       />
 
-      <YandexBannerAd />
-
       {children}
-
-      <YandexFeedAd />
 
       <YandexInImage />
 

@@ -22,7 +22,6 @@ declare global {
 
 const YAN_BLOCK_IDS = {
   topAd: 'R-A-18660186-1',
-  feed: 'R-A-18660186-2',
   banner: 'R-A-18660186-3',
   fullscreen: 'R-A-18660186-4',
   inImage: 'R-A-18660186-5',
@@ -30,14 +29,16 @@ const YAN_BLOCK_IDS = {
 
 export interface YandexAdProps {
   blockId: string
-  type?: 'topAd' | 'feed' | 'fullscreen' | 'inImage'
+  type?: 'topAd' | 'fullscreen' | 'inImage'
   renderTo?: string
   /** Konteyner uchun min-height (layout shift oldini olish) */
   minHeight?: number
   className?: string
 }
 
-export default function YandexAd({ blockId, type, renderTo, minHeight = 90, className = '' }: YandexAdProps) {
+const DEFAULT_MIN_HEIGHT = 250
+
+export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_MIN_HEIGHT, className = '' }: YandexAdProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const id = useId().replace(/:/g, '')
   const to = renderTo || `yandex_rtb_${blockId.replace(/-/g, '_')}_${id}`
