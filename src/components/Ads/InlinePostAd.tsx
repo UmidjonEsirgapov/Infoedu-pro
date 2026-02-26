@@ -16,7 +16,10 @@ export interface InlinePostAdProps {
 const CONTENT_BLOCK_SELECTOR =
   'p, h1, h2, h3, h4, h5, h6, [class*="wp-block-paragraph"], [class*="wp-block-heading"], .CoreFreeform > *'
 
-/** Maqola matnining o‘rtasiga (3-paragrafdan keyin) R-A-18660186-3 StandardBanner joylashtiriladi */
+/** Fallback: konteyner ichidagi har qanday to‘g‘ridan-to‘g‘ri bolalar (bloklar topilmasa) */
+const FALLBACK_BLOCK_SELECTOR = '#single-entry-content > *'
+
+/** Maqola matnining o‘rtasiga (3-blokdan keyin) R-A-18660186-3 StandardBanner joylashtiriladi */
 const INSERT_AFTER_BLOCK_INDEX = 2
 
 export default function InlinePostAd({ contentRef }: InlinePostAdProps) {
@@ -33,7 +36,10 @@ export default function InlinePostAd({ contentRef }: InlinePostAdProps) {
     const insertAd = () => {
       if (insertedRef.current) return
 
-      const blocks = container.querySelectorAll(CONTENT_BLOCK_SELECTOR)
+      let blocks = container.querySelectorAll(CONTENT_BLOCK_SELECTOR)
+      if (blocks.length === 0) {
+        blocks = container.querySelectorAll(FALLBACK_BLOCK_SELECTOR)
+      }
       const idx = INSERT_AFTER_BLOCK_INDEX
       const insertAfter =
         blocks.length > idx ? blocks[idx] : blocks.length > 0 ? blocks[blocks.length - 1] : null
@@ -63,11 +69,18 @@ export default function InlinePostAd({ contentRef }: InlinePostAdProps) {
       }
     }
 
+    /** Layout tugagach render (CONTAINER_IS_HIDDEN kamayishi uchun) */
+    const tryRenderAfterLayout = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(tryRender)
+      })
+    }
+
       if (window.yaContextCb) {
-        window.yaContextCb.push(tryRender)
+        window.yaContextCb.push(tryRenderAfterLayout)
       }
       if (window.Ya?.Context?.AdvManager) {
-        tryRender()
+        tryRenderAfterLayout()
       }
     }
 

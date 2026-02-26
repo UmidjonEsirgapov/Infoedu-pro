@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import MyImage from '../MyImage';
+import PushSubscribeButton from '../PushSubscribeButton';
 import { NC_SITE_SETTINGS } from '@/contains/site-settings';
 import { TELEGRAM_LINKS } from '@/contains/buttonTexts';
 
@@ -118,7 +119,8 @@ export default function Footer({ menuItems }: Props) {
           ))}
         </div>
 
-        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+          <PushSubscribeButton />
           <p
             className="text-center text-xs text-slate-500 dark:text-slate-400"
             dangerouslySetInnerHTML={{ __html: copyrightText }}

@@ -37,70 +37,23 @@ const poppins = Poppins({
 	weight: ['300', '400', '500', '600', '700'],
 })
 
-// OneSignal initialization component
+// OneSignal v16 init — OneSignalDeferred orqali (defer skript bilan to'g'ri ishlashi uchun)
+const ONE_SIGNAL_APP_ID = '8cd942e4-4453-4863-bfcb-dd86b87fc5cd'
+
 function OneSignalInit() {
 	useEffect(() => {
-		// Check if window is available (client-side only)
 		if (typeof window === 'undefined') return
+		if (!window.OneSignalDeferred) window.OneSignalDeferred = []
 
-		// Initialize OneSignal array if it doesn't exist
-		// window.OneSignal.push() SDK yuklanguncha funksiyalarni saqlaydi
-		window.OneSignal = window.OneSignal || []
-
-		// Initialize OneSignal using push method (safe way)
-		// This ensures OneSignal SDK is fully loaded before executing
-		window.OneSignal.push(function() {
-			// Type guard: OneSignal SDK yuklanganda, window.OneSignal obyekt bo'ladi
-			// Array emas, obyekt bo'lishini tekshiramiz
-			if (window.OneSignal && !Array.isArray(window.OneSignal) && typeof window.OneSignal.init === 'function') {
-				try {
-					// Use init() promise to ensure OneSignal is fully initialized before accessing its properties
-					// serviceWorkerPath: production da /OneSignalSDKWorker.js public/ dan serve qilinadi
-					window.OneSignal.init({
-						appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
-						allowLocalhostAsSecureOrigin: true,
-						serviceWorkerPath: "/OneSignalSDKWorker.js",
-					}).then(() => {
-						// OneSignal is now fully initialized, emitter and other properties are available
-						if (window.OneSignal && !Array.isArray(window.OneSignal)) {
-							// Notifications API mavjudligini tekshirish va xavfsiz ishlatish
-							// OneSignal SDK v16 da Notifications API o'zgargan bo'lishi mumkin
-							// SDK ichida NotificationsNamespace.ts xatosini oldini olish uchun
-							// Notifications obyektini mavjud qilish yoki xavfsiz ishlatish
-							try {
-								if (window.OneSignal.Notifications && typeof window.OneSignal.Notifications.on === 'function') {
-									// Notifications event listener'larini qo'shish
-									// Masalan: notification permission changes, click events, va hokazo
-									console.log('OneSignal Notifications API is available')
-								} else {
-									// Notifications API mavjud emas - SDK ichida xato bo'lmasligi uchun
-									// Notifications obyektini yaratish yoki SDK'ning o'ziga ishonish
-									console.warn('OneSignal Notifications API is not available - this is normal for some SDK versions')
-									
-									// SDK ichida NotificationsNamespace.ts xatosini oldini olish uchun
-									// Notifications obyektini mavjud qilish (agar kerak bo'lsa)
-									if (!window.OneSignal.Notifications) {
-										// SDK o'zi Notifications obyektini yaratadi, shuning uchun biz hech narsa qilmaymiz
-										// Faqat xatolarni catch qilamiz
-									}
-								}
-							} catch (error) {
-								// Notifications API bilan bog'liq xatolarni catch qilish
-								console.warn('OneSignal Notifications API error (non-critical):', error)
-							}
-							
-							// Emitter API mavjudligini tekshirish
-							if (window.OneSignal.emitter && window.OneSignal.EVENTS) {
-								// OneSignal.emitter is now available and can be used safely
-								console.log('OneSignal emitter API is available')
-							}
-						}
-					}).catch((error: Error) => {
-						console.error('OneSignal initialization failed:', error)
-					})
-				} catch (error) {
-					console.error('OneSignal initialization error:', error)
-				}
+		window.OneSignalDeferred.push(async (OneSignal: any) => {
+			try {
+				await OneSignal.init({
+					appId: ONE_SIGNAL_APP_ID,
+					allowLocalhostAsSecureOrigin: true,
+					serviceWorkerPath: '/OneSignalSDKWorker.js',
+				})
+			} catch (error) {
+				console.error('OneSignal initialization failed:', error)
 			}
 		})
 	}, [])
@@ -149,12 +102,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 				src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
 				strategy="afterInteractive"
 				defer
-				onLoad={() => {
-					// Script yuklangandan keyin, OneSignal array'ni tekshirish
-					if (typeof window !== 'undefined' && window.OneSignal) {
-						console.log('OneSignal SDK script loaded')
-					}
-				}}
 				onError={(e) => {
 					console.error('OneSignal SDK script failed to load:', e)
 				}}
