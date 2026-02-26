@@ -14,10 +14,10 @@ module.exports = withFaust({
 	// Build paytida ESLint ishlamasin (paket o'rnatilmagan, deploy xatosiz o'tishi uchun)
 	eslint: { ignoreDuringBuilds: true },
 	// Build parallelligini cheklash: WordPress/GraphQL ga bir vaqtda juda ko'p so'rov
-	// (paralel build) tushganda DB connection / rate limit xatolari chiqadi.
-	// Hostinger: qattiq cheklov; Vercel: o'rtacha (2 cpu) — origin yukini kamaytiradi.
+	// tushganda DB connection / rate limit xatolari chiqadi.
+	// workerThreads: true Vercel da DataCloneError (()=>null could not be cloned) beradi — false.
 	...(process.env.VERCEL
-		? { experimental: { cpus: 2, workerThreads: true } }
+		? { experimental: { cpus: 2, workerThreads: false } }
 		: {
 				experimental: {
 					cpus: 1,
