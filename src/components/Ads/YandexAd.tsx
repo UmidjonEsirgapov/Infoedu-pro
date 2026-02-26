@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useId } from 'react'
+import { useThemeMode } from '@/hooks/useThemeMode'
 
 declare global {
   interface Window {
@@ -13,6 +14,7 @@ declare global {
             type?: string
             renderTo?: string
             platform?: string
+            darkTheme?: boolean
           }) => void
         }
       }
@@ -42,6 +44,8 @@ export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_
   const containerRef = useRef<HTMLDivElement>(null)
   const id = useId().replace(/:/g, '')
   const to = renderTo || `yandex_rtb_${blockId.replace(/-/g, '_')}_${id}`
+  const { isDarkMode } = useThemeMode()
+  const isStandardBanner = blockId === YAN_BLOCK_IDS.banner
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -53,6 +57,7 @@ export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_
           const opts: Parameters<typeof window.Ya.Context.AdvManager.render>[0] = {
             blockId,
             renderTo: to,
+            darkTheme: isDarkMode,
           }
           if (type) opts.type = type
           window.Ya.Context.AdvManager.render(opts)
@@ -66,17 +71,19 @@ export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_
       const el = document.getElementById(to)
       if (el) el.innerHTML = ''
     }
-  }, [blockId, type, to])
+  }, [blockId, type, to, isDarkMode])
 
   if (type === 'topAd' || type === 'fullscreen') {
     return null
   }
 
+  const bannerClass = isStandardBanner ? ' max-h-[200px] sm:max-h-none overflow-hidden' : ''
+
   return (
     <div
       id={to}
       ref={containerRef}
-      className={className}
+      className={`${className}${bannerClass}`.trim()}
       style={{ minHeight: `${minHeight}px` }}
     />
   )

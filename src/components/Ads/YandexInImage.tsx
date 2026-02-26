@@ -2,21 +2,29 @@
 
 import React, { useEffect } from 'react'
 import { YAN_BLOCK_IDS } from './YandexAd'
+import { useThemeMode } from '@/hooks/useThemeMode'
+import { assignDynamicIdsToImages } from './assignImageIds'
 
 const IN_IMAGE_BLOCK_ID = YAN_BLOCK_IDS.inImage
 
-/** Faqat priority rasmlar (Next.js Image priority → loading="eager", yoki data-priority) */
-const PRIORITY_IMAGE_SELECTOR =
-  'main img[loading="eager"], article img[loading="eager"], img[data-priority="true"]'
+/** In-Image uchun id prefiksi (assignDynamicIdsToImages bilan bir xil) */
+const IN_IMAGE_ID_PREFIX = 'yandex_rtb_' + IN_IMAGE_BLOCK_ID.replace(/-/g, '_')
 
 export interface YandexInImageProps {
-  /** Faqat shu selector bilan rasmlarga reklama. Default: priority rasmlar */
-  selector?: string
+  /**
+   * Rasmlarni qidirish konteyneri.
+   * Default: main yoki document.body — sahifadagi barcha img ga dinamik id birikadi.
+   */
+  container?: HTMLElement | null
 }
 
-export default function YandexInImage({ selector = PRIORITY_IMAGE_SELECTOR }: YandexInImageProps) {
+export default function YandexInImage({ container }: YandexInImageProps) {
+  const { isDarkMode } = useThemeMode()
+
   useEffect(() => {
     if (typeof window === 'undefined' || !window.yaContextCb) return
+
+    const root = container || document.querySelector('main') || document.body
 
     const render = (imageId: string) => {
       window.yaContextCb!.push(() => {
@@ -25,16 +33,17 @@ export default function YandexInImage({ selector = PRIORITY_IMAGE_SELECTOR }: Ya
             renderTo: imageId,
             blockId: IN_IMAGE_BLOCK_ID,
             type: 'inImage',
+            darkTheme: isDarkMode,
           })
         }
       })
     }
 
-    const images = Array.from(document.querySelectorAll<HTMLImageElement>(selector))
+    const images = assignDynamicIdsToImages(root as HTMLElement, IN_IMAGE_ID_PREFIX)
 
     images.forEach((img) => {
-      const imageId = `yandex_rtb_${IN_IMAGE_BLOCK_ID.replace(/-/g, '_')}_${Math.random().toString(16).slice(2)}`
-      img.id = imageId
+      const imageId = img.id
+      if (!imageId) return
 
       const onReady = () => render(imageId)
 
@@ -45,7 +54,7 @@ export default function YandexInImage({ selector = PRIORITY_IMAGE_SELECTOR }: Ya
         onReady()
       }
     })
-  }, [selector])
+  }, [container, isDarkMode])
 
   return null
 }

@@ -3,7 +3,11 @@ declare global {
 	interface Window {
 		OneSignal?: {
 			push: (callback: () => void) => void
-			init: (options: { appId: string; allowLocalhostAsSecureOrigin?: boolean }) => Promise<void>
+			init: (options: {
+			appId: string
+			allowLocalhostAsSecureOrigin?: boolean
+			serviceWorkerPath?: string
+		}) => Promise<void>
 			emitter?: {
 				on: (event: string, callback: (data?: any) => void) => void
 				off: (event: string, callback?: (data?: any) => void) => void

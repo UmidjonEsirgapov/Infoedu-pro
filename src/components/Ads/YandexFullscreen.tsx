@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { YAN_BLOCK_IDS } from './YandexAd'
+import { useThemeMode } from '@/hooks/useThemeMode'
 
 function useIsTouch() {
   const [isTouch, setIsTouch] = React.useState(false)
@@ -17,6 +18,7 @@ export default function YandexFullscreen() {
   const router = useRouter()
   const isTouch = useIsTouch()
   const prevPathRef = useRef(router.asPath)
+  const { isDarkMode } = useThemeMode()
 
   useEffect(() => {
     if (!isTouch || typeof window === 'undefined') return
@@ -31,6 +33,7 @@ export default function YandexFullscreen() {
             blockId: YAN_BLOCK_IDS.fullscreen,
             type: 'fullscreen',
             platform: 'touch',
+            darkTheme: isDarkMode,
           })
         }
       })
@@ -38,7 +41,7 @@ export default function YandexFullscreen() {
 
     router.events.on('routeChangeComplete', handler)
     return () => router.events.off('routeChangeComplete', handler)
-  }, [router.asPath, router.events, isTouch])
+  }, [router.asPath, router.events, isTouch, isDarkMode])
 
   return null
 }

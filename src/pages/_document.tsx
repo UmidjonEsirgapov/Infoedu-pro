@@ -28,6 +28,10 @@ export default class Document extends NextDocument {
 					<script
 						dangerouslySetInnerHTML={{ __html: 'window.yaContextCb=window.yaContextCb||[]' }}
 					/>
+					{/* OneSignal — SDK skripti yuklanishidan oldin queue bo'lishi kerak (push bildirishnomalar ishlashi uchun) */}
+					<script
+						dangerouslySetInnerHTML={{ __html: 'window.OneSignal=window.OneSignal||[]' }}
+					/>
 				<script
   dangerouslySetInnerHTML={{
     __html: `
@@ -131,7 +135,7 @@ export default class Document extends NextDocument {
 					<meta name="robots" content="index, follow, max-image-preview:large" />
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://static.cloudflareinsights.com; frame-src 'self' https://www.youtube.com https://yandex.ru" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://static.cloudflareinsights.com; worker-src 'self' https://cdn.onesignal.com; frame-src 'self' https://www.youtube.com https://yandex.ru" 
         />
 
 

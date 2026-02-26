@@ -13,9 +13,11 @@ module.exports = withFaust({
 	typedRoutes: false,
 	// Build paytida ESLint ishlamasin (paket o'rnatilmagan, deploy xatosiz o'tishi uchun)
 	eslint: { ignoreDuringBuilds: true },
-	// Hostinger da resurs limiti; Vercel da cheklovsiz (tezroq build)
+	// Build parallelligini cheklash: WordPress/GraphQL ga bir vaqtda juda ko'p so'rov
+	// (paralel build) tushganda DB connection / rate limit xatolari chiqadi.
+	// Hostinger: qattiq cheklov; Vercel: o'rtacha (2 cpu) — origin yukini kamaytiradi.
 	...(process.env.VERCEL
-		? {}
+		? { experimental: { cpus: 2, workerThreads: true } }
 		: {
 				experimental: {
 					cpus: 1,

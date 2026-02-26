@@ -1,4 +1,5 @@
 export { default as YandexAd, YAN_BLOCK_IDS } from './YandexAd'
+export { assignDynamicIdsToImages } from './assignImageIds'
 export { default as YandexTopAd } from './YandexTopAd'
 export { default as YandexFullscreen } from './YandexFullscreen'
 export { default as YandexBannerAd } from './YandexBannerAd'

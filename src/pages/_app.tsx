@@ -55,9 +55,11 @@ function OneSignalInit() {
 			if (window.OneSignal && !Array.isArray(window.OneSignal) && typeof window.OneSignal.init === 'function') {
 				try {
 					// Use init() promise to ensure OneSignal is fully initialized before accessing its properties
+					// serviceWorkerPath: production da /OneSignalSDKWorker.js public/ dan serve qilinadi
 					window.OneSignal.init({
 						appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
 						allowLocalhostAsSecureOrigin: true,
+						serviceWorkerPath: "/OneSignalSDKWorker.js",
 					}).then(() => {
 						// OneSignal is now fully initialized, emitter and other properties are available
 						if (window.OneSignal && !Array.isArray(window.OneSignal)) {

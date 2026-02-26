@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { YAN_BLOCK_IDS } from './YandexAd'
+import { useThemeMode } from '@/hooks/useThemeMode'
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false)
@@ -18,6 +19,7 @@ function useIsMobile() {
 
 export default function YandexTopAd() {
   const isMobile = useIsMobile()
+  const { isDarkMode } = useThemeMode()
 
   useEffect(() => {
     if (!isMobile || typeof window === 'undefined') return
@@ -27,10 +29,11 @@ export default function YandexTopAd() {
         window.Ya.Context.AdvManager.render({
           blockId: YAN_BLOCK_IDS.topAd,
           type: 'topAd',
+          darkTheme: isDarkMode,
         })
       }
     })
-  }, [isMobile])
+  }, [isMobile, isDarkMode])
 
   return null
 }
