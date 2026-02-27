@@ -27,6 +27,18 @@ const links = [
     gradient: 'from-emerald-500/10 to-teal-600/10 dark:from-emerald-500/20 dark:to-teal-600/20',
     ring: 'ring-emerald-500/20 dark:ring-emerald-400/30',
   },
+  {
+    href: '/milliy-sertifikat-sanalari',
+    title: 'Milliy sertifikat',
+    description: 'Milliy sertifikat sanalari',
+    icon: (
+      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+      </svg>
+    ),
+    gradient: 'from-amber-500/10 to-orange-600/10 dark:from-amber-500/20 dark:to-orange-600/20',
+    ring: 'ring-amber-500/20 dark:ring-amber-400/30',
+  },
 ]
 
 export interface WidgetOliygohDarsliklarProps {

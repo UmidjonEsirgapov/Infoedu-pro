@@ -51,6 +51,9 @@ export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_
     if (typeof window === 'undefined') return
     if (!window.yaContextCb) window.yaContextCb = []
 
+    const el = document.getElementById(to)
+    if (el) el.innerHTML = ''
+
     const push = () => {
       window.yaContextCb!.push(() => {
         if (window.Ya?.Context?.AdvManager) {
@@ -78,12 +81,13 @@ export default function YandexAd({ blockId, type, renderTo, minHeight = DEFAULT_
   }
 
   const bannerClass = isStandardBanner ? ' max-h-[200px] sm:max-h-none overflow-hidden' : ''
+  const themeBg = 'bg-white dark:bg-slate-800'
 
   return (
     <div
       id={to}
       ref={containerRef}
-      className={`${className}${bannerClass}`.trim()}
+      className={`${themeBg} ${className}${bannerClass}`.trim()}
       style={{ minHeight: `${minHeight}px` }}
     />
   )

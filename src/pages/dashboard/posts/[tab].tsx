@@ -28,11 +28,13 @@ import DashboardLayout, {
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import getTrans from "@/utils/getTrans";
+import { useSession } from "next-auth/react";
 
 const Page: FaustPage<{}> = () => {
   const { isReady, isAuthenticated } = useSelector(
     (state: RootState) => state.viewer.authorizedUser
   );
+  const { data: session } = useSession();
   const router = useRouter();
   const client = getApolloAuthClient();
   const currentTab: TDashBoardPostTab =
@@ -88,6 +90,11 @@ const Page: FaustPage<{}> = () => {
     if (!isAuthenticated || !currentTab) {
       return;
     }
+    // NextAuth bilan kirilganda WordPress JWT ni so'rovdan oldin o'rnatamiz (viewer posts uchun)
+    const wpToken = (session as { wpToken?: string } | null)?.wpToken;
+    if (typeof globalThis !== "undefined" && wpToken) {
+      (globalThis as { __NEXT_AUTH_WP_TOKEN?: string }).__NEXT_AUTH_WP_TOKEN = wpToken;
+    }
 
     let status: PostStatusEnum = PostStatusEnum.Publish;
     if (currentTab === "published") {
@@ -118,7 +125,7 @@ const Page: FaustPage<{}> = () => {
         },
       },
     });
-  }, [isAuthenticated, currentTab]);
+  }, [isAuthenticated, currentTab, session]);
   //
   //
 

@@ -12,6 +12,7 @@ import {
 	NcmazFcUserReactionPostUpdateResuiltEnum,
 } from '@/__generated__/graphql'
 import { updateViewerAllReactionPosts } from '@/stores/viewer/viewerSlice'
+import { getViewerDatabaseIdAsNumber } from '@/utils/getViewerDatabaseIdAsNumber'
 import { useLoginModal } from '@/hooks/useLoginModal'
 
 import toast from 'react-hot-toast'
@@ -200,11 +201,12 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 				: NcmazFcUserReactionPostUpdateResuiltEnum.Added,
 		)
 
-		//  update like count for database
+		// update like count for database (user_id faqat raqam bo'lsa — GraphQL Int)
+		const userId = getViewerDatabaseIdAsNumber(viewer)
 		handleUpdateReactionCount({
 			variables: {
 				post_id: postDatabseId,
-				user_id: viewer.databaseId,
+				user_id: userId,
 				reaction: NcmazFcUserReactionPostActionEnum.Like,
 				number: isLiked
 					? NcmazFcUserReactionPostNumberUpdateEnum.Remove_1

@@ -30,6 +30,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
       { label: 'Milliy sertifikat sanalari', href: '/milliy-sertifikat-sanalari' },
       { label: 'Pedagog kadrlar attestatsiyasi', href: '/pedagog-kadrlar-attestatsiyasi' },
       { label: 'Reklama', href: '/reklama' },
+      { label: 'Sayt xaritasi', href: '/sitemap' },
     ],
   },
 ];

@@ -1,6 +1,7 @@
 import '@/../faust.config'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { SessionProvider } from 'next-auth/react'
 import { FaustProvider } from '@faustwp/core'
 import '@/styles/globals.css'
 import '@/styles/index.scss'
@@ -37,27 +38,8 @@ const poppins = Poppins({
 	weight: ['300', '400', '500', '600', '700'],
 })
 
-// OneSignal v16 init — OneSignalDeferred orqali (defer skript bilan to'g'ri ishlashi uchun)
-const ONE_SIGNAL_APP_ID = '8cd942e4-4453-4863-bfcb-dd86b87fc5cd'
-
+// OneSignal init _document da (SDK yuklanishidan oldin queue da bo'lishi uchun)
 function OneSignalInit() {
-	useEffect(() => {
-		if (typeof window === 'undefined') return
-		if (!window.OneSignalDeferred) window.OneSignalDeferred = []
-
-		window.OneSignalDeferred.push(async (OneSignal: any) => {
-			try {
-				await OneSignal.init({
-					appId: ONE_SIGNAL_APP_ID,
-					allowLocalhostAsSecureOrigin: true,
-					serviceWorkerPath: '/OneSignalSDKWorker.js',
-				})
-			} catch (error) {
-				console.error('OneSignal initialization failed:', error)
-			}
-		})
-	}, [])
-
 	return null
 }
 
@@ -97,11 +79,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 				src="https://yandex.ru/ads/system/context.js"
 				strategy="afterInteractive"
 			/>
-			{/* OneSignal SDK Script */}
+			{/* OneSignal SDK — erta yuklansin, _document dagi init queue ishlashi uchun */}
 			<Script
 				src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-				strategy="afterInteractive"
-				defer
+				strategy="beforeInteractive"
 				onError={(e) => {
 					console.error('OneSignal SDK script failed to load:', e)
 				}}
@@ -114,6 +95,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			<YandexFullscreen />
 
 			<FaustProvider pageProps={pageProps}>
+				<SessionProvider>
 				<WordPressBlocksProvider
 					config={{
 						blocks,
@@ -140,6 +122,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 						/>
 					</SiteWrapperProvider>
 				</WordPressBlocksProvider>
+				</SessionProvider>
 			</FaustProvider>
 		</>
 	)

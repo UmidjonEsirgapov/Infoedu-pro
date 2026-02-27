@@ -118,15 +118,18 @@ export default async function handler(
 			}
 		}
 
-		// 4. Alternative auth endpoint test (POST method)
+		// 4. Token exchange simulatsiyasi (POST — 500 chiqsa WordPress javobini ko'rish uchun)
+		const faustSecret = process.env.FAUST_SECRET_KEY || ''
 		try {
 			const faustAuthPostResponse = await fetch(`${wordPressUrl}/wp-json/faustwp/v1/auth/token`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					...(faustSecret ? { 'x-faustwp-secret': faustSecret } : {}),
 				},
+				body: JSON.stringify({ code: 'test-diagnostic-invalid-code' }),
 			})
-			
+
 			let postResponseBody: string | object | null = null
 			try {
 				const textResponse = await faustAuthPostResponse.text()
@@ -138,7 +141,7 @@ export default async function handler(
 			} catch {
 				postResponseBody = null
 			}
-			
+
 			results.tests.faustAuthEndpointPOST = {
 				status: faustAuthPostResponse.status,
 				statusText: faustAuthPostResponse.statusText,
@@ -146,6 +149,12 @@ export default async function handler(
 				url: `${wordPressUrl}/wp-json/faustwp/v1/auth/token`,
 				method: 'POST',
 				response: postResponseBody,
+				...(faustAuthPostResponse.status === 500
+					? {
+							messageFor500:
+								'500 = WordPress server xato. response ichidagi matnni yoki PHP error logni tekshiring. Secret key (WordPress Settings > Faust) va .env FAUST_SECRET_KEY bir xil bo\'lishi kerak.',
+						}
+					: {}),
 			}
 		} catch (error: any) {
 			results.tests.faustAuthEndpointPOST = {
@@ -195,8 +204,8 @@ export default async function handler(
 				? hasAuthorizeRoute
 					? 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available, but /authorize endpoint exists. This suggests you may be using an older version of Faust.js plugin that uses /authorize instead of /auth/token. Consider updating the plugin to the latest version.'
 					: 'Faust.js auth endpoint (/wp-json/faustwp/v1/auth/token) is not available. This is a WordPress plugin configuration issue. The endpoint is not registered in the available routes.'
-				: results.tests.faustAuthEndpoint?.status === 500
-				? 'Faust.js auth endpoint returns 500 error. Check WordPress server logs.'
+				: (results.tests.faustAuthEndpoint?.status === 500 || results.tests.faustAuthEndpointPOST?.status === 500)
+				? 'Token exchange 500: WordPress server xato. FAUST_SECRET_KEY mosligi, Front-end URL (Settings > Faust), PHP error log tekshiring. /api/test-wordpress-rest da faustAuthEndpointPOST.response ni ko\'ring.'
 				: 'All endpoints are working correctly.',
 			availableEndpoints: Object.keys(availableRoutes).filter(route => 
 				route.includes('auth') || route.includes('authorize') || route.includes('token')
@@ -222,6 +231,14 @@ export default async function handler(
 						'5. Check WordPress REST API is enabled (Settings > Permalinks > Save Changes)',
 						'6. Verify FAUST_SECRET_KEY matches between WordPress and Next.js',
 						'7. Check for plugin conflicts - temporarily disable other plugins',
+					]
+				: (results.tests.faustAuthEndpoint?.status === 500 || results.tests.faustAuthEndpointPOST?.status === 500)
+				? [
+						'Token exchange 500 — quyilarni tekshiring:',
+						'1. WordPress: Settings > Headless (Faust) — Secret Key va Next.js .env FAUST_SECRET_KEY bir xil bo\'lishi kerak.',
+						'2. WordPress: Front-end site URL to\'g\'ri (masalan https://infoedu.uz yoki http://localhost:3000).',
+						'3. Brauzerda /api/test-wordpress-rest ochib faustAuthEndpointPOST.response ichidagi xabar yoki PHP error logni o\'qing.',
+						'4. WPGraphQL va FaustWP pluginlari yangi versiyada va faol.',
 					]
 				: [],
 		}

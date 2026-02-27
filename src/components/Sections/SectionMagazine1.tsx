@@ -15,7 +15,11 @@ const Components: FC<SectionMagazine1Props> = ({ posts, className = '' }) => {
 				<Empty />
 			) : (
 				<div className="grid grid-cols-1 gap-6 lg:grid-cols-2 2xl:gap-7">
-					{posts[0] && <Card2 size="large" post={posts[0]} />}
+					{posts[0] && (
+						<div data-home-hero-image>
+							<Card2 size="large" post={posts[0]} />
+						</div>
+					)}
 					<div className="grid gap-6 2xl:gap-7">
 						{posts
 							.filter((_, i) => i < 4 && i > 0)

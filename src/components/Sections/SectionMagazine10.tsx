@@ -41,7 +41,11 @@ const SectionMagazine10: FC<SectionMagazine10Props> = ({
 						</div>
 					) : null}
 
-					{posts[0] && <Card19 className="" post={posts[0]} />}
+					{posts[0] && (
+						<div data-home-hero-image>
+							<Card19 className="" post={posts[0]} />
+						</div>
+					)}
 				</div>
 			)}
 		</div>

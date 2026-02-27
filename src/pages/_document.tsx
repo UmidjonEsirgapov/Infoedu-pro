@@ -28,9 +28,23 @@ export default class Document extends NextDocument {
 					<script
 						dangerouslySetInnerHTML={{ __html: 'window.yaContextCb=window.yaContextCb||[]' }}
 					/>
-					{/* OneSignal v16 — SDK yuklanishidan oldin queue (OneSignalDeferred tavsiya etiladi) */}
+					{/* OneSignal v16 — queue va init SDK yuklanishidan oldin bo'lishi kerak */}
 					<script
-						dangerouslySetInnerHTML={{ __html: 'window.OneSignal=window.OneSignal||[];window.OneSignalDeferred=window.OneSignalDeferred||[]' }}
+						dangerouslySetInnerHTML={{
+							__html: `
+window.OneSignal=window.OneSignal||[];
+window.OneSignalDeferred=window.OneSignalDeferred||[];
+OneSignalDeferred.push(async function(OneSignal){
+  try {
+    await OneSignal.init({
+      appId: "8cd942e4-4453-4863-bfcb-dd86b87fc5cd",
+      allowLocalhostAsSecureOrigin: true,
+      serviceWorkerPath: "/OneSignalSDKWorker.js"
+    });
+  } catch (e) { console.error('OneSignal init:', e); }
+});
+`,
+						}}
 					/>
 				<script
   dangerouslySetInnerHTML={{
@@ -135,7 +149,7 @@ export default class Document extends NextDocument {
 					<meta name="robots" content="index, follow, max-image-preview:large" />
 					<meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://static.cloudflareinsights.com https://va.vercel-scripts.com; worker-src 'self' https://cdn.onesignal.com; frame-src 'self' https://www.youtube.com https://yandex.ru https://mc.yandex.ru" 
+          content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://yandex.ru https://yastatic.net https://cdn.onesignal.com https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://static.cloudflareinsights.com https://va.vercel-scripts.com https://telegram.org; worker-src 'self' https://cdn.onesignal.com; frame-src 'self' https://www.youtube.com https://yandex.ru https://mc.yandex.ru https://telegram.org" 
         />
 
 

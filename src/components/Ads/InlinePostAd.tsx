@@ -1,5 +1,13 @@
 'use client'
 
+/**
+ * Maqola matni ichiga (3-blokdan keyin) Yandex banner joylashtiradi.
+ * Agar reklama chiqmasa:
+ * 1. Yandex Dashboard → Blok R-A-18660186-3 → sayt domeni "Ruxsat berilgan saytlar"da bo'lsin.
+ * 2. Blok turi "Adaptiv banner" yoki "Standart banner" bo'lsin.
+ * 3. Brauzerda Elements → #single-entry-content ichida [data-yandex-inline-ad] div bor-yo'qligini tekshiring (joylashuv ishlayapti).
+ * 4. Localhostda Yandex 403 berishi mumkin — production domenida tekshiring.
+ */
 import React, { useEffect, useRef, useId } from 'react'
 import { YAN_BLOCK_IDS } from './YandexAd'
 import { useThemeMode } from '@/hooks/useThemeMode'
@@ -48,7 +56,7 @@ export default function InlinePostAd({ contentRef }: InlinePostAdProps) {
       adDiv.id = renderToId
       adDiv.setAttribute('data-yandex-inline-ad', '')
       adDiv.style.minHeight = `${MIN_HEIGHT_PX}px`
-      adDiv.className = 'my-6 w-full max-h-[200px] sm:max-h-none overflow-hidden'
+      adDiv.className = 'my-6 w-full max-h-[200px] sm:max-h-none overflow-hidden bg-white dark:bg-slate-800'
 
       if (insertAfter) {
         insertAfter.after(adDiv)

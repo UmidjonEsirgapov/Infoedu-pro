@@ -52,8 +52,8 @@ const Hero: React.FC<HeroProps> = ({ title, bgImage, viloyat }) => {
             </div>
           </div>
 
-          {/* Rasm qismi */}
-          <div className="lg:w-1/2 order-1 lg:order-2">
+          {/* Rasm qismi — In-Image reklama chiqarilmaydi (universitet nomi yopilmasin) */}
+          <div className="lg:w-1/2 order-1 lg:order-2" data-oliygoh-hero-image>
             <div className="relative h-64 md:h-80 lg:h-96 w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 group">
                <MyImage
                  src={bgImage}

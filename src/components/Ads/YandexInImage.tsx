@@ -10,12 +10,16 @@ const IN_IMAGE_BLOCK_ID = YAN_BLOCK_IDS.inImage
 /** In-Image uchun id prefiksi (assignDynamicIdsToImages bilan bir xil) */
 const IN_IMAGE_ID_PREFIX = 'yandex_rtb_' + IN_IMAGE_BLOCK_ID.replace(/-/g, '_')
 
-/** Yandex In-Image minimal o‘lcham (px) — kichikrasmlar INVALID_IMAGE_SIZE beradi */
+/** Yandex In-Image minimal o‘lcham (px) — natural va ekrandagi o‘lcham ikkalasi ham shundan katta bo‘lishi kerak (INVALID_IMAGE_SIZE oldini olish) */
 const MIN_IMAGE_WIDTH = 320
 const MIN_IMAGE_HEIGHT = 190
 
 /** Maqola matnidagi rasmlar — reklama qo‘yilmaydi, faqat oddiy ko‘rinadi */
 const POST_CONTENT_SELECTOR = '#single-entry-content'
+/** Oliygoh sahifasidagi Hero rasmi — reklama yopmasin (universitet nomi binoda ko‘rinsin) */
+const OLIYGOH_HERO_SELECTOR = '[data-oliygoh-hero-image]'
+/** Bosh sahifadagi asosiy post rasmi — reklama chiqmasin */
+const HOME_HERO_SELECTOR = '[data-home-hero-image]'
 
 export interface YandexInImageProps {
   /**
@@ -48,16 +52,34 @@ export default function YandexInImage({ container }: YandexInImageProps) {
 
     const allImages = assignDynamicIdsToImages(root as HTMLElement, IN_IMAGE_ID_PREFIX)
     const postContent = document.querySelector(POST_CONTENT_SELECTOR)
-    /** Post ichidagi rasmlarni In-Image dan chiqarib tashlash — ular doim oddiy ko‘rinsin */
-    const images = postContent
-      ? allImages.filter((img) => !postContent.contains(img))
-      : allImages
+    const oliygohHero = document.querySelector(OLIYGOH_HERO_SELECTOR)
+    const homeHero = document.querySelector(HOME_HERO_SELECTOR)
+    /** Post, oliygoh Hero va bosh sahifa hero rasmlarida In-Image chiqarilmaydi */
+    const images = allImages.filter((img) => {
+      if (postContent?.contains(img)) return false
+      if (oliygohHero?.contains(img)) return false
+      if (homeHero?.contains(img)) return false
+      return true
+    })
 
-    /** Faqat asl rasm o‘lchami (natural*) — Yandex INVALID_IMAGE_SIZE ni shu asosida beradi */
+    /** Natural va ekrandagi o‘lcham ikkalasi ham min dan katta bo‘lishi kerak (Yandex ikkalasini tekshiradi, INVALID_IMAGE_SIZE kamayadi) */
     const isLargeEnough = (img: HTMLImageElement): boolean => {
-      const w = img.naturalWidth
-      const h = img.naturalHeight
-      return w >= MIN_IMAGE_WIDTH && h >= MIN_IMAGE_HEIGHT
+      const nw = img.naturalWidth || 0
+      const nh = img.naturalHeight || 0
+      const dw = img.offsetWidth || 0
+      const dh = img.offsetHeight || 0
+      return (
+        nw >= MIN_IMAGE_WIDTH &&
+        nh >= MIN_IMAGE_HEIGHT &&
+        dw >= MIN_IMAGE_WIDTH &&
+        dh >= MIN_IMAGE_HEIGHT
+      )
+    }
+
+    const runAfterLayout = (fn: () => void) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(fn)
+      })
     }
 
     images.forEach((img) => {
@@ -65,8 +87,10 @@ export default function YandexInImage({ container }: YandexInImageProps) {
       if (!imageId) return
 
       const onReady = () => {
-        if (!isLargeEnough(img)) return
-        render(imageId)
+        runAfterLayout(() => {
+          if (!isLargeEnough(img)) return
+          render(imageId)
+        })
       }
 
       if (!img.complete) {

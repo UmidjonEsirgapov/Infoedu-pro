@@ -96,8 +96,6 @@ const Page = () => {
 		}
 	}, [ref])
 
-	console.log('data', data)
-
 	return (
 		<div ref={ref} className="no-prose relative">
 			<>

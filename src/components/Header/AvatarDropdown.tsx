@@ -22,8 +22,10 @@ import {
 	UserPlusIcon,
 } from '@heroicons/react/24/outline'
 import { useLogout } from '@faustwp/core'
-import { useSelector } from 'react-redux'
+import { signOut, useSession } from 'next-auth/react'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/stores/store'
+import { removeAll, updateAuthorizedUser } from '@/stores/viewer/viewerSlice'
 import { useLoginModal } from '@/hooks/useLoginModal'
 import { getImageDataFromImageFragment } from '@/utils/getImageDataFromImageFragment'
 import { NC_SITE_SETTINGS } from '@/contains/site-settings'
@@ -40,10 +42,24 @@ export default function AvatarDropdown({ className = '' }: Props) {
 		(state: RootState) => state.viewer.authorizedUser,
 	)
 	const { logout } = useLogout()
+	const { data: session } = useSession()
+	const dispatch = useDispatch()
 	const { viewer } = useSelector((state: RootState) => state.viewer)
 	const { openLoginModal } = useLoginModal()
 	const router = useRouter()
 	const T = getTrans()
+
+	const handleLogout = () => {
+		if (session?.user) {
+			signOut({ redirect: false }).then(() => {
+				dispatch(removeAll())
+				dispatch(updateAuthorizedUser({ isAuthenticated: false, isReady: true, loginUrl: null }))
+				router.push('/')
+			})
+		} else {
+			logout('/')
+		}
+	}
 
 	useEffect(() => {
 		// mot so truong hop ngoai le, can phai reload lai trang
@@ -269,7 +285,7 @@ export default function AvatarDropdown({ className = '' }: Props) {
 		return (
 			<button
 				className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-neutral-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50 dark:hover:bg-neutral-700"
-				onClick={() => logout('/')}
+				onClick={handleLogout}
 			>
 				<div className="flex flex-shrink-0 items-center justify-center text-neutral-500 dark:text-neutral-300">
 					<PowerIcon className="h-6 w-6" />

@@ -17,7 +17,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ posts, className = '' }) => {
 			posts[0],
 		)
 		return (
-			<div className="aspect-h-8 aspect-w-8 sm:aspect-w-10 lg:aspect-w-16">
+			<div className="aspect-h-8 aspect-w-8 sm:aspect-w-10 lg:aspect-w-16" data-home-hero-image>
 				<NcImage
 					alt={featuredImage?.altText || title}
 					containerClassName="absolute inset-0 rounded-[40px] overflow-hidden z-0"

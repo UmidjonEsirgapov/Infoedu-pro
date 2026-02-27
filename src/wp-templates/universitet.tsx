@@ -21,6 +21,17 @@ const RelatedOliygohCard = dynamic(() => import('@/components/oliygoh/RelatedOli
   loading: () => <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />
 });
 
+const YandexAdOliygohSidebar = dynamic(
+  () => import('@/components/Ads/YandexAd').then((m) => {
+    const Y = m.default;
+    const { YAN_BLOCK_IDS } = m;
+    return function Ad() {
+      return <Y blockId={YAN_BLOCK_IDS.banner} renderTo="yandex_rtb_oliygoh_sidebar" minHeight={250} className="w-full rounded-xl overflow-hidden" />;
+    };
+  }),
+  { ssr: false }
+);
+
 // --- 3. MAIN COMPONENT ---
 
 const Universitet: FaustTemplate<any> = (props) => {
@@ -489,6 +500,9 @@ const Universitet: FaustTemplate<any> = (props) => {
                 <div className="hidden lg:block lg:col-span-1">
                   <div className="lg:sticky" style={{ top: `${stickyTop}px` }}>
                     <ContactCard info={info} />
+                    <div className="mt-6 w-full">
+                      <YandexAdOliygohSidebar />
+                    </div>
                   </div>
                 </div>
               </div>

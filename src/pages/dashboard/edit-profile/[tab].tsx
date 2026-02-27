@@ -6,6 +6,9 @@ import {
 	useAuth,
 	useLogout,
 } from '@faustwp/core'
+import { signOut, useSession } from 'next-auth/react'
+import { useDispatch } from 'react-redux'
+import { removeAll, updateAuthorizedUser } from '@/stores/viewer/viewerSlice'
 import { gql } from '@/__generated__'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -38,8 +41,22 @@ const T = getTrans()
 const Page: FaustPage<{}> = () => {
 	const { isReady, isAuthenticated, viewer } = useAuth()
 	const { logout } = useLogout()
+	const { data: session } = useSession()
+	const dispatch = useDispatch()
 	const router = useRouter()
 	const client = getApolloAuthClient()
+
+	const handleLogout = () => {
+		if (session?.user) {
+			signOut({ redirect: false }).then(() => {
+				dispatch(removeAll())
+				dispatch(updateAuthorizedUser({ isAuthenticated: false, isReady: true, loginUrl: null }))
+				router.push('/')
+			})
+		} else {
+			logout('/')
+		}
+	}
 	const currentTab: TDashBoardEditProfileTab =
 		(router.query.tab as TDashBoardEditProfileTab) || 'general'
 
@@ -184,7 +201,7 @@ const Page: FaustPage<{}> = () => {
 					toast.success(
 						`${T['Account deleted successfully!']} ${T['Returning to the home page!']}`,
 					)
-					logout('/')
+					handleLogout()
 				},
 				onError: (error) => {
 					errorHandling(error)

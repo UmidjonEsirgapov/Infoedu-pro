@@ -17,7 +17,7 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
 }) => {
 	return (
 		<div className={`nc-WidgetCategories overflow-hidden ${className}`}>
-			<WidgetHeading1 title="✨ Top 10 katigoriyalar" />
+			<WidgetHeading1 title="✨ Top 5 katigoriyalar" />
 			<div className="flow-root">
 				<div className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-700">
 					{isLoading ? (
@@ -29,7 +29,7 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
 							<CardCategory6Skeleton className="p-4 xl:p-5" />
 						</>
 					) : (
-						categories?.map(category => (
+						categories?.slice(0, 5).map(category => (
 							<CardCategory6
 								className="p-4 transition-colors hover:bg-neutral-50 xl:p-5 dark:hover:bg-neutral-800"
 								key={category.databaseId}

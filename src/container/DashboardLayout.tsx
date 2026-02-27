@@ -22,6 +22,9 @@ import classNames from '@/utils/classNames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useLogout } from '@faustwp/core'
+import { signOut, useSession } from 'next-auth/react'
+import { useDispatch } from 'react-redux'
+import { removeAll, updateAuthorizedUser } from '@/stores/viewer/viewerSlice'
 import CreateBtn from '@/components/Header/CreateBtn'
 import { NC_SITE_SETTINGS } from '@/contains/site-settings'
 import getTrans from '@/utils/getTrans'
@@ -142,6 +145,20 @@ export default function DashboardLayout({ children }: Props) {
 	const router = useRouter()
 	const currentTab = router.query.tab || 'published'
 	const { logout } = useLogout()
+	const { data: session } = useSession()
+	const dispatch = useDispatch()
+
+	const handleLogout = () => {
+		if (session?.user) {
+			signOut({ redirect: false }).then(() => {
+				dispatch(removeAll())
+				dispatch(updateAuthorizedUser({ isAuthenticated: false, isReady: true, loginUrl: null }))
+				router.push('/')
+			})
+		} else {
+			logout('/')
+		}
+	}
 
 	const renderItem = (item: NavigationItem) => {
 		const isCurrent = item.name === currentTab
@@ -235,7 +252,7 @@ export default function DashboardLayout({ children }: Props) {
 								className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-200"
 								onClick={e => {
 									e.preventDefault()
-									logout('/')
+									handleLogout()
 								}}
 							>
 								<PowerIcon

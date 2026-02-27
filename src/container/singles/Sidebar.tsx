@@ -1,6 +1,5 @@
 import { TCategoryCardFull } from '@/components/CardCategory1/CardCategory1'
 import WidgetCategories from '@/components/WidgetCategories/WidgetCategories'
-import WidgetSocialsFollow from '@/components/WidgetSocialsFollow/WidgetSocialsFollow'
 import WidgetPopularPosts from '@/components/WidgetPopularPosts/WidgetPopularPosts'
 import WidgetOliygohDarsliklar from '@/components/WidgetOliygohDarsliklar/WidgetOliygohDarsliklar'
 import { TPostCard } from '@/components/Card2/Card2'
@@ -23,8 +22,6 @@ export const Sidebar: FC<SidebarProps> = ({
 			{popularPosts && popularPosts.length > 0 && (
 				<WidgetPopularPosts posts={popularPosts} />
 			)}
-
-			<WidgetSocialsFollow />
 
 			<WidgetOliygohDarsliklar />
 

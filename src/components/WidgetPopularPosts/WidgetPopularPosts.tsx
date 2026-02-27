@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { TPostCard } from '@/components/Card2/Card2'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
 import { formatShortDateUz } from '@/utils/formatDate'
-import MyImage from '@/components/MyImage'
 import { FireIcon } from '@heroicons/react/24/outline'
 
 export interface WidgetPopularPostsProps {
@@ -51,21 +50,8 @@ const WidgetPopularPosts: FC<WidgetPopularPostsProps> = ({
 									{index + 1}
 								</div>
 
-								{/* Content */}
+								{/* Content — rasm ko'rsatilmaydi (sidebar qisqa) */}
 								<div className="flex-1 min-w-0">
-									{/* Image */}
-									{featuredImage?.sourceUrl && (
-										<div className="relative w-full h-20 mb-2 rounded-lg overflow-hidden">
-											<MyImage
-												fill
-												src={featuredImage.sourceUrl}
-												alt={title || ''}
-												className="object-cover"
-												sizes="(max-width: 768px) 100vw, 200px"
-											/>
-										</div>
-									)}
-
 									{/* Title */}
 									<h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
 										{title}

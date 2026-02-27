@@ -9,31 +9,43 @@ const LABEL_SUBSCRIBED = 'Obuna boʻldingiz'
 export default function PushSubscribeButton() {
 	const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		if (typeof window === 'undefined') return
 		setStatus('loading')
 
-		const run = async (OneSignal: any) => {
-			const req =
-				OneSignal?.Notifications?.requestPermission ??
-				OneSignal?.Slidedown?.requestPermission
-			if (typeof req !== 'function') {
-				setStatus('error')
-				return
+		try {
+			// Avvalo brauzer native ruxsatini so'raymiz (OneSignal SDK NotificationsNamespace xatosiga bog'liq emas)
+			if (typeof Notification !== 'undefined' && Notification.requestPermission) {
+				const perm = await Notification.requestPermission()
+				if (perm === 'granted') {
+					setStatus('done')
+					// Sahifani qayta yuklash — OneSignal keyingi yuklashda ruxsatni ko'rib, obunani ro'yxatga oladi
+					window.location.reload()
+					return
+				}
+				if (perm === 'denied') {
+					setStatus('error')
+					return
+				}
 			}
-			try {
-				const ok = await req()
-				setStatus(ok ? 'done' : 'error')
-			} catch {
-				setStatus('error')
-			}
-		}
 
-		if (window.OneSignalDeferred) {
-			window.OneSignalDeferred.push(async (OS: any) => {
-				await run(OS)
-			})
-		} else {
+			// Fallback: OneSignal API (agar SDK ishlab qolsa)
+			const run = async (OS: any) => {
+				const req = OS?.Notifications?.requestPermission ?? OS?.Slidedown?.requestPermission
+				if (typeof req === 'function') {
+					const ok = await req()
+					setStatus(ok ? 'done' : 'error')
+					if (ok) window.location.reload()
+					return
+				}
+				setStatus('error')
+			}
+			if (window.OneSignalDeferred && Array.isArray(window.OneSignalDeferred)) {
+				window.OneSignalDeferred.push(run)
+			} else {
+				setStatus('error')
+			}
+		} catch {
 			setStatus('error')
 		}
 	}

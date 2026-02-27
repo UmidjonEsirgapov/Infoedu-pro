@@ -16,6 +16,7 @@ import {
 } from '@/contains/site-settings'
 import Button from '../Button/Button'
 import { useAuth } from '@faustwp/core'
+import { useSession } from 'next-auth/react'
 import { useLoginModal } from '@/hooks/useLoginModal'
 
 interface MenuItemImageProps {
@@ -38,8 +39,11 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 	enableUpload = true,
 }) => {
 	const T = getTrans()
-	const { isAuthenticated, isReady } = useAuth()
+	const { isAuthenticated: faustAuth, isReady: faustReady } = useAuth()
+	const { data: session, status: sessionStatus } = useSession()
 	const { openLoginModal } = useLoginModal()
+	const isAuthenticated = faustAuth || (sessionStatus === 'authenticated' && !!session?.user)
+	const isReady = faustReady || sessionStatus !== 'loading'
 
 	let [catImages] = useState(['Upload', 'Insert from URL'])
 
@@ -126,38 +130,25 @@ const ModalUploadImage: FC<MenuItemImageProps> = ({
 			)
 
 		const getAccessToken = async () => {
-			// Authentication holatini tekshirish
-			if (!isReady) {
-				throw new Error('Authentication is not ready yet')
-			}
-
-			if (!isAuthenticated) {
-				throw new Error('User is not authenticated')
-			}
-
+			if (!isReady) throw new Error('Authentication is not ready yet')
+			if (!isAuthenticated) throw new Error('User is not authenticated')
+			// NextAuth orqali WordPress JWT bilan kirilgan bo'lsa
+			const wpToken = (session as { wpToken?: string } | null)?.wpToken
+			if (wpToken) return wpToken
+			// Faust token (eski oqim)
 			try {
 				const response = await fetch('/api/faust/auth/token', {
 					method: 'GET',
-					credentials: 'include', // Cookie'larni yuborish uchun
-					headers: {
-						'Content-Type': 'application/json',
-					},
+					credentials: 'include',
+					headers: { 'Content-Type': 'application/json' },
 				})
-				
 				if (!response.ok) {
-					if (response.status === 401) {
-						console.error('Token fetch error: 401 Unauthorized - User is not authenticated')
-						throw new Error('UNAUTHORIZED')
-					}
-					console.error('Token fetch error:', response.status, response.statusText)
+					if (response.status === 401) throw new Error('UNAUTHORIZED')
 					throw new Error(`Failed to get access token: ${response.status}`)
 				}
-				
 				const data = await response.json()
 				const accessToken = data?.accessToken
-				if (!accessToken) {
-					throw new Error('Access token not found in response')
-				}
+				if (!accessToken) throw new Error('Access token not found in response')
 				return accessToken
 			} catch (error) {
 				console.error('Error getting access token:', error)

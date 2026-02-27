@@ -8,6 +8,18 @@ import possibleTypes from "./possibleTypes.json";
  * Cloudflare whitelist uchun build serverini identifikatsiya qilish.
  * GET va POST so'rovlariga birdek qo'llanadi.
  */
+/** NextAuth orqali kirilganda WordPress JWT ni Apollo so'rovlariga qo'shadigan link (client'da window.__NEXT_AUTH_WP_TOKEN) */
+const nextAuthWpTokenLink = setContext((_, { headers = {} }) => {
+  const token =
+    typeof globalThis !== "undefined" && globalThis.__NEXT_AUTH_WP_TOKEN;
+  return {
+    headers: {
+      ...headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  };
+});
+
 const buildSecretPlugin = {
   apply(hooksInstance) {
     hooksInstance.addFilter(
@@ -15,18 +27,16 @@ const buildSecretPlugin = {
       "build-secret-header",
       (apolloClientOptions) => {
         const secret = process.env.BUILD_SECRET;
-        if (!secret) return apolloClientOptions;
-
-        const buildSecretLink = setContext((_, { headers = {} }) => ({
-          headers: {
-            ...headers,
-            "x-build-secret": secret,
-          },
-        }));
-
+        // Avval NextAuth wpToken (client'da globalThis.__NEXT_AUTH_WP_TOKEN), keyin build-secret, keyin Faust link
+        const withWpToken = nextAuthWpTokenLink.concat(apolloClientOptions.link);
+        const newLink = secret
+          ? setContext((_, { headers = {} }) => ({
+              headers: { ...headers, "x-build-secret": secret },
+            })).concat(withWpToken)
+          : withWpToken;
         return {
           ...apolloClientOptions,
-          link: buildSecretLink.concat(apolloClientOptions.link),
+          link: newLink,
         };
       }
     );
